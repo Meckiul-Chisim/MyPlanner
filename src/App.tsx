@@ -11,10 +11,10 @@ function App() {
   const [view, setView] = useState<View>('dashboard')
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50">
+    <div className="app-shell flex h-screen overflow-hidden">
       <Sidebar active={view} onNavigate={setView} />
 
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 min-w-0 overflow-y-auto">
         {view === 'dashboard' && <DashboardView />}
         {view === 'tasks' && <TaskList />}
         {view === 'habits' && <HabitList />}

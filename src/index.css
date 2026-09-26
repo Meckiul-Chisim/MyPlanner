@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  /* Primary — sage green, used for buttons, active states, checkboxes */
+  --color-primary-50: #f2f8f5;
+  --color-primary-100: #e0efe7;
+  --color-primary-300: #b3d9c4;
+  --color-primary-500: #86b89f;
+  --color-primary-600: #6a9f85;
+  --color-primary-700: #54826b;
+
+  /* Blush — used for "high priority" tags */
+  --color-blush-100: #fbe8ea;
+  --color-blush-500: #e7a5ac;
+
+  /* Lavender — used for schedule blocks */
+  --color-lavender-100: #eee7fa;
+  --color-lavender-500: #b6a3dd;
+  --color-lavender-700: #7c6ba3;
+
+  /* Sand — used for habit streaks */
+  --color-sand-100: #fbf0e4;
+  --color-sand-500: #e0b787;
+
+  /* Sky — used for "low priority" tags */
+  --color-sky-100: #e6f2fa;
+  --color-sky-500: #92c1e0;
+}
+
+body {
+  background-color: #fafafa;
+}

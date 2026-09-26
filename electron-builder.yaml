@@ -1,0 +1,6 @@
+appId: com.meckiul.myplanner
+productName: MyPlanner
+publish:
+  provider: github
+  owner: your-github-username
+  repo: myplanner

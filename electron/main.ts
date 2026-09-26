@@ -18,6 +18,33 @@ import { addHabit, deleteHabit, logHabitDay, getStreakForHabit } from './db'
 import { addScheduleBlock, deleteScheduleBlock } from './db'
 import type { NewScheduleBlock } from '../src/db/types'
 
+import { app, BrowserWindow, ipcMain, dialog } from 'electron'
+import { autoUpdater } from 'electron-updater'
+// ...your existing imports
+
+app.whenReady().then(() => {
+  initDatabase()
+  registerIpcHandlers()
+  createWindow()
+
+  // Check GitHub Releases for a newer version on every app launch
+  autoUpdater.checkForUpdatesAndNotify()
+})
+
+// Fires once a newer version has finished downloading in the background
+autoUpdater.on('update-downloaded', () => {
+  dialog.showMessageBox({
+    type: 'info',
+    title: 'Update ready',
+    message: 'A new version of MyPlanner has been downloaded. Restart now to apply it?',
+    buttons: ['Restart', 'Later'],
+  }).then((result) => {
+    if (result.response === 0) {
+      autoUpdater.quitAndInstall() // closes and reopens the app with the update applied
+    }
+  })
+})
+
 ipcMain.handle('schedule-blocks:add', (_event, block: NewScheduleBlock) => addScheduleBlock(block))
 ipcMain.handle('schedule-blocks:delete', (_event, id: number) => deleteScheduleBlock(id))
 

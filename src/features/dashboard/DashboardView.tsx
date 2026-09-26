@@ -77,7 +77,8 @@ export function DashboardView() {
             {sortedBlocks.map((block) => (
               <div
                 key={block.id}
-                className="flex items-center gap-3 py-2.5 px-4 bg-white rounded-lg border-l-2 border-lavender-500 border-y border-r border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200"
+                className="flex items-center gap-3 py-2.5 px-4 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200"
+                style={{ borderLeft: '2px solid #b6a3dd' }}
               >
                 <span className="text-xs text-lavender-500 w-20 font-medium">{block.startTime}</span>
                 <span className="text-sm text-gray-700">{block.title}</span>

@@ -1,10 +1,27 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, dialog, ipcMain, BrowserWindow } from "electron";
 import { join } from "node:path";
+import { autoUpdater } from "electron-updater";
 import Database from "better-sqlite3";
 import __cjs_mod__ from "node:module";
 const __filename = import.meta.filename;
 const __dirname = import.meta.dirname;
 const require2 = __cjs_mod__.createRequire(import.meta.url);
+function addScheduleBlock(block) {
+  const result = getDb().prepare(`
+    INSERT INTO schedule_blocks (title, start_time, end_time, date, linked_task_id)
+    VALUES (@title, @startTime, @endTime, @date, @linkedTaskId)
+  `).run({
+    title: block.title,
+    startTime: block.startTime,
+    endTime: block.endTime,
+    date: block.date,
+    linkedTaskId: block.linkedTaskId ?? null
+  });
+  return result.lastInsertRowid;
+}
+function deleteScheduleBlock(id) {
+  getDb().prepare(`DELETE FROM schedule_blocks WHERE id = ?`).run(id);
+}
 let db;
 function initDatabase() {
   const dbPath = join(app.getPath("userData"), "myplanner.db");
@@ -162,6 +179,26 @@ function getStreakForHabit(habitId) {
   }
   return streak;
 }
+app.whenReady().then(() => {
+  initDatabase();
+  registerIpcHandlers();
+  createWindow();
+  autoUpdater.checkForUpdatesAndNotify();
+});
+autoUpdater.on("update-downloaded", () => {
+  dialog.showMessageBox({
+    type: "info",
+    title: "Update ready",
+    message: "A new version of MyPlanner has been downloaded. Restart now to apply it?",
+    buttons: ["Restart", "Later"]
+  }).then((result) => {
+    if (result.response === 0) {
+      autoUpdater.quitAndInstall();
+    }
+  });
+});
+ipcMain.handle("schedule-blocks:add", (_event, block) => addScheduleBlock(block));
+ipcMain.handle("schedule-blocks:delete", (_event, id) => deleteScheduleBlock(id));
 function createWindow() {
   const win = new BrowserWindow({
     width: 1200,

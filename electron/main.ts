@@ -1,7 +1,8 @@
 // Purpose: Create the app window and register all IPC handlers that bridge
 // React (renderer) requests to the local SQLite database.
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, dialog, ipcMain } from 'electron'
 import { join } from 'node:path'
+import { autoUpdater } from 'electron-updater'
 import {
   initDatabase,
   closeDatabase,
@@ -12,15 +13,14 @@ import {
   addTask,
   toggleTask,
   deleteTask,
+  addHabit,
+  deleteHabit,
+  logHabitDay,
+  getStreakForHabit,
+  addScheduleBlock,
+  deleteScheduleBlock,
 } from './db'
-import type { NewHabit, NewTask } from '../src/db/types'
-import { addHabit, deleteHabit, logHabitDay, getStreakForHabit } from './db'
-import { addScheduleBlock, deleteScheduleBlock } from './db'
-import type { NewScheduleBlock } from '../src/db/types'
-
-import { app, BrowserWindow, ipcMain, dialog } from 'electron'
-import { autoUpdater } from 'electron-updater'
-// ...your existing imports
+import type { NewHabit, NewScheduleBlock, NewTask } from '../src/db/types'
 
 app.whenReady().then(() => {
   initDatabase()

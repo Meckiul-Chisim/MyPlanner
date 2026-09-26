@@ -14232,30 +14232,877 @@ function requireClient() {
   return client.exports;
 }
 var clientExports = requireClient();
-function App() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "min-h-screen bg-[#f2f3ec] text-[#20241f]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mx-auto flex min-h-screen max-w-6xl flex-col px-6 py-7 sm:px-10", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("header", { className: "flex items-center gap-3", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "grid size-10 place-items-center rounded-xl bg-[#245b48] font-serif text-xl text-white", children: "M" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold tracking-normal", children: "MyPlanner" })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "my-auto grid gap-12 py-20 md:grid-cols-[1fr_0.75fr] md:items-end", children: [
+const toKebabCase = (string) => string?.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+function toLucideIconData(iconName, iconNode, aliases = []) {
+  if (iconNode == null) {
+    throw new Error("[lucide]: iconNode is required when icon name is used");
+  }
+  return {
+    name: toKebabCase(iconName),
+    size: 24,
+    node: iconNode,
+    ...aliases.length > 0 ? { aliases } : {}
+  };
+}
+const toCamelCase = (string) => {
+  let out = "";
+  let upperNext = false;
+  for (const ch of string) {
+    if (ch === "-" || ch === "_" || ch <= " ") {
+      upperNext = out.length > 0;
+      continue;
+    }
+    if (out.length === 0) {
+      out += ch.toLowerCase();
+    } else {
+      out += upperNext ? ch.toUpperCase() : ch;
+    }
+    upperNext = false;
+  }
+  return out;
+};
+const toPascalCase = (string) => {
+  const camelCase = toCamelCase(string);
+  return camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
+};
+const mergeClasses = (...classes) => classes.filter((className, index, array) => {
+  return Boolean(className) && className.trim() !== "" && array.indexOf(className) === index;
+}).join(" ").trim();
+const defaultAttributes = {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: 24,
+  height: 24,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  "stroke-width": 2,
+  "stroke-linecap": "round",
+  "stroke-linejoin": "round"
+};
+function isDefined(value) {
+  return value !== null && value !== void 0;
+}
+function buildLucideIconNode(icon, params = {}) {
+  const attributeNames = params.attributeNames ?? {};
+  const getAttributeName = (attributeName) => attributeNames[attributeName] ?? attributeName;
+  const viewBoxWidth = icon.size ?? icon.width ?? defaultAttributes["width"];
+  const viewBoxHeight = icon.size ?? icon.height ?? defaultAttributes["height"];
+  const aliasClassNames = icon.aliases?.filter((alias) => typeof alias === "string" && alias.trim() !== "").map((alias) => `lucide-${alias}`) ?? [];
+  const iconClassNames = [...icon.name ? [`lucide-${icon.name}`] : [], ...aliasClassNames];
+  const classNamesFromClassName = params.className?.split(" ").filter(Boolean) ?? [];
+  const className = params.includeDefaultClasses === false ? mergeClasses(...classNamesFromClassName) : mergeClasses("lucide", ...iconClassNames, ...classNamesFromClassName);
+  const calculatedStrokeWidth = params.absoluteStrokeWidth ? Number(params.strokeWidth ?? defaultAttributes["stroke-width"]) * Number(icon.size ?? icon.width ?? defaultAttributes["width"]) / Number(params.size ?? params.width ?? defaultAttributes["width"]) : params.strokeWidth ?? defaultAttributes["stroke-width"];
+  const attributes = {
+    ...Object.entries(defaultAttributes).reduce((attrs, [attrName, value]) => {
+      attrs[getAttributeName(attrName)] = value;
+      return attrs;
+    }, {}),
+    ..."color" in params && params.color && {
+      [getAttributeName("stroke")]: params.color
+    },
+    ..."size" in params && isDefined(params.size) && {
+      [getAttributeName("width")]: params.size,
+      [getAttributeName("height")]: params.size
+    },
+    ..."width" in params && isDefined(params.width) && {
+      [getAttributeName("width")]: params.width
+    },
+    ..."height" in params && isDefined(params.height) && {
+      [getAttributeName("height")]: params.height
+    },
+    [getAttributeName("stroke-width")]: calculatedStrokeWidth,
+    ...className && {
+      [getAttributeName("class")]: className
+    },
+    [getAttributeName("viewBox")]: `0 0 ${viewBoxWidth} ${viewBoxHeight}`,
+    ...params.hasA11yProp === false ? {
+      [getAttributeName("aria-hidden")]: "true"
+    } : {},
+    ..."attributes" in params && params.attributes
+  };
+  return [
+    "svg",
+    attributes,
+    icon.node.map((child) => {
+      const [name, attrs, children] = child;
+      const nextAttrs = params.nonScalingStroke ? { [getAttributeName("vector-effect")]: "non-scaling-stroke", ...attrs } : attrs;
+      return children ? [name, nextAttrs, children] : [name, nextAttrs];
+    })
+  ];
+}
+function buildLucideIconForReact(icon, params = {}) {
+  return buildLucideIconNode(icon, {
+    ...params,
+    attributeNames: {
+      ...params.attributeNames,
+      class: "className",
+      "stroke-width": "strokeWidth",
+      "stroke-linecap": "strokeLinecap",
+      "stroke-linejoin": "strokeLinejoin",
+      "vector-effect": "vectorEffect"
+    }
+  });
+}
+const hasA11yProp = (props) => {
+  for (const prop in props) {
+    if (prop.startsWith("aria-") || prop === "role" || prop === "title") {
+      return true;
+    }
+  }
+  return false;
+};
+const LucideContext = reactExports.createContext({});
+const useLucideContext = () => reactExports.useContext(LucideContext);
+const Icon = reactExports.forwardRef(
+  ({
+    color,
+    size,
+    width,
+    height,
+    strokeWidth,
+    absoluteStrokeWidth,
+    nonScalingStroke,
+    className = "",
+    children,
+    iconNode = [],
+    icon = {
+      node: iconNode,
+      aliases: [],
+      size: 24
+    },
+    ...rest
+  }, ref) => {
+    const {
+      size: contextSize = 24,
+      strokeWidth: contextStrokeWidth = 2,
+      absoluteStrokeWidth: contextAbsoluteStrokeWidth = false,
+      nonScalingStroke: contextNonScalingStroke = false,
+      color: contextColor = "currentColor",
+      className: contextClass = ""
+    } = useLucideContext() ?? {};
+    const hasAccessibleProp = Boolean(children) || hasA11yProp(rest);
+    const [name, svgAttributes, builtIconNode = []] = buildLucideIconForReact(icon, {
+      color: color ?? contextColor,
+      width: width ?? size ?? contextSize,
+      height: height ?? size ?? contextSize,
+      strokeWidth: strokeWidth ?? contextStrokeWidth,
+      absoluteStrokeWidth: absoluteStrokeWidth ?? contextAbsoluteStrokeWidth,
+      nonScalingStroke: nonScalingStroke ?? contextNonScalingStroke,
+      className: mergeClasses(contextClass, className),
+      hasA11yProp: hasAccessibleProp,
+      attributes: rest
+    });
+    return reactExports.createElement(
+      name,
+      {
+        ref,
+        ...svgAttributes
+      },
+      [
+        ...builtIconNode.map(([tag, attrs]) => reactExports.createElement(tag, attrs)),
+        ...Array.isArray(children) ? children : [children]
+      ]
+    );
+  }
+);
+function createLucideIcon(iconDataOrName, iconNode = [], aliases = []) {
+  const iconData = typeof iconDataOrName === "string" ? toLucideIconData(iconDataOrName, iconNode, aliases) : iconDataOrName;
+  const Component = reactExports.forwardRef(
+    ({ className, ...props }, ref) => reactExports.createElement(Icon, {
+      ref,
+      icon: iconData,
+      className,
+      ...props
+    })
+  );
+  if (iconData.name) {
+    Component.displayName = toPascalCase(iconData.name);
+  }
+  return Component;
+}
+const __iconData$7 = {
+  name: "calendar-days",
+  size: 24,
+  node: [
+    ["path", { d: "M8 2v3", key: "1ioesn" }],
+    ["path", { d: "M16 2v3", key: "otl347" }],
+    ["rect", { x: "3", y: "3", width: "18", height: "18", rx: "2", key: "h1oib" }],
+    ["path", { d: "M3 9h18", key: "1pudct" }],
+    ["path", { d: "M8 13h.01", key: "1sbv64" }],
+    ["path", { d: "M12 13h.01", key: "y0uutt" }],
+    ["path", { d: "M16 13h.01", key: "wip0gl" }],
+    ["path", { d: "M8 17h.01", key: "p3bg7i" }],
+    ["path", { d: "M12 17h.01", key: "p32p05" }],
+    ["path", { d: "M16 17h.01", key: "ql8jdd" }]
+  ]
+};
+__iconData$7.node;
+const CalendarDays = createLucideIcon(__iconData$7);
+const __iconData$6 = {
+  name: "clipboard-list",
+  size: 24,
+  node: [
+    ["rect", { width: "8", height: "4", x: "8", y: "2", rx: "1", ry: "1", key: "tgr4d6" }],
+    [
+      "path",
+      {
+        d: "M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2",
+        key: "116196"
+      }
+    ],
+    ["path", { d: "M12 11h4", key: "1jrz19" }],
+    ["path", { d: "M12 16h4", key: "n85exb" }],
+    ["path", { d: "M8 11h.01", key: "1dfujw" }],
+    ["path", { d: "M8 16h.01", key: "18s6g9" }]
+  ]
+};
+__iconData$6.node;
+const ClipboardList = createLucideIcon(__iconData$6);
+const __iconData$5 = {
+  name: "flame",
+  size: 24,
+  node: [
+    [
+      "path",
+      {
+        d: "M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4",
+        key: "1slcih"
+      }
+    ]
+  ]
+};
+__iconData$5.node;
+const Flame = createLucideIcon(__iconData$5);
+const __iconData$4 = {
+  name: "layout-grid",
+  size: 24,
+  node: [
+    ["rect", { width: "7", height: "7", x: "3", y: "3", rx: "1", key: "1g98yp" }],
+    ["rect", { width: "7", height: "7", x: "14", y: "3", rx: "1", key: "6d4xhi" }],
+    ["rect", { width: "7", height: "7", x: "14", y: "14", rx: "1", key: "nxv5o0" }],
+    ["rect", { width: "7", height: "7", x: "3", y: "14", rx: "1", key: "1bb6yr" }]
+  ]
+};
+__iconData$4.node;
+const LayoutGrid = createLucideIcon(__iconData$4);
+const __iconData$3 = {
+  name: "repeat",
+  size: 24,
+  node: [
+    ["path", { d: "m17 2 4 4-4 4", key: "nntrym" }],
+    ["path", { d: "M3 11v-1a4 4 0 0 1 4-4h14", key: "84bu3i" }],
+    ["path", { d: "m7 22-4-4 4-4", key: "1wqhfi" }],
+    ["path", { d: "M21 13v1a4 4 0 0 1-4 4H3", key: "1rx37r" }]
+  ]
+};
+__iconData$3.node;
+const Repeat = createLucideIcon(__iconData$3);
+const __iconData$2 = {
+  name: "sparkles",
+  size: 24,
+  node: [
+    [
+      "path",
+      {
+        d: "M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z",
+        key: "1s2grr"
+      }
+    ],
+    ["path", { d: "M20 2v4", key: "1rf3ol" }],
+    ["path", { d: "M22 4h-4", key: "gwowj6" }],
+    ["circle", { cx: "4", cy: "20", r: "2", key: "6kqj1y" }]
+  ],
+  aliases: ["stars"]
+};
+__iconData$2.node;
+const Sparkles = createLucideIcon(__iconData$2);
+const __iconData$1 = {
+  name: "square-check-big",
+  size: 24,
+  node: [
+    [
+      "path",
+      { d: "M21 10.656V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12.344", key: "2acyp4" }
+    ],
+    ["path", { d: "m9 11 3 3L22 4", key: "1pflzl" }]
+  ],
+  aliases: ["check-square"]
+};
+__iconData$1.node;
+const SquareCheckBig = createLucideIcon(__iconData$1);
+const __iconData = {
+  name: "x",
+  size: 24,
+  node: [
+    ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
+    ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
+  ]
+};
+__iconData.node;
+const X = createLucideIcon(__iconData);
+const items = [
+  { id: "dashboard", label: "Today", icon: LayoutGrid },
+  { id: "tasks", label: "Tasks", icon: SquareCheckBig },
+  { id: "habits", label: "Habits", icon: Repeat },
+  { id: "schedule", label: "Schedule", icon: CalendarDays }
+];
+function Sidebar({ active, onNavigate }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("aside", { className: "w-56 h-full bg-white border-r border-gray-100 flex flex-col", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-6 py-5", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-7 h-7 rounded-md bg-primary-600 flex items-center justify-center text-white text-sm font-semibold", children: "M" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-semibold text-gray-800 tracking-tight", children: "MyPlanner" })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("nav", { className: "flex-1 px-3 space-y-1", children: items.map((item) => {
+      const Icon2 = item.icon;
+      const isActive = active === item.id;
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "button",
+        {
+          onClick: () => onNavigate(item.id),
+          className: `w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md transition-all duration-150 text-left ${isActive ? "bg-primary-100 text-primary-700" : "text-gray-500 hover:text-gray-800 hover:bg-gray-50 hover:translate-x-0.5"}`,
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Icon2, { size: 17, strokeWidth: isActive ? 2.2 : 1.8 }),
+            item.label
+          ]
+        },
+        item.id
+      );
+    }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-6 py-4 text-xs text-gray-300", children: "Stored locally on this device" })
+  ] });
+}
+const HOUR_HEIGHT_PX = 60;
+const GRID_START_HOUR = 6;
+const GRID_END_HOUR = 23;
+function timeToMinutes(time) {
+  const [hours, minutes] = time.split(":").map(Number);
+  return hours * 60 + minutes;
+}
+function timeToTopOffset(time) {
+  const minutesFromGridStart = timeToMinutes(time) - GRID_START_HOUR * 60;
+  return minutesFromGridStart / 60 * HOUR_HEIGHT_PX;
+}
+function durationToHeight(startTime, endTime) {
+  const durationMinutes = timeToMinutes(endTime) - timeToMinutes(startTime);
+  return durationMinutes / 60 * HOUR_HEIGHT_PX;
+}
+function todayString$1() {
+  return (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+}
+function isDueTodayOrOverdue(task, today) {
+  if (task.completed) return false;
+  if (!task.dueDate) return false;
+  return task.dueDate <= today;
+}
+function DashboardView() {
+  const [tasks, setTasks] = reactExports.useState([]);
+  const [habits, setHabits] = reactExports.useState([]);
+  const [habitLogs, setHabitLogs] = reactExports.useState([]);
+  const [scheduleBlocks, setScheduleBlocks] = reactExports.useState([]);
+  const [loading, setLoading] = reactExports.useState(true);
+  const today = todayString$1();
+  async function refresh() {
+    const [allTasks, allHabits, allLogs, allBlocks] = await Promise.all([
+      window.planner.getTasks(),
+      window.planner.getHabits(),
+      window.planner.getHabitLogs(),
+      window.planner.getScheduleBlocks()
+    ]);
+    setTasks(allTasks);
+    setHabits(allHabits);
+    setHabitLogs(allLogs);
+    setScheduleBlocks(allBlocks.filter((b) => b.date === today));
+  }
+  reactExports.useEffect(() => {
+    refresh().finally(() => setLoading(false));
+  }, []);
+  async function handleToggleTask(id) {
+    await window.planner.toggleTask(id);
+    await refresh();
+  }
+  async function handleToggleHabit(habitId, completed) {
+    await window.planner.logHabitDay(habitId, today, completed);
+    await refresh();
+  }
+  if (loading) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400 p-6", children: "Loading today…" });
+  }
+  const dueTasks = tasks.filter((t) => isDueTodayOrOverdue(t, today));
+  const sortedBlocks = [...scheduleBlocks].sort((a, b) => a.startTime.localeCompare(b.startTime));
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-3xl mx-auto p-8 space-y-9", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 20, className: "text-primary-500", strokeWidth: 1.8 }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mb-5 text-sm font-semibold uppercase tracking-[0.14em] text-[#527565]", children: "Your personal workspace" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "max-w-2xl font-serif text-5xl leading-[1.05] sm:text-6xl", children: "A little more room to think." }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-6 max-w-lg text-lg leading-8 text-[#5c655e]", children: "MyPlanner is ready for your plans. Your information stays on this device, available whenever you need it." })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("aside", { className: "border-l-2 border-[#8cab74] py-2 pl-6", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-medium text-[#647066]", children: "WORKSPACE" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-xl font-medium", children: "Ready to begin" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-2 text-sm text-[#647066]", children: "Stored locally on this device" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-2xl font-semibold text-gray-800 tracking-tight", children: "Today" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400", children: (/* @__PURE__ */ new Date()).toLocaleDateString(void 0, { weekday: "long", month: "long", day: "numeric" }) })
       ] })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("footer", { className: "border-t border-[#d9ddd2] pt-4 text-sm text-[#647066]", children: [
-      "MyPlanner ",
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { "aria-hidden": "true", children: "/" }),
-      " Offline by default"
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5 mb-3", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CalendarDays, { size: 13, className: "text-lavender-500" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xs font-semibold text-lavender-700 uppercase tracking-wider", children: "Schedule" })
+      ] }),
+      sortedBlocks.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400", children: "Nothing scheduled today." }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-1.5", children: sortedBlocks.map((block) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          className: "flex items-center gap-3 py-2.5 px-4 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200",
+          style: { borderLeft: "2px solid #b6a3dd" },
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-lavender-500 w-20 font-medium", children: block.startTime }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm text-gray-700", children: block.title })
+          ]
+        },
+        block.id
+      )) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5 mb-3", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(SquareCheckBig, { size: 13, className: "text-primary-600" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "text-xs font-semibold text-primary-700 uppercase tracking-wider", children: [
+          "Due Today ",
+          dueTasks.length > 0 && `(${dueTasks.length})`
+        ] })
+      ] }),
+      dueTasks.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400", children: "Nothing due — you're clear." }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-1.5", children: dueTasks.map((task) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "label",
+        {
+          className: "flex items-center gap-3 py-2.5 px-4 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer",
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "input",
+              {
+                type: "checkbox",
+                checked: task.completed,
+                onChange: () => handleToggleTask(task.id),
+                className: "h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm text-gray-700", children: task.title })
+          ]
+        },
+        task.id
+      )) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5 mb-3", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Repeat, { size: 13, className: "text-sand-500" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xs font-semibold text-sand-500 uppercase tracking-wider", children: "Habits" })
+      ] }),
+      habits.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400", children: "No habits set up yet." }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-1.5", children: habits.map((habit) => {
+        const todayLog = habitLogs.find((l) => l.habitId === habit.id && l.date === today);
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "label",
+          {
+            className: "flex items-center gap-3 py-2.5 px-4 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "input",
+                {
+                  type: "checkbox",
+                  checked: todayLog?.completed ?? false,
+                  onChange: (e) => handleToggleHabit(habit.id, e.target.checked),
+                  className: "h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm text-gray-700", children: habit.name })
+            ]
+          },
+          habit.id
+        );
+      }) })
     ] })
-  ] }) });
+  ] });
+}
+function TaskForm({ onAdd }) {
+  const [title, setTitle] = reactExports.useState("");
+  const [dueDate, setDueDate] = reactExports.useState("");
+  const [priority, setPriority] = reactExports.useState("normal");
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!title.trim()) return;
+    onAdd({
+      title: title.trim(),
+      dueDate: dueDate || void 0,
+      priority
+    });
+    setTitle("");
+    setDueDate("");
+    setPriority("normal");
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, className: "flex flex-wrap gap-2 p-4 bg-gray-50 rounded-lg", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "input",
+      {
+        type: "text",
+        value: title,
+        onChange: (e) => setTitle(e.target.value),
+        placeholder: "What needs to get done?",
+        className: "flex-1 min-w-50 px-3 py-2 text-sm rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "input",
+      {
+        type: "date",
+        value: dueDate,
+        onChange: (e) => setDueDate(e.target.value),
+        className: "px-3 py-2 text-sm rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "select",
+      {
+        value: priority,
+        onChange: (e) => setPriority(e.target.value),
+        className: "px-3 py-2 text-sm rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "low", children: "Low" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "normal", children: "Normal" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "high", children: "High" })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "button",
+      {
+        type: "submit",
+        className: "px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-md hover:bg-primary-700 transition-colors",
+        children: "Add"
+      }
+    )
+  ] });
+}
+const priorityColors = {
+  low: "bg-sky-100 text-sky-500",
+  normal: "bg-primary-100 text-primary-700",
+  high: "bg-blush-100 text-blush-500"
+};
+function TaskItem({ task, onToggle, onDelete }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 py-3.5 px-4 border-b border-gray-100 last:border-0 hover:bg-gray-50/60 transition-colors group", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "input",
+      {
+        type: "checkbox",
+        checked: task.completed,
+        onChange: () => onToggle(task.id),
+        className: "h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: `text-sm font-medium ${task.completed ? "line-through text-gray-400" : "text-gray-800"}`, children: task.title }),
+      task.description && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-gray-400 truncate mt-0.5", children: task.description })
+    ] }),
+    task.dueDate && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-gray-400", children: task.dueDate }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `text-xs font-medium px-2 py-0.5 rounded-full ${priorityColors[task.priority]}`, children: task.priority }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "button",
+      {
+        onClick: () => onDelete(task.id),
+        className: "text-gray-300 hover:text-rose-500 transition-colors opacity-0 group-hover:opacity-100",
+        "aria-label": "Delete task",
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 15 })
+      }
+    )
+  ] });
+}
+function EmptyState({ icon: Icon2, message }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-center justify-center gap-3 py-14 text-center", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Icon2, { size: 32, strokeWidth: 1.5, className: "text-gray-300" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400", children: message })
+  ] });
+}
+function TaskList() {
+  const [tasks, setTasks] = reactExports.useState([]);
+  const [loading, setLoading] = reactExports.useState(true);
+  async function refreshTasks() {
+    const data = await window.planner.getTasks();
+    setTasks(data);
+  }
+  reactExports.useEffect(() => {
+    refreshTasks().finally(() => setLoading(false));
+  }, []);
+  async function handleAdd(task) {
+    await window.planner.addTask(task);
+    await refreshTasks();
+  }
+  async function handleToggle(id) {
+    await window.planner.toggleTask(id);
+    await refreshTasks();
+  }
+  async function handleDelete(id) {
+    await window.planner.deleteTask(id);
+    await refreshTasks();
+  }
+  if (loading) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400 p-4", children: "Loading tasks…" });
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-2xl mx-auto p-8 space-y-6", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-2xl font-semibold text-gray-800 tracking-tight", children: "Tasks" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400 mt-1", children: "Keep track of what needs doing." })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TaskForm, { onAdd: handleAdd }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200", children: tasks.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyState, { icon: ClipboardList, message: "No tasks yet — add one above." }) : tasks.map((task) => /* @__PURE__ */ jsxRuntimeExports.jsx(TaskItem, { task, onToggle: handleToggle, onDelete: handleDelete }, task.id)) })
+  ] });
+}
+function HabitForm({ onAdd }) {
+  const [name, setName] = reactExports.useState("");
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!name.trim()) return;
+    onAdd({ name: name.trim(), frequency: "daily" });
+    setName("");
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, className: "flex gap-2 p-4 bg-gray-50 rounded-lg", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "input",
+      {
+        type: "text",
+        value: name,
+        onChange: (e) => setName(e.target.value),
+        placeholder: "New habit, e.g. Read 20 minutes",
+        className: "flex-1 px-3 py-2 text-sm rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "button",
+      {
+        type: "submit",
+        className: "px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-md hover:bg-primary-700 transition-colors",
+        children: "Add"
+      }
+    )
+  ] });
+}
+function HabitItem({ habit, todayLog, onToggleToday, onDelete }) {
+  const [streak, setStreak] = reactExports.useState(0);
+  reactExports.useEffect(() => {
+    window.planner.getStreak(habit.id).then(setStreak);
+  }, [habit.id, todayLog]);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200 group", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "input",
+      {
+        type: "checkbox",
+        checked: todayLog?.completed ?? false,
+        onChange: (e) => onToggleToday(habit.id, e.target.checked),
+        className: "h-5 w-5 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-medium text-gray-800", children: habit.name }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1 mt-0.5", children: [
+        streak > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(Flame, { size: 12, className: "text-sand-500" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-sand-500 font-medium", children: streak > 0 ? `${streak} day streak` : "No streak yet" })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "button",
+      {
+        onClick: () => onDelete(habit.id),
+        className: "text-gray-300 hover:text-rose-500 transition-colors opacity-0 group-hover:opacity-100",
+        "aria-label": "Delete habit",
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 15 })
+      }
+    )
+  ] });
+}
+function todayString() {
+  return (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+}
+function HabitList() {
+  const [habits, setHabits] = reactExports.useState([]);
+  const [logs, setLogs] = reactExports.useState([]);
+  const [loading, setLoading] = reactExports.useState(true);
+  async function refresh() {
+    const [habitsData, logsData] = await Promise.all([
+      window.planner.getHabits(),
+      window.planner.getHabitLogs()
+    ]);
+    setHabits(habitsData);
+    setLogs(logsData);
+  }
+  reactExports.useEffect(() => {
+    refresh().finally(() => setLoading(false));
+  }, []);
+  async function handleAdd(habit) {
+    await window.planner.addHabit(habit);
+    await refresh();
+  }
+  async function handleToggleToday(habitId, completed) {
+    await window.planner.logHabitDay(habitId, todayString(), completed);
+    await refresh();
+  }
+  async function handleDelete(id) {
+    await window.planner.deleteHabit(id);
+    await refresh();
+  }
+  if (loading) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400 p-4", children: "Loading habits…" });
+  }
+  const today = todayString();
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-2xl mx-auto p-8 space-y-6", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-2xl font-semibold text-gray-800 tracking-tight", children: "Habits" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400 mt-1", children: "Small, repeated things add up." })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(HabitForm, { onAdd: handleAdd }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-2", children: habits.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-white rounded-xl border border-gray-100 shadow-sm", children: /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyState, { icon: Repeat, message: "No habits yet — add one above." }) }) : habits.map((habit) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      HabitItem,
+      {
+        habit,
+        todayLog: logs.find((l) => l.habitId === habit.id && l.date === today),
+        onToggleToday: handleToggleToday,
+        onDelete: handleDelete
+      },
+      habit.id
+    )) })
+  ] });
+}
+function ScheduleForm({ date, onAdd }) {
+  const [title, setTitle] = reactExports.useState("");
+  const [startTime, setStartTime] = reactExports.useState("09:00");
+  const [endTime, setEndTime] = reactExports.useState("10:00");
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!title.trim()) return;
+    if (startTime >= endTime) return;
+    onAdd({ title: title.trim(), startTime, endTime, date });
+    setTitle("");
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, className: "flex flex-wrap gap-2 p-4 bg-gray-50 rounded-lg mb-4", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "input",
+      {
+        type: "text",
+        value: title,
+        onChange: (e) => setTitle(e.target.value),
+        placeholder: "What's happening?",
+        className: "flex-1 min-w-45 px-3 py-2 text-sm rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-lavender-500"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "input",
+      {
+        type: "time",
+        value: startTime,
+        onChange: (e) => setStartTime(e.target.value),
+        className: "px-3 py-2 text-sm rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-lavender-500"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "input",
+      {
+        type: "time",
+        value: endTime,
+        onChange: (e) => setEndTime(e.target.value),
+        className: "px-3 py-2 text-sm rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-lavender-500"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "button",
+      {
+        type: "submit",
+        className: "px-4 py-2 text-sm font-medium text-white bg-lavender-500 rounded-md hover:bg-lavender-700 transition-colors",
+        children: "Add"
+      }
+    )
+  ] });
+}
+function ScheduleBlockCard({ block, onDelete }) {
+  const top = timeToTopOffset(block.startTime);
+  const height = durationToHeight(block.startTime, block.endTime);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "div",
+    {
+      style: { top: `${top}px`, height: `${height}px` },
+      className: "absolute left-16 right-2 bg-lavender-100 border-l-2 border-lavender-500 rounded-md px-3 py-1 overflow-hidden group shadow-sm hover:shadow-md transition-shadow duration-200",
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-medium text-lavender-700 truncate", children: block.title }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-[10px] text-lavender-500", children: [
+          block.startTime,
+          " – ",
+          block.endTime
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            onClick: () => onDelete(block.id),
+            className: "absolute top-1 right-1 text-lavender-500 hover:text-rose-500 opacity-0 group-hover:opacity-100 transition-opacity",
+            "aria-label": "Delete block",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 13 })
+          }
+        )
+      ]
+    }
+  );
+}
+function ScheduleView() {
+  const [blocks, setBlocks] = reactExports.useState([]);
+  const [loading, setLoading] = reactExports.useState(true);
+  const date = todayString$1();
+  async function refresh() {
+    const all = await window.planner.getScheduleBlocks();
+    setBlocks(all.filter((b) => b.date === date));
+  }
+  reactExports.useEffect(() => {
+    refresh().finally(() => setLoading(false));
+  }, []);
+  async function handleAdd(block) {
+    await window.planner.addScheduleBlock(block);
+    await refresh();
+  }
+  async function handleDelete(id) {
+    await window.planner.deleteScheduleBlock(id);
+    await refresh();
+  }
+  if (loading) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400 p-4", children: "Loading schedule…" });
+  }
+  const hours = Array.from(
+    { length: GRID_END_HOUR - GRID_START_HOUR + 1 },
+    (_, i) => GRID_START_HOUR + i
+  );
+  const gridHeight = hours.length * HOUR_HEIGHT_PX;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-3xl mx-auto p-8", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-6", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-2xl font-semibold text-gray-800 tracking-tight", children: "Schedule" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400 mt-1", children: "Today, mapped out hour by hour." })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(ScheduleForm, { date, onAdd: handleAdd }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: "relative bg-white rounded-xl border border-gray-100 shadow-sm",
+        style: { height: `${gridHeight}px` },
+        children: [
+          blocks.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 flex items-center justify-center pointer-events-none", children: /* @__PURE__ */ jsxRuntimeExports.jsx(EmptyState, { icon: CalendarDays, message: "Nothing scheduled — add a block above." }) }),
+          hours.map((hour, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "div",
+            {
+              className: "absolute left-0 right-0 border-t border-gray-100 flex items-start",
+              style: { top: `${i * HOUR_HEIGHT_PX}px` },
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-gray-300 w-14 pl-2 -mt-2 bg-white", children: hour === 12 ? "12 PM" : hour > 12 ? `${hour - 12} PM` : `${hour} AM` })
+            },
+            hour
+          )),
+          blocks.map((block) => /* @__PURE__ */ jsxRuntimeExports.jsx(ScheduleBlockCard, { block, onDelete: handleDelete }, block.id))
+        ]
+      }
+    )
+  ] });
+}
+function App() {
+  const [view, setView] = reactExports.useState("dashboard");
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex h-screen overflow-hidden bg-gray-50", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Sidebar, { active: view, onNavigate: setView }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("main", { className: "flex-1 overflow-y-auto", children: [
+      view === "dashboard" && /* @__PURE__ */ jsxRuntimeExports.jsx(DashboardView, {}),
+      view === "tasks" && /* @__PURE__ */ jsxRuntimeExports.jsx(TaskList, {}),
+      view === "habits" && /* @__PURE__ */ jsxRuntimeExports.jsx(HabitList, {}),
+      view === "schedule" && /* @__PURE__ */ jsxRuntimeExports.jsx(ScheduleView, {})
+    ] })
+  ] });
 }
 clientExports.createRoot(document.getElementById("root")).render(
   /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) })

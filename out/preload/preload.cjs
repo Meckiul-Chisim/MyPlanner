@@ -14,6 +14,9 @@ const plannerApi = {
   addHabit: (habit) => electron.ipcRenderer.invoke("habits:add", habit),
   deleteHabit: (id) => electron.ipcRenderer.invoke("habits:delete", id),
   logHabitDay: (habitId, date, completed) => electron.ipcRenderer.invoke("habits:logDay", { habitId, date, completed }),
-  getStreak: (habitId) => electron.ipcRenderer.invoke("habits:getStreak", habitId)
+  getStreak: (habitId) => electron.ipcRenderer.invoke("habits:getStreak", habitId),
+  // Schedule writes
+  addScheduleBlock: (block) => electron.ipcRenderer.invoke("schedule-blocks:add", block),
+  deleteScheduleBlock: (id) => electron.ipcRenderer.invoke("schedule-blocks:delete", id)
 };
 electron.contextBridge.exposeInMainWorld("planner", plannerApi);

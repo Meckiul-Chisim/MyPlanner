@@ -759,3 +759,88 @@ html[data-motion="reduced"] .sidebar-logo:hover,
 html[data-motion="reduced"] .sidebar-new-task:hover {
   transform: none;
 }
+
+/* Global theme surface + accent mapping */
+html[data-theme="sage"]{--page-bg:#f6f8f6;--surface:#fff;--surface-soft:#f5f8f6;--surface-muted:#eef5f1;--line:#e1e9e4;--line-strong:#d4e1da;--heading:#24312b;--body-text:#4f5f57;--muted:#8b9791;--accent:#5d9678;--accent-strong:#46765e;--accent-soft:#f0f8f4;--accent-soft-2:#dceee5}
+html[data-theme="lavender"]{--page-bg:#f7f5fc;--surface:#fff;--surface-soft:#f7f4fc;--surface-muted:#eeeafa;--line:#e6e0f0;--line-strong:#d9d0e9;--heading:#302b3a;--body-text:#5e5668;--muted:#918a99;--accent:#75659f;--accent-strong:#65548e;--accent-soft:#eeeafa;--accent-soft-2:#ddd6f0}
+html[data-theme="ocean"]{--page-bg:#f2f8fb;--surface:#fff;--surface-soft:#f2f8fb;--surface-muted:#e6f2f8;--line:#dcebef;--line-strong:#cfe2e9;--heading:#263940;--body-text:#536a73;--muted:#899ba2;--accent:#579ab8;--accent-strong:#417d98;--accent-soft:#e6f2f8;--accent-soft-2:#d5ebf2}
+html[data-theme="rose"]{--page-bg:#fcf5f5;--surface:#fff;--surface-soft:#fcf3f4;--surface-muted:#fce8eb;--line:#f0dfe2;--line-strong:#e9cfd4;--heading:#3c2b2e;--body-text:#69575a;--muted:#978487;--accent:#b86572;--accent-strong:#9e5360;--accent-soft:#fce8eb;--accent-soft-2:#f4d6dc}
+html[data-theme="midnight"]{--page-bg:#101615;--surface:#1a2321;--surface-soft:#202a28;--surface-muted:#26332f;--line:#2b3935;--line-strong:#3a4b45;--heading:#e7efeb;--body-text:#c2cec8;--muted:#91a29b;--accent:#72ad8d;--accent-strong:#a9d2bb;--accent-soft:#20362d;--accent-soft-2:#2b4b3d}
+
+html[data-theme] .bg-white{background-color:var(--surface)!important}
+html[data-theme] .bg-gray-50{background-color:var(--surface-soft)!important}
+html[data-theme] .bg-gray-100{background-color:var(--surface-muted)!important}
+html[data-theme] .border-gray-100{border-color:var(--line)!important}
+html[data-theme] .border-gray-200{border-color:var(--line-strong)!important}
+html[data-theme] .border-white{border-color:var(--line)!important}
+html[data-theme] .text-gray-900,html[data-theme] .text-gray-800{color:var(--heading)!important}
+html[data-theme] .text-gray-700,html[data-theme] .text-gray-600{color:var(--body-text)!important}
+html[data-theme] .text-gray-500,html[data-theme] .text-gray-400{color:var(--muted)!important}
+html[data-theme] .text-gray-300{color:color-mix(in srgb,var(--muted) 70%,transparent)!important}
+html[data-theme] .hover\:bg-gray-50:hover,html[data-theme] .hover\:bg-gray-50\/70:hover{background-color:var(--surface-soft)!important}
+
+/* Primary accent follows the selected theme */
+html[data-theme="lavender"] .bg-primary-50,html[data-theme="lavender"] .bg-primary-50\/70{background-color:#eeeafa!important}
+html[data-theme="lavender"] .bg-primary-100{background-color:#ddd6f0!important}
+html[data-theme="lavender"] .bg-primary-600{background-color:#75659f!important}
+html[data-theme="lavender"] .text-primary-700,html[data-theme="lavender"] .text-primary-600{color:#65548e!important}
+html[data-theme="lavender"] .border-primary-100{border-color:#d9d0e9!important}
+html[data-theme="ocean"] .bg-primary-50,html[data-theme="ocean"] .bg-primary-50\/70{background-color:#e6f2f8!important}
+html[data-theme="ocean"] .bg-primary-100{background-color:#d5ebf2!important}
+html[data-theme="ocean"] .bg-primary-600{background-color:#579ab8!important}
+html[data-theme="ocean"] .text-primary-700,html[data-theme="ocean"] .text-primary-600{color:#417d98!important}
+html[data-theme="ocean"] .border-primary-100{border-color:#cfe2e9!important}
+html[data-theme="rose"] .bg-primary-50,html[data-theme="rose"] .bg-primary-50\/70{background-color:#fce8eb!important}
+html[data-theme="rose"] .bg-primary-100{background-color:#f4d6dc!important}
+html[data-theme="rose"] .bg-primary-600{background-color:#b86572!important}
+html[data-theme="rose"] .text-primary-700,html[data-theme="rose"] .text-primary-600{color:#9e5360!important}
+html[data-theme="rose"] .border-primary-100{border-color:#e9cfd4!important}
+html[data-theme="midnight"] .bg-primary-50,html[data-theme="midnight"] .bg-primary-50\/70{background-color:#20362d!important}
+html[data-theme="midnight"] .bg-primary-100{background-color:#2b4b3d!important}
+html[data-theme="midnight"] .bg-primary-600{background-color:#72ad8d!important}
+html[data-theme="midnight"] .text-primary-700,html[data-theme="midnight"] .text-primary-600{color:#a9d2bb!important}
+html[data-theme="midnight"] .border-primary-100{border-color:#3a4b45!important}
+
+/* Pastel utility families */
+html[data-theme="lavender"] .bg-lavender-50{background:#f4f0fb!important}
+html[data-theme="lavender"] .bg-lavender-100,html[data-theme="lavender"] .bg-lavender-100\/50,html[data-theme="lavender"] .bg-lavender-100\/70,html[data-theme="lavender"] .bg-lavender-100\/80{background:#eeeafa!important}
+html[data-theme="lavender"] .text-lavender-700,html[data-theme="lavender"] .text-lavender-500{color:#75659f!important}
+html[data-theme="lavender"] .border-lavender-100,html[data-theme="lavender"] .border-lavender-200{border-color:#ddd6f0!important}
+html[data-theme="lavender"] .bg-lavender-500{background:#a99ad6!important}
+html[data-theme="ocean"] .bg-sky-100,html[data-theme="ocean"] .bg-sky-100\/60{background:#e6f2f8!important}
+html[data-theme="ocean"] .text-sky-700,html[data-theme="ocean"] .text-sky-500{color:#579ab8!important}
+html[data-theme="ocean"] .border-sky-100{border-color:#cfe5ee!important}
+html[data-theme="rose"] .bg-blush-100,html[data-theme="rose"] .bg-blush-100\/70{background:#fce8eb!important}
+html[data-theme="rose"] .text-blush-700,html[data-theme="rose"] .text-blush-500{color:#b86572!important}
+html[data-theme="rose"] .border-blush-100{border-color:#efd0d6!important}
+
+html[data-theme="midnight"] .bg-lavender-50{background:#252d35!important}
+html[data-theme="midnight"] .bg-lavender-100,html[data-theme="midnight"] .bg-lavender-100\/50,html[data-theme="midnight"] .bg-lavender-100\/70,html[data-theme="midnight"] .bg-lavender-100\/80{background:#293039!important}
+html[data-theme="midnight"] .text-lavender-700,html[data-theme="midnight"] .text-lavender-500{color:#b5a9e2!important}
+html[data-theme="midnight"] .border-lavender-100,html[data-theme="midnight"] .border-lavender-200{border-color:#3c4050!important}
+html[data-theme="midnight"] .bg-lavender-500{background:#9b8ccc!important}
+html[data-theme="midnight"] .bg-sky-100,html[data-theme="midnight"] .bg-sky-100\/60{background:#24343b!important}
+html[data-theme="midnight"] .text-sky-700,html[data-theme="midnight"] .text-sky-500{color:#74b8d5!important}
+html[data-theme="midnight"] .border-sky-100{border-color:#334a53!important}
+html[data-theme="midnight"] .bg-blush-100,html[data-theme="midnight"] .bg-blush-100\/70{background:#382b30!important}
+html[data-theme="midnight"] .text-blush-700,html[data-theme="midnight"] .text-blush-500{color:#df929f!important}
+html[data-theme="midnight"] .border-blush-100{border-color:#51363d!important}
+html[data-theme="midnight"] .bg-sand-100{background:#3a3024!important}
+html[data-theme="midnight"] .text-sand-700,html[data-theme="midnight"] .text-sand-500{color:#ddb77e!important}
+html[data-theme="midnight"] .border-sand-100{border-color:#54432f!important}
+
+html[data-theme="midnight"] input,html[data-theme="midnight"] select{background:var(--surface)!important;color:var(--heading)!important;border-color:var(--line-strong)!important}
+html[data-theme="midnight"] input::placeholder{color:#6f8179!important}
+html[data-theme="midnight"] .shadow-sm,html[data-theme="midnight"] .shadow-md{box-shadow:0 10px 28px rgba(0,0,0,.18)!important}
+html[data-theme="midnight"] .bg-gray-900{background:#0b100f!important}
+html[data-theme="midnight"] .hover\:bg-white\/70:hover{background:rgba(255,255,255,.10)!important}
+html[data-theme="midnight"] .hover\:bg-rose-50:hover{background:#38252a!important}
+html[data-theme="midnight"] .hover\:text-rose-500:hover{color:#e69aa6!important}
+
+/* Dashboard lane cards */
+html[data-theme="midnight"] .bg-sky-100\/60{color:#74b8d5}
+html[data-theme="midnight"] .bg-blush-100\/70{color:#df929f}
+html[data-theme="midnight"] .bg-lavender-100\/70{color:#b5a9e2}
+
+html[data-theme] .group:hover{border-color:var(--line-strong)}
+html[data-motion="reduced"] .card-lift,html[data-motion="reduced"] .group{will-change:auto}

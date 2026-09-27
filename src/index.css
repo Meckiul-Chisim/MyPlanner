@@ -899,3 +899,24 @@ html[data-motion="reduced"] .schedule-block:hover {
 .sidebar-logo-dot{background:var(--surface);border-color:var(--accent)}
 html[data-motion="reduced"] .sidebar-new-task,html[data-motion="reduced"] .sidebar-logo{transition:none}
 html[data-motion="reduced"] .sidebar-new-task:hover,html[data-motion="reduced"] .sidebar-logo:hover{transform:none}
+
+/* Habit / daily-rhythm surfaces: keep translucent gray utilities theme-aware. */
+html[data-theme] .bg-gray-50\/60 {
+  background-color: color-mix(in srgb, var(--surface-soft) 82%, transparent) !important;
+  border-color: var(--line) !important;
+}
+html[data-theme] .bg-gray-50\/60:hover {
+  background-color: var(--surface-muted) !important;
+  border-color: var(--line-strong) !important;
+}
+html[data-theme="midnight"] .bg-gray-50\/60 {
+  background-color: #202a28 !important;
+  border-color: #2b3935 !important;
+}
+html[data-theme="midnight"] .bg-gray-50\/60:hover {
+  background-color: #26332f !important;
+  border-color: #3a4b45 !important;
+}
+html[data-theme] input[type="checkbox"] {
+  accent-color: var(--accent);
+}

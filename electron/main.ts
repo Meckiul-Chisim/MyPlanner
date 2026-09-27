@@ -96,8 +96,6 @@ autoUpdater.on('update-downloaded', () => {
   })
 })
 
-ipcMain.handle('schedule-blocks:add', (_event, block: NewScheduleBlock) => addScheduleBlock(block))
-ipcMain.handle('schedule-blocks:delete', (_event, id: number) => deleteScheduleBlock(id))
 
 function createWindow() {
   const win = new BrowserWindow({

@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { Check, Database, Moon, Palette, RotateCcw, Sparkles, Sun, Zap } from 'lucide-react'
 
-type Theme = 'light' | 'dim'
+type Theme = 'sage' | 'lavender' | 'ocean' | 'rose' | 'midnight'
 type Motion = 'full' | 'reduced'
 
 const THEME_KEY = 'myplanner-theme'
 const MOTION_KEY = 'myplanner-motion'
 
 export function SettingsView() {
-  const [theme, setTheme] = useState<Theme>(() => (localStorage.getItem(THEME_KEY) as Theme) || 'light')
+  const [theme, setTheme] = useState<Theme>(() => (localStorage.getItem(THEME_KEY) as Theme) || 'sage')
   const [motion, setMotion] = useState<Motion>(() => (localStorage.getItem(MOTION_KEY) as Motion) || 'full')
 
   useEffect(() => {
@@ -22,12 +22,12 @@ export function SettingsView() {
   }, [motion])
 
   function resetPreferences() {
-    setTheme('light')
+    setTheme('sage')
     setMotion('full')
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-5 sm:p-8 lg:p-10 space-y-7">
+    <div className="max-w-4xl mx-auto p-5 sm:p-8 lg:p-10 space-y-7">
       <header>
         <div className="inline-flex items-center gap-2 rounded-full bg-primary-50 border border-primary-100 px-3 py-1.5 text-[11px] font-semibold text-primary-700 mb-3">
           <Sparkles size={13} />
@@ -47,18 +47,11 @@ export function SettingsView() {
 
         <div className="p-4 space-y-3">
           <div className="grid sm:grid-cols-2 gap-3">
-            <button onClick={() => setTheme('light')} className={`rounded-2xl border p-4 text-left transition-all ${theme === 'light' ? 'border-primary-300 bg-primary-50' : 'border-gray-100 hover:bg-gray-50'}`}>
-              <Sun size={18} className="text-sand-700" />
-              <p className="text-sm font-bold text-gray-800 mt-3">Calm light</p>
-              <p className="text-xs text-gray-400 mt-1">Soft, bright and clean.</p>
-              {theme === 'light' && <Check size={15} className="text-primary-600 mt-3" />}
-            </button>
-            <button onClick={() => setTheme('dim')} className={`rounded-2xl border p-4 text-left transition-all ${theme === 'dim' ? 'border-primary-300 bg-primary-50' : 'border-gray-100 hover:bg-gray-50'}`}>
-              <Moon size={18} className="text-lavender-700" />
-              <p className="text-sm font-bold text-gray-800 mt-3">Dim workspace</p>
-              <p className="text-xs text-gray-400 mt-1">Lower contrast for evening planning.</p>
-              {theme === 'dim' && <Check size={15} className="text-primary-600 mt-3" />}
-            </button>
+            <ThemeCard theme={theme} selected="sage" onSelect={setTheme} icon={<Sun size={18} />} title="Sage" description="Calm, soft and focused." />
+            <ThemeCard theme={theme} selected="lavender" onSelect={setTheme} icon={<Sparkles size={18} />} title="Lavender" description="Creative and gentle." />
+            <ThemeCard theme={theme} selected="ocean" onSelect={setTheme} icon={<Zap size={18} />} title="Ocean" description="Cool and refreshing." />
+            <ThemeCard theme={theme} selected="rose" onSelect={setTheme} icon={<Palette size={18} />} title="Rose" description="Warm and expressive." />
+            <ThemeCard theme={theme} selected="midnight" onSelect={setTheme} icon={<Moon size={18} />} title="Midnight" description="Dark and easy on the eyes." />
           </div>
 
           <div className="flex items-center justify-between gap-4 rounded-2xl bg-gray-50 border border-gray-100 p-4">
@@ -114,5 +107,31 @@ export function SettingsView() {
         Reset appearance preferences
       </button>
     </div>
+  )
+}
+
+function ThemeCard({ theme, selected, onSelect, icon, title, description }: {
+  theme: Theme
+  selected: Theme
+  onSelect: (theme: Theme) => void
+  icon: ReactNode
+  title: string
+  description: string
+}) {
+  return (
+    <button
+      onClick={() => onSelect(selected)}
+      className={`theme-card rounded-2xl border p-4 text-left transition-all ${theme === selected ? 'border-primary-300 bg-primary-50' : 'border-gray-100 hover:bg-gray-50'}`}
+    >
+      <div className="flex items-center justify-between">
+        <span className="text-primary-600">{icon}</span>
+        {theme === selected && <Check size={15} className="text-primary-600" />}
+      </div>
+      <div className="theme-preview mt-3 rounded-xl h-12 border border-black/5 overflow-hidden">
+        <span /><span /><span />
+      </div>
+      <p className="text-sm font-bold text-gray-800 mt-3">{title}</p>
+      <p className="text-xs text-gray-400 mt-1">{description}</p>
+    </button>
   )
 }

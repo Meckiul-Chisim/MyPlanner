@@ -1,13 +1,19 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Sidebar, type View } from './components/NavBar'
 import { DashboardView } from './features/dashboard/DashboardView'
 import { TaskList } from './features/tasks/TaskList'
 import { HabitList } from './features/habits/HabitList'
 import { ScheduleView } from './features/schedule/ScheduleView'
 import { ensurePlannerStorage } from './db/localStorage'
+import { ensureWeeklyRoutine } from './features/schedule/routine'
 
 function App() {
   ensurePlannerStorage()
+
+  useEffect(() => {
+    ensureWeeklyRoutine().catch(() => undefined)
+  }, [])
+
   const [view, setView] = useState<View>('dashboard')
 
   return (

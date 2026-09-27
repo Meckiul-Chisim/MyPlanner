@@ -575,6 +575,10 @@ button:hover {
   filter: saturate(1.04);
 }
 
+button:not(.sidebar-item):not(.theme-card):hover {
+  transform: translateY(-1px);
+}
+
 button:focus-visible,
 select:focus-visible,
 input:focus-visible {

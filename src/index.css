@@ -844,3 +844,24 @@ html[data-theme="midnight"] .bg-lavender-100\/70{color:#b5a9e2}
 
 html[data-theme] .group:hover{border-color:var(--line-strong)}
 html[data-motion="reduced"] .card-lift,html[data-motion="reduced"] .group{will-change:auto}
+
+/* Schedule controls use the active theme instead of a fixed lavender accent. */
+.schedule-day-active {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+}
+
+html[data-theme="sage"] .bg-lavender-500 { background:#72ad8d !important; }
+html[data-theme="sage"] .text-lavender-700,html[data-theme="sage"] .text-lavender-500 { color:#46765e !important; }
+html[data-theme="sage"] .bg-lavender-50,html[data-theme="sage"] .bg-lavender-100,html[data-theme="sage"] .bg-lavender-100\/50,html[data-theme="sage"] .bg-lavender-100\/70,html[data-theme="sage"] .bg-lavender-100\/80 { background:#f0f8f4 !important; }
+html[data-theme="sage"] .border-lavender-100,html[data-theme="sage"] .border-lavender-200 { border-color:#dceee5 !important; }
+
+html[data-theme="ocean"] .bg-lavender-500 { background:#579ab8 !important; }
+html[data-theme="ocean"] .text-lavender-700,html[data-theme="ocean"] .text-lavender-500 { color:#417d98 !important; }
+html[data-theme="ocean"] .bg-lavender-50,html[data-theme="ocean"] .bg-lavender-100,html[data-theme="ocean"] .bg-lavender-100\/50,html[data-theme="ocean"] .bg-lavender-100\/70,html[data-theme="ocean"] .bg-lavender-100\/80 { background:#e6f2f8 !important; }
+html[data-theme="ocean"] .border-lavender-100,html[data-theme="ocean"] .border-lavender-200 { border-color:#cfe2e9 !important; }
+
+html[data-theme="rose"] .bg-lavender-500 { background:#b86572 !important; }
+html[data-theme="rose"] .text-lavender-700,html[data-theme="rose"] .text-lavender-500 { color:#9e5360 !important; }
+html[data-theme="rose"] .bg-lavender-50,html[data-theme="rose"] .bg-lavender-100,html[data-theme="rose"] .bg-lavender-100\/50,html[data-theme="rose"] .bg-lavender-100\/70,html[data-theme="rose"] .bg-lavender-100\/80 { background:#fce8eb !important; }
+html[data-theme="rose"] .border-lavender-100,html[data-theme="rose"] .border-lavender-200 { border-color:#efd0d6 !important; }

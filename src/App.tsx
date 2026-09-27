@@ -31,7 +31,7 @@ function App() {
 
       <div className="relative z-20 flex h-full min-w-0 w-full">
         <Sidebar active={view} onNavigate={setView} />
-        <main className="relative z-10 flex-1 min-w-0 overflow-y-auto">
+        <main className="app-main relative z-10 flex-1 min-w-0 overflow-y-auto">
           <div className="page-reveal" key={view}>
             {view === 'dashboard' && <DashboardView />}
             {view === 'tasks' && <TaskList />}

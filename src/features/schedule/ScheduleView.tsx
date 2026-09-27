@@ -137,7 +137,7 @@ export function ScheduleView() {
               <span className="block text-sm font-bold mt-0.5">
                 {dateLabel.getDate()}
               </span>
-              <span className="block text-[8px] mt-0.5 opacity-55 truncate">
+              <span className="block text-[8px] mt-0.5 opacity-60 truncate">
                 {dayContext(date)}
               </span>
             </button>

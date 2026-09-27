@@ -30,6 +30,13 @@ function shortDay(dateString: string) {
   })
 }
 
+function dayContext(dateString: string) {
+  const day = new Date(`${dateString}T00:00:00`).getDay()
+  if (day === 1) return 'Market day'
+  if (day === 0) return 'Church + reset'
+  return 'Build day'
+}
+
 export function ScheduleView() {
   const [blocks, setBlocks] = useState<ScheduleBlock[]>([])
   const [loading, setLoading] = useState(true)
@@ -88,7 +95,7 @@ export function ScheduleView() {
               {formatDay(selectedDate)}
             </h1>
             <p className="text-sm text-gray-400 mt-1">
-              Your day, mapped out hour by hour.
+              {dayContext(selectedDate)} · mapped around your real routine.
             </p>
           </div>
           {selectedDate !== today && (
@@ -129,6 +136,9 @@ export function ScheduleView() {
               </span>
               <span className="block text-sm font-bold mt-0.5">
                 {dateLabel.getDate()}
+              </span>
+              <span className="block text-[8px] mt-0.5 opacity-55 truncate">
+                {dayContext(date)}
               </span>
             </button>
           )

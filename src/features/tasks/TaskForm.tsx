@@ -19,7 +19,7 @@ export function TaskForm({ onAdd }: TaskFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-2 flex flex-wrap gap-2">
+    <form onSubmit={handleSubmit} className="task-form bg-white rounded-2xl border border-gray-100 shadow-sm p-2 flex flex-wrap gap-2">
       <div className="flex-1 min-w-52 flex items-center px-3">
         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="What do you want to get done?" className="w-full py-2.5 text-sm bg-transparent focus:outline-none placeholder:text-gray-300" />
       </div>

@@ -865,3 +865,29 @@ html[data-theme="rose"] .bg-lavender-500 { background:#b86572 !important; }
 html[data-theme="rose"] .text-lavender-700,html[data-theme="rose"] .text-lavender-500 { color:#9e5360 !important; }
 html[data-theme="rose"] .bg-lavender-50,html[data-theme="rose"] .bg-lavender-100,html[data-theme="rose"] .bg-lavender-100\/50,html[data-theme="rose"] .bg-lavender-100\/70,html[data-theme="rose"] .bg-lavender-100\/80 { background:#fce8eb !important; }
 html[data-theme="rose"] .border-lavender-100,html[data-theme="rose"] .border-lavender-200 { border-color:#efd0d6 !important; }
+
+.schedule-add-button {
+  background: var(--accent);
+  box-shadow: 0 8px 18px var(--accent-shadow);
+  transition: transform 180ms cubic-bezier(.22,1,.36,1), background-color 180ms ease, box-shadow 180ms ease;
+}
+.schedule-add-button:hover {
+  background: var(--accent-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px var(--accent-shadow);
+}
+.schedule-block {
+  transition: transform 180ms cubic-bezier(.22,1,.36,1), box-shadow 180ms ease, background-color 180ms ease;
+}
+.schedule-block:hover {
+  transform: translateX(2px);
+  box-shadow: 0 10px 24px var(--accent-shadow);
+}
+html[data-motion="reduced"] .schedule-add-button,
+html[data-motion="reduced"] .schedule-block {
+  transition: none;
+}
+html[data-motion="reduced"] .schedule-add-button:hover,
+html[data-motion="reduced"] .schedule-block:hover {
+  transform: none;
+}

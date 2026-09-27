@@ -111,7 +111,7 @@ export function ScheduleView() {
         </div>
       </div>
 
-      <div className="grid grid-cols-7 gap-1.5 mb-5">
+      <div className="schedule-day-strip grid grid-cols-7 gap-1.5 mb-5">
         {dayOptions.map((date) => {
           const active = date === selectedDate
           const dateLabel = new Date(`${date}T00:00:00`)
@@ -148,7 +148,7 @@ export function ScheduleView() {
       <ScheduleForm date={selectedDate} onAdd={handleAdd} />
 
       <div
-        className="relative bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden"
+        className="schedule-calendar relative bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden"
         style={{ height: `${gridHeight}px` }}
       >
         {selectedBlocks.length === 0 && (

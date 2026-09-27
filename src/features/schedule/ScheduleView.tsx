@@ -125,7 +125,7 @@ export function ScheduleView() {
               onClick={() => setSelectedDate(date)}
               className={`rounded-xl px-1 py-2.5 text-center border transition-all ${
                 active
-                  ? 'bg-gray-900 text-white border-gray-900 shadow-sm'
+                  ? 'schedule-day-active text-white shadow-sm'
                   : special
                     ? 'bg-lavender-50 text-lavender-700 border-lavender-100 hover:bg-lavender-100'
                     : 'bg-white text-gray-500 border-gray-100 hover:bg-gray-50'

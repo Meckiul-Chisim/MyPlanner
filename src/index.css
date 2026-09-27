@@ -213,3 +213,25 @@ input[type="checkbox"] {
     transition: none;
   }
 }
+
+
+html[data-theme="dim"] body {
+  background: #e9eeeb;
+}
+
+html[data-theme="dim"] .app-shell {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.58), transparent 26rem),
+    radial-gradient(circle at 82% 70%, rgba(238, 234, 250, 0.22), transparent 28rem),
+    rgba(233, 238, 235, 0.82);
+}
+
+html[data-motion="reduced"] .smoke,
+html[data-motion="reduced"] .ambient-orb,
+html[data-motion="reduced"] .page-reveal {
+  animation: none;
+}
+
+html[data-motion="reduced"] .card-lift {
+  transition: none;
+}

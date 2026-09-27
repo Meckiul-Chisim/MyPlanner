@@ -891,3 +891,11 @@ html[data-motion="reduced"] .schedule-add-button:hover,
 html[data-motion="reduced"] .schedule-block:hover {
   transform: none;
 }
+
+.sidebar-new-task{background:var(--accent)!important;color:#fff!important;box-shadow:0 8px 20px var(--accent-shadow);transition:transform 180ms cubic-bezier(.22,1,.36,1),background-color 180ms ease,box-shadow 180ms ease}
+.sidebar-new-task:hover{background:var(--accent-strong)!important;transform:translateY(-2px);box-shadow:0 12px 26px var(--accent-shadow)}
+.sidebar-logo{background:var(--accent)!important;box-shadow:0 8px 18px var(--accent-shadow);transition:transform 180ms cubic-bezier(.22,1,.36,1),box-shadow 180ms ease}
+.sidebar-logo:hover{transform:translateY(-2px) rotate(-2deg);box-shadow:0 12px 24px var(--accent-shadow)}
+.sidebar-logo-dot{background:var(--surface);border-color:var(--accent)}
+html[data-motion="reduced"] .sidebar-new-task,html[data-motion="reduced"] .sidebar-logo{transition:none}
+html[data-motion="reduced"] .sidebar-new-task:hover,html[data-motion="reduced"] .sidebar-logo:hover{transform:none}

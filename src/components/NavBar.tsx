@@ -20,7 +20,7 @@ const items: { id: View; label: string; icon: LucideIcon; hint: string }[] = [
 export function Sidebar({ active, onNavigate }: SidebarProps) {
   return (
     <aside className="app-sidebar w-64 h-full bg-white/90 backdrop-blur-xl border-r border-gray-200/70 flex flex-col shrink-0">
-      <div className="px-5 pt-6 pb-5">
+      <div className="sidebar-brand px-5 pt-6 pb-5">
         <div className="flex items-center gap-3">
           <div className="sidebar-logo relative w-10 h-10 rounded-2xl flex items-center justify-center text-white">
             <span className="text-lg font-bold">M</span>
@@ -33,7 +33,7 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
         </div>
       </div>
 
-      <div className="px-4 pb-4">
+      <div className="sidebar-action px-4 pb-4">
         <button
           onClick={() => onNavigate('tasks')}
           className="sidebar-new-task w-full flex items-center justify-center gap-2 rounded-xl text-white py-2.5 text-sm font-semibold"
@@ -43,8 +43,8 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
         </button>
       </div>
 
-      <nav className="flex-1 px-3 space-y-1">
-        <p className="px-3 pt-1 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] sidebar-label">
+      <nav className="sidebar-nav flex-1 px-3 space-y-1">
+        <p className="sidebar-workspace-label px-3 pt-1 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] sidebar-label">
           Workspace
         </p>
         {items.map((item) => {
@@ -65,7 +65,7 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
               }`}>
                 <Icon size={17} strokeWidth={isActive ? 2.2 : 1.8} />
               </span>
-              <span className="flex-1">
+              <span className="sidebar-item-copy flex-1">
                 <span className="block text-sm font-semibold">{item.label}</span>
                 <span className="block text-[10px] mt-0.5 text-gray-400">{item.hint}</span>
               </span>

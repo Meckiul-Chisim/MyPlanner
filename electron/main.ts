@@ -1,6 +1,6 @@
 // Purpose: Create the app window and register all IPC handlers that bridge
 // React (renderer) requests to the local SQLite database.
-import { app, BrowserWindow, dialog, ipcMain } from 'electron'
+import { app, BrowserWindow, dialog, ipcMain, Notification } from 'electron'
 import { join } from 'node:path'
 import { autoUpdater } from 'electron-updater'
 import {
@@ -22,10 +22,52 @@ import {
 } from './db'
 import type { NewHabit, NewScheduleBlock, NewTask } from '../src/db/types'
 
+const REMINDER_MINUTES = 10
+const notifiedReminders = new Set<string>()
+let reminderTimer: NodeJS.Timeout | undefined
+
+function formatReminderTime(date: Date) {
+  return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
+}
+
+function checkScheduleReminders() {
+  if (!Notification.isSupported()) return
+
+  const now = new Date()
+  const today = now.toISOString().slice(0, 10)
+  const currentMinutes = now.getHours() * 60 + now.getMinutes()
+
+  for (const block of getScheduleBlocks().filter((item) => item.date === today)) {
+    const [hours, minutes] = block.startTime.split(':').map(Number)
+    const startMinutes = hours * 60 + minutes
+    const reminderKey = `${block.id}-${today}-${block.startTime}`
+    const minutesUntilStart = startMinutes - currentMinutes
+
+    if (minutesUntilStart === REMINDER_MINUTES && !notifiedReminders.has(reminderKey)) {
+      notifiedReminders.add(reminderKey)
+
+      new Notification({
+        title: `Up next · ${block.title}`,
+        body: `Starts at ${formatReminderTime(new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes))}`,
+        silent: false,
+      }).show()
+    }
+  }
+
+  // Keep the in-memory set small across long-running app sessions.
+  if (notifiedReminders.size > 500) notifiedReminders.clear()
+}
+
+function startScheduleReminders() {
+  checkScheduleReminders()
+  reminderTimer = setInterval(checkScheduleReminders, 30_000)
+}
+
 app.whenReady().then(() => {
   initDatabase()
   registerIpcHandlers()
   createWindow()
+  startScheduleReminders()
 
   // Check GitHub Releases for a newer version on every app launch
   autoUpdater.checkForUpdatesAndNotify()
@@ -90,6 +132,7 @@ app.whenReady().then(() => {
 })
 
 app.on('window-all-closed', () => {
+  if (reminderTimer) clearInterval(reminderTimer)
   closeDatabase()
   if (process.platform !== 'darwin') app.quit()
 })

@@ -6,12 +6,14 @@ import { HabitList } from './features/habits/HabitList'
 import { ScheduleView } from './features/schedule/ScheduleView'
 import { ensurePlannerStorage } from './db/localStorage'
 import { ensureWeeklyRoutine } from './features/schedule/routine'
+import { ensurePersonalDefaults } from './features/personalization/defaults'
 
 function App() {
   ensurePlannerStorage()
 
   useEffect(() => {
     ensureWeeklyRoutine().catch(() => undefined)
+    ensurePersonalDefaults().catch(() => undefined)
   }, [])
 
   const [view, setView] = useState<View>('dashboard')

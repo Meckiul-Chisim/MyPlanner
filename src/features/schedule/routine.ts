@@ -126,11 +126,29 @@ function sameBlock(a: ScheduleBlock, b: NewScheduleBlock): boolean {
   )
 }
 
-export async function ensureWeeklyRoutine() {
-  const existing = await window.planner.getScheduleBlocks()
-  const existingBlocks = [...existing]
+let routineSeedPromise: Promise<void> | null = null
 
-  const start = new Date(`${todayString()}T00:00:00`)
+function sameBlockKey(block: ScheduleBlock): string {
+  return block.date + '|' + block.startTime + '|' + block.endTime + '|' + block.title
+}
+
+async function seedWeeklyRoutine(): Promise<void> {
+  const existing = await window.planner.getScheduleBlocks()
+  const seen = new Set<string>()
+  const duplicateIds: number[] = []
+
+  for (const block of existing) {
+    const key = sameBlockKey(block)
+    if (seen.has(key)) duplicateIds.push(block.id)
+    else seen.add(key)
+  }
+
+  for (const id of duplicateIds) {
+    await window.planner.deleteScheduleBlock(id)
+  }
+
+  const existingBlocks = existing.filter((block) => !duplicateIds.includes(block.id))
+  const start = new Date(todayString() + 'T00:00:00')
 
   for (let offset = 0; offset < ROUTINE_DAYS; offset += 1) {
     const date = addDays(start, offset)
@@ -146,4 +164,14 @@ export async function ensureWeeklyRoutine() {
       })
     }
   }
+}
+
+export async function ensureWeeklyRoutine() {
+  if (routineSeedPromise) return routineSeedPromise
+
+  routineSeedPromise = seedWeeklyRoutine().finally(() => {
+    routineSeedPromise = null
+  })
+
+  return routineSeedPromise
 }

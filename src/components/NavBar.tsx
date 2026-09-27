@@ -22,9 +22,9 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
     <aside className="app-sidebar w-64 h-full bg-white/90 backdrop-blur-xl border-r border-gray-200/70 flex flex-col shrink-0">
       <div className="px-5 pt-6 pb-5">
         <div className="flex items-center gap-3">
-          <div className="relative w-10 h-10 rounded-2xl bg-primary-600 flex items-center justify-center text-white shadow-lg shadow-primary-600/15">
+          <div className="sidebar-logo relative w-10 h-10 rounded-2xl flex items-center justify-center text-white">
             <span className="text-lg font-bold">M</span>
-            <span className="absolute -right-0.5 -top-0.5 w-2.5 h-2.5 rounded-full bg-primary-300 border-2 border-white" />
+            <span className="sidebar-logo-dot absolute -right-0.5 -top-0.5 w-2.5 h-2.5 rounded-full border-2" />
           </div>
           <div>
             <p className="text-[15px] font-bold sidebar-heading tracking-tight">MyPlanner</p>
@@ -36,7 +36,7 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
       <div className="px-4 pb-4">
         <button
           onClick={() => onNavigate('tasks')}
-          className="w-full flex items-center justify-center gap-2 rounded-xl bg-primary-600 text-white py-2.5 text-sm font-semibold shadow-sm hover:bg-primary-700 active:scale-[0.99] transition-all"
+          className="sidebar-new-task w-full flex items-center justify-center gap-2 rounded-xl text-white py-2.5 text-sm font-semibold"
         >
           <Plus size={16} />
           New task

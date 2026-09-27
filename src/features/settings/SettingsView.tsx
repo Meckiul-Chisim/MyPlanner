@@ -37,7 +37,7 @@ export function SettingsView() {
         <p className="text-sm text-gray-400 mt-2">Make MyPlanner feel like your own workspace.</p>
       </header>
 
-      <section className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      <section className="settings-section bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden card-lift">
         <div className="px-5 py-4 border-b border-gray-100">
           <div className="flex items-center gap-3">
             <span className="w-9 h-9 rounded-xl bg-lavender-100 text-lavender-700 flex items-center justify-center"><Palette size={17} /></span>
@@ -54,7 +54,7 @@ export function SettingsView() {
             <ThemeCard theme={theme} selected="midnight" onSelect={setTheme} icon={<Moon size={18} />} title="Midnight" description="Dark and easy on the eyes." />
           </div>
 
-          <div className="flex items-center justify-between gap-4 rounded-2xl bg-gray-50 border border-gray-100 p-4">
+          <div className="settings-control flex items-center justify-between gap-4 rounded-2xl bg-gray-50 border border-gray-100 p-4 card-lift">
             <div className="flex items-center gap-3">
               <Zap size={17} className="text-primary-600" />
               <div><p className="text-sm font-semibold text-gray-700">Animations</p><p className="text-xs text-gray-400">Ambient motion and page transitions.</p></div>
@@ -94,7 +94,7 @@ export function SettingsView() {
             ['Create', 'Videos, reels and useful content'],
             ['Grow', 'Freelancing and online-business progress'],
           ].map(([title, text]) => (
-            <div key={title} className="rounded-2xl bg-gray-50 border border-gray-100 p-4">
+            <div key={title} className="personal-card rounded-2xl bg-gray-50 border border-gray-100 p-4 card-lift">
               <p className="text-sm font-bold text-gray-800">{title}</p>
               <p className="text-xs text-gray-400 mt-1">{text}</p>
             </div>
@@ -102,7 +102,7 @@ export function SettingsView() {
         </div>
       </section>
 
-      <button onClick={resetPreferences} className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-xs font-semibold text-gray-600 hover:bg-gray-50">
+      <button onClick={resetPreferences} className="settings-reset inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-xs font-semibold text-gray-600">
         <RotateCcw size={14} />
         Reset appearance preferences
       </button>
@@ -121,17 +121,17 @@ function ThemeCard({ theme, selected, onSelect, icon, title, description }: {
   return (
     <button
       onClick={() => onSelect(selected)}
-      className={`theme-card rounded-2xl border p-4 text-left transition-all ${theme === selected ? 'border-primary-300 bg-primary-50' : 'border-gray-100 hover:bg-gray-50'}`}
+      className={`theme-card rounded-2xl border p-4 text-left ${theme === selected ? 'theme-card-selected' : 'theme-card-idle'}`}
     >
       <div className="flex items-center justify-between">
-        <span className="text-primary-600">{icon}</span>
+        <span className="theme-card-icon">{icon}</span>
         {theme === selected && <Check size={15} className="text-primary-600" />}
       </div>
       <div className="theme-preview mt-3 rounded-xl h-12 border border-black/5 overflow-hidden">
         <span /><span /><span />
       </div>
-      <p className="text-sm font-bold text-gray-800 mt-3">{title}</p>
-      <p className="text-xs text-gray-400 mt-1">{description}</p>
+      <p className="theme-card-title text-sm font-bold mt-3">{title}</p>
+      <p className="theme-card-description text-xs mt-1">{description}</p>
     </button>
   )
 }

@@ -377,3 +377,297 @@ html[data-motion="reduced"] .sidebar-item:hover,
 html[data-motion="reduced"] .sidebar-private:hover {
   transform: none;
 }
+
+
+/* ─────────────────────────────────────────────────────────
+   Polished interactions + animated theme backgrounds
+   ───────────────────────────────────────────────────────── */
+
+html {
+  --accent: #5d9678;
+  --accent-soft: #f0f8f4;
+  --accent-border: #dceee5;
+  --accent-shadow: rgba(93, 150, 120, .16);
+  --ambient-a: rgba(114, 173, 141, .20);
+  --ambient-b: rgba(169, 154, 214, .16);
+  --ambient-c: rgba(223, 143, 155, .10);
+  --theme-card-bg: #ffffff;
+  --theme-card-selected: #f0f8f4;
+  --theme-card-border: #e3ebe6;
+  --theme-card-selected-border: #a8d1bb;
+  --theme-card-title: #24312b;
+  --theme-card-description: #87938d;
+  --theme-card-icon: #5d9678;
+}
+
+html[data-theme="lavender"] {
+  --accent: #75659f;
+  --accent-soft: #eeeafa;
+  --accent-border: #dcd4ef;
+  --accent-shadow: rgba(117, 101, 159, .16);
+  --ambient-a: rgba(169, 154, 214, .22);
+  --ambient-b: rgba(134, 197, 215, .14);
+  --ambient-c: rgba(217, 183, 192, .12);
+  --theme-card-selected: #eeeafa;
+  --theme-card-border: #e5e0f0;
+  --theme-card-selected-border: #c6bde8;
+  --theme-card-title: #302b3a;
+  --theme-card-description: #81798e;
+  --theme-card-icon: #75659f;
+}
+
+html[data-theme="ocean"] {
+  --accent: #579ab8;
+  --accent-soft: #e6f2f8;
+  --accent-border: #cde5ef;
+  --accent-shadow: rgba(87, 154, 184, .16);
+  --ambient-a: rgba(87, 154, 184, .22);
+  --ambient-b: rgba(134, 197, 215, .18);
+  --ambient-c: rgba(209, 180, 119, .10);
+  --theme-card-selected: #e6f2f8;
+  --theme-card-border: #dcebef;
+  --theme-card-selected-border: #a9d1df;
+  --theme-card-title: #263940;
+  --theme-card-description: #71838a;
+  --theme-card-icon: #579ab8;
+}
+
+html[data-theme="rose"] {
+  --accent: #b86572;
+  --accent-soft: #fce8eb;
+  --accent-border: #efd0d6;
+  --accent-shadow: rgba(184, 101, 114, .16);
+  --ambient-a: rgba(207, 125, 137, .20);
+  --ambient-b: rgba(217, 160, 176, .16);
+  --ambient-c: rgba(214, 166, 108, .10);
+  --theme-card-selected: #fce8eb;
+  --theme-card-border: #f0dfe2;
+  --theme-card-selected-border: #dfadb7;
+  --theme-card-title: #3c2b2e;
+  --theme-card-description: #8f777b;
+  --theme-card-icon: #b86572;
+}
+
+html[data-theme="midnight"] {
+  --accent: #72ad8d;
+  --accent-soft: #20362d;
+  --accent-border: #315445;
+  --accent-shadow: rgba(114, 173, 141, .18);
+  --ambient-a: rgba(114, 173, 141, .15);
+  --ambient-b: rgba(155, 140, 204, .13);
+  --ambient-c: rgba(87, 154, 184, .10);
+  --theme-card-bg: #1a2321;
+  --theme-card-selected: #20362d;
+  --theme-card-border: #2b3935;
+  --theme-card-selected-border: #4f8067;
+  --theme-card-title: #e7efeb;
+  --theme-card-description: #a9b9b2;
+  --theme-card-icon: #72ad8d;
+}
+
+/* Theme cards: fix contrast and make selection feel intentional. */
+.theme-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--theme-card-bg);
+  border-color: var(--theme-card-border);
+  color: var(--theme-card-title);
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 220ms cubic-bezier(.22, 1, .36, 1),
+    border-color 220ms ease,
+    background-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.theme-card::after {
+  content: "";
+  position: absolute;
+  inset: -45%;
+  pointer-events: none;
+  background: radial-gradient(circle, var(--accent-shadow), transparent 58%);
+  opacity: 0;
+  transform: scale(.7);
+  transition: opacity 240ms ease, transform 420ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.theme-card:hover {
+  transform: translateY(-4px) scale(1.012);
+  border-color: var(--theme-card-selected-border);
+  box-shadow: 0 14px 30px var(--accent-shadow);
+}
+
+.theme-card:hover::after {
+  opacity: .8;
+  transform: scale(1);
+}
+
+.theme-card-selected {
+  background: var(--theme-card-selected) !important;
+  border-color: var(--theme-card-selected-border) !important;
+  box-shadow: inset 0 0 0 1px var(--theme-card-selected-border), 0 10px 24px var(--accent-shadow);
+}
+
+.theme-card-icon,
+.theme-card-title,
+.theme-card-description {
+  position: relative;
+  z-index: 1;
+}
+
+.theme-card-icon { color: var(--theme-card-icon); transition: transform 220ms cubic-bezier(.22, 1, .36, 1); }
+.theme-card:hover .theme-card-icon { transform: rotate(-4deg) scale(1.08); }
+.theme-card-title { color: var(--theme-card-title) !important; }
+.theme-card-description { color: var(--theme-card-description) !important; }
+
+/* Shared lift for settings surfaces and the planner's existing card-lift class. */
+.settings-section,
+.settings-control,
+.personal-card,
+.card-lift {
+  transition:
+    transform 220ms cubic-bezier(.22, 1, .36, 1),
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+.settings-section:hover,
+.settings-control:hover,
+.personal-card:hover,
+.card-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px var(--accent-shadow);
+}
+
+.personal-card:hover {
+  border-color: var(--accent-border);
+}
+
+.settings-reset {
+  transition:
+    transform 180ms cubic-bezier(.22, 1, .36, 1),
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.settings-reset:hover {
+  transform: translateY(-2px);
+  color: var(--accent) !important;
+  background: var(--accent-soft) !important;
+  border-color: var(--accent-border) !important;
+  box-shadow: 0 8px 20px var(--accent-shadow);
+}
+
+/* Consistent micro-interactions for controls throughout the app. */
+button {
+  transition:
+    transform 180ms cubic-bezier(.22, 1, .36, 1),
+    box-shadow 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+button:hover {
+  filter: saturate(1.04);
+}
+
+button:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+select,
+input {
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+select:hover,
+input:hover {
+  border-color: var(--accent-border);
+}
+
+select:focus,
+input:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-shadow);
+}
+
+/* Animated, theme-aware background gradients. */
+.ambient-bg {
+  background:
+    radial-gradient(circle at 15% 15%, var(--ambient-a), transparent 34%),
+    radial-gradient(circle at 86% 72%, var(--ambient-b), transparent 38%),
+    radial-gradient(circle at 50% 100%, var(--ambient-c), transparent 34%);
+}
+
+.ambient-bg::before,
+.ambient-bg::after {
+  content: "";
+  position: absolute;
+  inset: -22%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.ambient-bg::before {
+  background:
+    radial-gradient(ellipse at 25% 35%, var(--ambient-a), transparent 35%),
+    radial-gradient(ellipse at 75% 65%, var(--ambient-b), transparent 38%);
+  filter: blur(30px);
+  opacity: .9;
+  animation: gradientDrift 18s ease-in-out infinite alternate;
+}
+
+.ambient-bg::after {
+  background:
+    conic-gradient(
+      from 0deg at 50% 50%,
+      transparent 0deg,
+      var(--ambient-a) 70deg,
+      transparent 145deg,
+      var(--ambient-b) 225deg,
+      transparent 300deg,
+      var(--ambient-c) 340deg,
+      transparent 360deg
+    );
+  filter: blur(54px);
+  opacity: .38;
+  animation: gradientRotate 32s linear infinite;
+}
+
+@keyframes gradientDrift {
+  0% { transform: translate3d(-4%, -2%, 0) scale(.98); }
+  50% { transform: translate3d(4%, 3%, 0) scale(1.06); }
+  100% { transform: translate3d(-1%, 6%, 0) scale(1.02); }
+}
+
+@keyframes gradientRotate {
+  from { transform: rotate(0deg) scale(1); }
+  to { transform: rotate(360deg) scale(1.08); }
+}
+
+html[data-theme="midnight"] .ambient-bg::before,
+html[data-theme="midnight"] .ambient-bg::after {
+  opacity: .5;
+}
+
+html[data-motion="reduced"] .ambient-bg::before,
+html[data-motion="reduced"] .ambient-bg::after,
+html[data-motion="reduced"] .theme-card,
+html[data-motion="reduced"] .settings-section,
+html[data-motion="reduced"] .settings-control,
+html[data-motion="reduced"] .personal-card,
+html[data-motion="reduced"] .card-lift,
+html[data-motion="reduced"] .settings-reset,
+html[data-motion="reduced"] button,
+html[data-motion="reduced"] select,
+html[data-motion="reduced"] input {
+  animation: none;
+  transition: none;
+}

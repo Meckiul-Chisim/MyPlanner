@@ -1,8 +1,8 @@
 // Purpose: Left-hand sidebar navigation between the app's main sections.
-import { LayoutGrid, CheckSquare, Repeat, CalendarDays, Plus } from 'lucide-react'
+import { LayoutGrid, CheckSquare, Repeat, CalendarDays, Plus, Settings } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
-export type View = 'dashboard' | 'tasks' | 'habits' | 'schedule'
+export type View = 'dashboard' | 'tasks' | 'habits' | 'schedule' | 'settings'
 
 interface SidebarProps {
   active: View
@@ -14,6 +14,7 @@ const items: { id: View; label: string; icon: LucideIcon; hint: string }[] = [
   { id: 'tasks', label: 'Tasks', icon: CheckSquare, hint: 'To-do list' },
   { id: 'habits', label: 'Habits', icon: Repeat, hint: 'Daily rhythm' },
   { id: 'schedule', label: 'Schedule', icon: CalendarDays, hint: 'Time blocks' },
+  { id: 'settings', label: 'Settings', icon: Settings, hint: 'Your preferences' },
 ]
 
 export function Sidebar({ active, onNavigate }: SidebarProps) {

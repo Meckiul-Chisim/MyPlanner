@@ -34,7 +34,11 @@ function checkScheduleReminders() {
   if (!Notification.isSupported()) return
 
   const now = new Date()
-  const today = now.toISOString().slice(0, 10)
+  const today = [
+    now.getFullYear(),
+    String(now.getMonth() + 1).padStart(2, '0'),
+    String(now.getDate()).padStart(2, '0'),
+  ].join('-')
   const currentMinutes = now.getHours() * 60 + now.getMinutes()
 
   for (const block of getScheduleBlocks().filter((item) => item.date === today)) {
@@ -68,6 +72,9 @@ app.whenReady().then(() => {
   registerIpcHandlers()
   createWindow()
   startScheduleReminders()
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  })
 
   // Check GitHub Releases for a newer version on every app launch
   autoUpdater.checkForUpdatesAndNotify()
@@ -121,15 +128,6 @@ function registerIpcHandlers() {
   ipcMain.handle('schedule-blocks:add', (_event, block: NewScheduleBlock) => addScheduleBlock(block))
   ipcMain.handle('schedule-blocks:delete', (_event, id: number) => deleteScheduleBlock(id))
 }
-
-app.whenReady().then(() => {
-  initDatabase()
-  registerIpcHandlers()
-  createWindow()
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  })
-})
 
 app.on('window-all-closed', () => {
   if (reminderTimer) clearInterval(reminderTimer)

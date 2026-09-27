@@ -2,6 +2,8 @@ import type { NewScheduleBlock, ScheduleBlock } from '../../db/types'
 import { todayString } from './timeUtils'
 
 const ROUTINE_DAYS = 14
+const ROUTINE_VERSION_KEY = 'myplanner-routine-version'
+const ROUTINE_VERSION = '2'
 
 function addDays(date: Date, days: number): Date {
   const next = new Date(date)
@@ -100,7 +102,39 @@ function sameBlockKey(block: ScheduleBlock): string {
 }
 
 async function seedWeeklyRoutine(): Promise<void> {
-  const existing = await window.planner.getScheduleBlocks()
+  let existing = await window.planner.getScheduleBlocks()
+
+  // Migrate the previous routine once so old blocks do not remain beside
+  // the new schedule after an app update.
+  if (localStorage.getItem(ROUTINE_VERSION_KEY) !== ROUTINE_VERSION) {
+    const oldRoutineTitles = new Set([
+      'Morning medication — as prescribed',
+      'Breakfast + morning routine',
+      'Coding / focused work',
+      'Lunch + rest',
+      'Coding / learning',
+      'Exercise / walk',
+      'Dinner + reset',
+      'Night medication — as prescribed',
+      'Wind down',
+      'Market',
+      'Church service',
+    ])
+
+    const start = new Date(todayString() + 'T00:00:00')
+    const end = addDays(start, ROUTINE_DAYS - 1)
+
+    for (const block of existing) {
+      const blockDate = new Date(block.date + 'T00:00:00')
+      if (oldRoutineTitles.has(block.title) && blockDate >= start && blockDate <= end) {
+        await window.planner.deleteScheduleBlock(block.id)
+      }
+    }
+
+    existing = await window.planner.getScheduleBlocks()
+    localStorage.setItem(ROUTINE_VERSION_KEY, ROUTINE_VERSION)
+  }
+
   const seen = new Set<string>()
   const duplicateIds: number[] = []
 

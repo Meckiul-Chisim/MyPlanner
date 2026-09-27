@@ -10,7 +10,18 @@ const DEFAULT_HABITS: NewHabit[] = [
 
 export async function ensurePersonalDefaults() {
   const existing = await window.planner.getHabits()
-  const existingNames = new Set(existing.map((habit) => habit.name.trim().toLowerCase()))
+  const existingNames = new Set<string>()
+  const duplicateIds: number[] = []
+
+  for (const habit of existing) {
+    const key = habit.name.trim().toLowerCase()
+    if (existingNames.has(key)) duplicateIds.push(habit.id)
+    else existingNames.add(key)
+  }
+
+  for (const id of duplicateIds) {
+    await window.planner.deleteHabit(id)
+  }
 
   for (const habit of DEFAULT_HABITS) {
     if (existingNames.has(habit.name.toLowerCase())) continue

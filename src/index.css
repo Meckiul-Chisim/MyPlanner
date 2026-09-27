@@ -675,3 +675,87 @@ html[data-motion="reduced"] input {
   animation: none;
   transition: none;
 }
+
+
+/* Theme-aware sidebar brand + primary action */
+.app-sidebar {
+  --sidebar-brand: #5d9678;
+  --sidebar-brand-hover: #46765e;
+  --sidebar-brand-dot: #a8d1bb;
+  --sidebar-brand-shadow: rgba(93, 150, 120, .22);
+}
+
+.sidebar-logo {
+  background: var(--sidebar-brand);
+  box-shadow: 0 10px 22px var(--sidebar-brand-shadow);
+  transition: transform 220ms cubic-bezier(.22,1,.36,1), box-shadow 220ms ease, background-color 220ms ease;
+}
+
+.sidebar-logo-dot {
+  background: var(--sidebar-brand-dot);
+  border-color: var(--sidebar-bg, #fff);
+}
+
+.sidebar-logo:hover {
+  transform: translateY(-2px) rotate(-3deg) scale(1.04);
+  box-shadow: 0 14px 28px var(--sidebar-brand-shadow);
+}
+
+.sidebar-new-task {
+  background: var(--sidebar-brand);
+  box-shadow: 0 8px 18px var(--sidebar-brand-shadow);
+  transition: transform 180ms cubic-bezier(.22,1,.36,1), background-color 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.sidebar-new-task:hover {
+  background: var(--sidebar-brand-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px var(--sidebar-brand-shadow);
+  filter: saturate(1.05);
+}
+
+.sidebar-new-task:active {
+  transform: translateY(0) scale(.985);
+}
+
+html[data-theme="lavender"] .app-sidebar {
+  --sidebar-brand: #75659f;
+  --sidebar-brand-hover: #65548e;
+  --sidebar-brand-dot: #c6bde8;
+  --sidebar-brand-shadow: rgba(117,101,159,.22);
+  --sidebar-bg: #fff;
+}
+
+html[data-theme="ocean"] .app-sidebar {
+  --sidebar-brand: #579ab8;
+  --sidebar-brand-hover: #417d98;
+  --sidebar-brand-dot: #a9d1df;
+  --sidebar-brand-shadow: rgba(87,154,184,.22);
+  --sidebar-bg: #fff;
+}
+
+html[data-theme="rose"] .app-sidebar {
+  --sidebar-brand: #b86572;
+  --sidebar-brand-hover: #9e5360;
+  --sidebar-brand-dot: #dfadb7;
+  --sidebar-brand-shadow: rgba(184,101,114,.22);
+  --sidebar-bg: #fff;
+}
+
+html[data-theme="midnight"] .app-sidebar {
+  --sidebar-brand: #72ad8d;
+  --sidebar-brand-hover: #5d9678;
+  --sidebar-brand-dot: #a8d1bb;
+  --sidebar-brand-shadow: rgba(114,173,141,.24);
+  --sidebar-bg: #141c1a;
+}
+
+html[data-motion="reduced"] .sidebar-logo,
+html[data-motion="reduced"] .sidebar-new-task {
+  transition: none;
+}
+
+html[data-motion="reduced"] .sidebar-logo:hover,
+html[data-motion="reduced"] .sidebar-new-task:hover {
+  transform: none;
+}

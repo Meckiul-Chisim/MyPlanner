@@ -78,8 +78,11 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 
-  // Check GitHub Releases for a newer version on every app launch
-  autoUpdater.checkForUpdatesAndNotify()
+  // Only check for updates in packaged builds. Development runs do not have
+  // the release metadata needed by electron-updater.
+  if (app.isPackaged) {
+    autoUpdater.checkForUpdatesAndNotify()
+  }
 })
 
 // Fires once a newer version has finished downloading in the background

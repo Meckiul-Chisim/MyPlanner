@@ -9,7 +9,9 @@
     "dev": "electron-vite dev",
     "build": "electron-vite build",
     "lint": "eslint .",
-    "preview": "electron-vite preview"
+    "preview": "electron-vite preview",
+    "dist": "npm run build && electron-builder --win",
+    "dist:dir": "npm run build && electron-builder --win --dir"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
@@ -35,9 +37,48 @@
     "globals": "^17.12.0",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.69.0",
-    "vite": "^7.0.0"
+    "vite": "^7.0.0",
+    "electron-builder": "^26.15.3"
   },
   "allowScripts": {
     "electron@44.4.5": true
+  },
+  "build": {
+    "appId": "com.meckiul.myplanner",
+    "productName": "MyPlanner",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "MyPlanner-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "MyPlanner",
+      "installerLanguages": [
+        "en_US"
+      ],
+      "language": 1033
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "Meckiul-Chisim",
+      "repo": "MyPlanner"
+    }
   }
 }

@@ -1264,3 +1264,12 @@ select {
     background: rgba(252, 245, 245, .96) !important;
   }
 }
+
+@media (max-width: 768px) {
+  .task-form,.habit-form,.schedule-form{width:100%}
+  .task-form>div:first-child,.task-form>input[type="date"],.task-form>select,.task-form>button,.habit-form>input,.habit-form>button,.schedule-form>input[type="text"],.schedule-form>input[type="time"],.schedule-form>button{min-width:0!important;width:100%;flex:1 1 100%}
+  .task-form>div:first-child{padding-left:.5rem;padding-right:.5rem}
+  .task-form>button,.habit-form>button,.schedule-form>button{justify-content:center}
+  .app-main .group-hover\\:opacity-100{opacity:1}
+}
+@media (min-width:769px) and (max-width:900px){.task-form>input[type="date"],.task-form>select{flex:1 1 150px}.schedule-form>input[type="time"]{flex:0 1 145px}}

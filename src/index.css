@@ -920,3 +920,347 @@ html[data-theme="midnight"] .bg-gray-50\/60:hover {
 html[data-theme] input[type="checkbox"] {
   accent-color: var(--accent);
 }
+
+
+/* ─────────────────────────────────────────────────────────
+   Responsive layout
+   Desktop: full sidebar + roomy workspace
+   Tablet: compact sidebar
+   Phone: bottom navigation + fluid content
+   ───────────────────────────────────────────────────────── */
+
+.app-main {
+  min-width: 0;
+  scrollbar-gutter: stable;
+}
+
+.sidebar-new-task,
+.sidebar-item,
+.sidebar-private,
+.theme-card,
+.settings-control,
+.personal-card,
+button,
+input,
+select {
+  max-width: 100%;
+}
+
+@media (max-width: 1100px) and (min-width: 769px) {
+  .app-sidebar {
+    width: 210px !important;
+  }
+
+  .sidebar-brand {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .sidebar-action {
+    padding-left: .75rem !important;
+    padding-right: .75rem !important;
+  }
+
+  .sidebar-nav {
+    padding-left: .5rem !important;
+    padding-right: .5rem !important;
+  }
+
+  .sidebar-private {
+    margin: .75rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  html, body, #root {
+    min-width: 320px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .app-shell {
+    height: 100dvh !important;
+    min-height: 100dvh;
+    flex-direction: column;
+  }
+
+  .app-shell > .relative.z-20 {
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .app-main {
+    order: 1;
+    width: 100%;
+    height: calc(100dvh - 72px);
+    min-height: 0;
+    padding-bottom: env(safe-area-inset-bottom);
+    overscroll-behavior-y: contain;
+  }
+
+  .app-sidebar {
+    order: 2;
+    width: 100% !important;
+    height: 72px !important;
+    min-height: 72px;
+    flex: 0 0 72px;
+    display: block !important;
+    border-right: 0 !important;
+    border-top: 1px solid var(--sidebar-border, #e7ece9) !important;
+    box-shadow: 0 -8px 24px rgba(25, 40, 33, .06);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    z-index: 50;
+  }
+
+  .sidebar-brand,
+  .sidebar-action,
+  .sidebar-workspace-label,
+  .sidebar-private {
+    display: none !important;
+  }
+
+  .sidebar-nav {
+    height: 100%;
+    width: 100%;
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0 !important;
+    padding: .35rem .35rem calc(.35rem + env(safe-area-inset-bottom)) !important;
+    overflow: visible;
+  }
+
+  .sidebar-nav > button {
+    min-width: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 62px;
+    padding: .35rem .15rem !important;
+    border-radius: .85rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .2rem;
+    text-align: center;
+    transform: none !important;
+  }
+
+  .sidebar-nav > button::before {
+    left: 50%;
+    top: auto;
+    right: auto;
+    bottom: 3px;
+    width: 26px;
+    height: 3px;
+    transform: translateX(-50%) scaleX(.4);
+  }
+
+  .sidebar-nav > button:hover::before {
+    transform: translateX(-50%) scaleX(1);
+  }
+
+  .sidebar-nav > button > span:first-of-type {
+    width: 30px !important;
+    height: 30px !important;
+    flex: 0 0 30px;
+  }
+
+  .sidebar-item-copy {
+    min-width: 0;
+    width: 100%;
+    flex: 0 0 auto !important;
+  }
+
+  .sidebar-item-copy > span:first-child {
+    font-size: 10px !important;
+    line-height: 1.1;
+  }
+
+  .sidebar-item-copy > span:last-child {
+    display: none !important;
+  }
+
+  .sidebar-nav > button:hover {
+    transform: none !important;
+    box-shadow: none;
+  }
+
+  .sidebar-active {
+    box-shadow: inset 0 2px 0 var(--sidebar-accent, #5d9678) !important;
+  }
+
+  .page-reveal {
+    min-height: 100%;
+  }
+
+  /* Fluid page containers */
+  .app-main .max-w-2xl,
+  .app-main .max-w-4xl,
+  .app-main .max-w-5xl {
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .app-main .p-8 {
+    padding-top: 1.25rem !important;
+    padding-bottom: 1.25rem !important;
+  }
+
+  .app-main .lg\:p-10 {
+    padding-top: 1.25rem !important;
+    padding-bottom: 1.25rem !important;
+  }
+
+  /* Prevent long headings and controls from forcing horizontal scrolling. */
+  .app-main h1,
+  .app-main h2,
+  .app-main h3,
+  .app-main p,
+  .app-main label {
+    overflow-wrap: anywhere;
+  }
+
+  .app-main input,
+  .app-main select,
+  .app-main textarea {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Dashboard/stat cards become single-column where necessary. */
+  .app-main .grid {
+    min-width: 0;
+  }
+
+  /* Settings theme cards stay two-up only when there is enough room. */
+  .app-main .settings-section .grid.sm\:grid-cols-2,
+  .app-main .settings-section .grid[class*="sm:grid-cols-2"] {
+    grid-template-columns: 1fr;
+  }
+
+  /* Schedule day strip can scroll horizontally instead of squeezing seven cards. */
+  .app-main .schedule-day-strip {
+    overflow-x: auto;
+    display: flex;
+    scrollbar-width: none;
+    padding-bottom: .2rem;
+  }
+
+  .app-main .schedule-day-strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  .app-main .schedule-day-strip > button {
+    flex: 0 0 76px;
+  }
+
+  /* Keep the calendar usable on narrow screens. */
+  .schedule-calendar {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .schedule-calendar > .schedule-calendar-grid {
+    min-width: 560px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-main .max-w-2xl,
+  .app-main .max-w-4xl,
+  .app-main .max-w-5xl {
+    padding-left: .75rem !important;
+    padding-right: .75rem !important;
+  }
+
+  .app-main .space-y-7 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1rem;
+  }
+
+  .app-main .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1rem;
+  }
+
+  .app-main h1.text-3xl {
+    font-size: 1.75rem;
+    line-height: 1.15;
+  }
+
+  .app-main .settings-section > .p-4,
+  .app-main section > .p-4 {
+    padding: .75rem !important;
+  }
+
+  .app-main .settings-control {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .app-main .settings-control select {
+    width: 100%;
+  }
+
+  .sidebar-nav > button > span:first-of-type {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .sidebar-nav > button > span:first-of-type svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .sidebar-item-copy > span:first-child {
+    font-size: 9px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .sidebar-nav {
+    padding-left: .15rem !important;
+    padding-right: .15rem !important;
+  }
+
+  .sidebar-nav > button {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .sidebar-item-copy > span:first-child {
+    font-size: 8px !important;
+  }
+
+  .sidebar-nav > button > span:first-of-type {
+    width: 26px !important;
+    height: 26px !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .schedule-day-strip {
+    display: grid;
+  }
+}
+
+/* Use theme surfaces for the responsive bottom navigation. */
+@media (max-width: 768px) {
+  html[data-theme="midnight"] .app-sidebar {
+    background: rgba(20, 28, 26, .96) !important;
+  }
+
+  html[data-theme="lavender"] .app-sidebar {
+    background: rgba(247, 245, 252, .96) !important;
+  }
+
+  html[data-theme="ocean"] .app-sidebar {
+    background: rgba(242, 248, 251, .96) !important;
+  }
+
+  html[data-theme="rose"] .app-sidebar {
+    background: rgba(252, 245, 245, .96) !important;
+  }
+}

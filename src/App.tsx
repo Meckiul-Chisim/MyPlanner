@@ -11,15 +11,27 @@ function App() {
   const [view, setView] = useState<View>('dashboard')
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50">
-      <Sidebar active={view} onNavigate={setView} />
+    <div className="app-shell relative flex h-screen overflow-hidden">
+      <div className="ambient-bg" aria-hidden="true">
+        <div className="smoke smoke-one" />
+        <div className="smoke smoke-two" />
+        <div className="smoke smoke-three" />
+        <div className="ambient-orb orb-one" />
+        <div className="ambient-orb orb-two" />
+      </div>
 
-      <main className="flex-1 overflow-y-auto">
-        {view === 'dashboard' && <DashboardView />}
-        {view === 'tasks' && <TaskList />}
-        {view === 'habits' && <HabitList />}
-        {view === 'schedule' && <ScheduleView />}
-      </main>
+      <div className="relative z-20 flex h-full min-w-0 w-full">
+        <Sidebar active={view} onNavigate={setView} />
+
+        <main className="relative z-10 flex-1 min-w-0 overflow-y-auto">
+          <div className="page-reveal" key={view}>
+            {view === 'dashboard' && <DashboardView />}
+            {view === 'tasks' && <TaskList />}
+            {view === 'habits' && <HabitList />}
+            {view === 'schedule' && <ScheduleView />}
+          </div>
+        </main>
+      </div>
     </div>
   )
 }

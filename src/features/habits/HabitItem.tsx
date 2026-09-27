@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { X, Flame } from 'lucide-react'
+import { X, Flame, Check } from 'lucide-react'
 import type { Habit, HabitLog } from '../../db/types'
 
 interface HabitItemProps {
@@ -16,32 +16,31 @@ export function HabitItem({ habit, todayLog, onToggleToday, onDelete }: HabitIte
     window.planner.getStreak(habit.id).then(setStreak)
   }, [habit.id, todayLog])
 
-  return (
-    <div className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200 group">
-      <input
-        type="checkbox"
-        checked={todayLog?.completed ?? false}
-        onChange={(e) => onToggleToday(habit.id, e.target.checked)}
-        className="h-5 w-5 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
-      />
+  const done = todayLog?.completed ?? false
 
+  return (
+    <div className={`flex items-center gap-4 p-4 rounded-2xl border shadow-sm card-lift group ${
+      done ? 'bg-primary-50/70 border-primary-100' : 'bg-white border-gray-100'
+    }`}>
+      <button
+        onClick={() => onToggleToday(habit.id, !done)}
+        className={`w-10 h-10 rounded-xl flex items-center justify-center border transition-all ${
+          done ? 'bg-primary-600 border-primary-600 text-white' : 'bg-white border-gray-200 text-transparent hover:border-primary-300'
+        }`}
+        aria-label={done ? 'Mark habit incomplete' : 'Mark habit complete'}
+      >
+        <Check size={17} strokeWidth={2.5} />
+      </button>
       <div className="flex-1">
-        <p className="text-sm font-medium text-gray-800">{habit.name}</p>
-        <div className="flex items-center gap-1 mt-0.5">
-          {streak > 0 && <Flame size={12} className="text-sand-500" />}
-          <p className="text-xs text-sand-500 font-medium">
-            {streak > 0 ? `${streak} day streak` : 'No streak yet'}
-          </p>
+        <p className={`text-sm font-semibold ${
+          done ? 'text-primary-700 line-through' : 'text-gray-800'
+        }`}>{habit.name}</p>
+        <div className="flex items-center gap-1.5 mt-1">
+          <Flame size={12} className={streak > 0 ? 'text-sand-500' : 'text-gray-300'} />
+          <p className="text-xs text-sand-700 font-medium">{streak > 0 ? `${streak} day streak` : 'Start your streak today'}</p>
         </div>
       </div>
-
-      <button
-        onClick={() => onDelete(habit.id)}
-        className="text-gray-300 hover:text-rose-500 transition-colors opacity-0 group-hover:opacity-100"
-        aria-label="Delete habit"
-      >
-        <X size={15} />
-      </button>
+      <button onClick={() => onDelete(habit.id)} className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-300 hover:text-rose-500 hover:bg-rose-50 transition-all opacity-0 group-hover:opacity-100" aria-label="Delete habit"><X size={15}/></button>
     </div>
   )
 }

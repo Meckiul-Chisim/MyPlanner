@@ -19,7 +19,7 @@ const items: { id: View; label: string; icon: LucideIcon; hint: string }[] = [
 
 export function Sidebar({ active, onNavigate }: SidebarProps) {
   return (
-    <aside className="w-64 h-full bg-white/90 backdrop-blur-xl border-r border-gray-200/70 flex flex-col shrink-0">
+    <aside className="app-sidebar w-64 h-full bg-white/90 backdrop-blur-xl border-r border-gray-200/70 flex flex-col shrink-0">
       <div className="px-5 pt-6 pb-5">
         <div className="flex items-center gap-3">
           <div className="relative w-10 h-10 rounded-2xl bg-primary-600 flex items-center justify-center text-white shadow-lg shadow-primary-600/15">
@@ -27,8 +27,8 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
             <span className="absolute -right-0.5 -top-0.5 w-2.5 h-2.5 rounded-full bg-primary-300 border-2 border-white" />
           </div>
           <div>
-            <p className="text-[15px] font-bold text-gray-800 tracking-tight">MyPlanner</p>
-            <p className="text-[11px] text-gray-400 mt-0.5">Plan a calmer day</p>
+            <p className="text-[15px] font-bold sidebar-heading tracking-tight">MyPlanner</p>
+            <p className="text-[11px] sidebar-muted mt-0.5">Plan a calmer day</p>
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
       </div>
 
       <nav className="flex-1 px-3 space-y-1">
-        <p className="px-3 pt-1 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-gray-300">
+        <p className="px-3 pt-1 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] sidebar-label">
           Workspace
         </p>
         {items.map((item) => {
@@ -56,12 +56,12 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
               onClick={() => onNavigate(item.id)}
               className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-left transition-all duration-150 group ${
                 isActive
-                  ? 'bg-primary-50 text-primary-700 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-800 hover:bg-gray-50'
+                  ? 'sidebar-active shadow-sm'
+                  : 'sidebar-item'
               }`}
             >
               <span className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                isActive ? 'bg-white text-primary-600 shadow-sm' : 'bg-gray-50 text-gray-400 group-hover:text-gray-600'
+                isActive ? 'sidebar-icon-active' : 'sidebar-icon'
               }`}>
                 <Icon size={17} strokeWidth={isActive ? 2.2 : 1.8} />
               </span>
@@ -74,9 +74,9 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
         })}
       </nav>
 
-      <div className="m-3 p-3 rounded-2xl bg-gray-50 border border-gray-100">
-        <p className="text-[10px] font-semibold text-gray-500">Private by default</p>
-        <p className="text-[10px] text-gray-400 mt-1 leading-relaxed">Your planner data stays stored locally on this device.</p>
+      <div className="sidebar-private m-3 p-3 rounded-2xl border">
+        <p className="text-[10px] font-semibold sidebar-heading">Private by default</p>
+        <p className="text-[10px] sidebar-muted mt-1 leading-relaxed">Your planner data stays stored locally on this device.</p>
       </div>
     </aside>
   )

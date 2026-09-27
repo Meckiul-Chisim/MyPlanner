@@ -2,7 +2,9 @@
 // React (renderer) requests to the local SQLite database.
 import { app, BrowserWindow, dialog, ipcMain, Notification } from 'electron'
 import { join } from 'node:path'
-import { autoUpdater } from 'electron-updater'
+import electronUpdater from 'electron-updater'
+
+const { autoUpdater } = electronUpdater
 import {
   initDatabase,
   closeDatabase,

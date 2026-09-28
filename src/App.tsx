@@ -8,6 +8,7 @@ import { ensurePlannerStorage } from './db/localStorage'
 import { ensureWeeklyRoutine } from './features/schedule/routine'
 import { ensurePersonalDefaults } from './features/personalization/defaults'
 import { SettingsView } from './features/settings/SettingsView'
+import { ProfileView } from './features/profile/ProfileView'
 
 function App() {
   ensurePlannerStorage()
@@ -37,7 +38,7 @@ function App() {
             {view === 'tasks' && <TaskList />}
             {view === 'habits' && <HabitList />}
             {view === 'schedule' && <ScheduleView />}
-            {view === 'profile' && <SettingsView focusProfile />}
+            {view === 'profile' && <ProfileView />}
             {view === 'settings' && <SettingsView />}
           </div>
         </main>

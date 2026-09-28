@@ -1,18 +1,10 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { Check, Database, Moon, Palette, RotateCcw, Sparkles, Sun, Zap } from 'lucide-react'
 type Theme = 'sage' | 'lavender' | 'ocean' | 'rose' | 'midnight'
 type Motion = 'full' | 'reduced'
 
 const THEME_KEY = 'myplanner-theme'
 const MOTION_KEY = 'myplanner-motion'
-
-function splitLines(value: string) {
-  return value.split('\n').map((item) => item.trim()).filter(Boolean)
-}
-
-function joinLines(value: string[]) {
-  return value.join('\n')
-}
 
 export function SettingsView() {
   const [theme, setTheme] = useState<Theme>(() => (localStorage.getItem(THEME_KEY) as Theme) || 'sage')

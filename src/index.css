@@ -465,6 +465,79 @@ html[data-theme="midnight"] {
   --theme-card-icon: #72ad8d;
 }
 
+
+/* Additional theme presets */
+html[data-theme="forest"] {
+  --accent:#3f7d5a; --accent-soft:#e4f1e8; --accent-border:#c7dfcf; --accent-shadow:rgba(63,125,90,.17);
+  --ambient-a:rgba(63,125,90,.22); --ambient-b:rgba(116,151,94,.14); --ambient-c:rgba(214,166,108,.09);
+  --theme-card-selected:#e4f1e8; --theme-card-border:#d7e7dc; --theme-card-selected-border:#9fc4aa;
+  --theme-card-title:#263b2e; --theme-card-description:#74877a; --theme-card-icon:#3f7d5a;
+  --sidebar-text:#5d7064; --sidebar-heading:#25362b; --sidebar-muted:#96a69b; --sidebar-label:#bec9c1;
+  --sidebar-hover:#eef6f0; --sidebar-icon-bg:#e8f2eb; --sidebar-icon-text:#8da092; --sidebar-icon-active-bg:#fff;
+  --sidebar-accent:#3f7d5a; --sidebar-accent-dark:#326746; --sidebar-active-bg:#e4f1e8; --sidebar-private-bg:#eef6f0; --sidebar-border:#dce9df;
+  --sidebar-hover-shadow:rgba(63,125,90,.10); --sidebar-icon-hover-bg:#deeee3;
+}
+html[data-theme="sunset"] {
+  --accent:#c47745; --accent-soft:#fff0e4; --accent-border:#f0d2bc; --accent-shadow:rgba(196,119,69,.17);
+  --ambient-a:rgba(239,151,92,.22); --ambient-b:rgba(222,129,151,.14); --ambient-c:rgba(214,166,108,.13);
+  --theme-card-selected:#fff0e4; --theme-card-border:#f0e0d4; --theme-card-selected-border:#e7b38f;
+  --theme-card-title:#493329; --theme-card-description:#92786a; --theme-card-icon:#c47745;
+  --sidebar-text:#75655b; --sidebar-heading:#443028; --sidebar-muted:#aa9588; --sidebar-label:#cbbdb4;
+  --sidebar-hover:#fff4ec; --sidebar-icon-bg:#fff0e5; --sidebar-icon-text:#ae9688; --sidebar-icon-active-bg:#fff;
+  --sidebar-accent:#c47745; --sidebar-accent-dark:#a55f34; --sidebar-active-bg:#fff0e4; --sidebar-private-bg:#fff5ee; --sidebar-border:#f0dfd2;
+  --sidebar-hover-shadow:rgba(196,119,69,.10); --sidebar-icon-hover-bg:#ffe7d6;
+}
+html[data-theme="sky"] {
+  --accent:#4f8fb3; --accent-soft:#e8f4fb; --accent-border:#cbe3ef; --accent-shadow:rgba(79,143,179,.16);
+  --ambient-a:rgba(79,143,179,.21); --ambient-b:rgba(118,177,211,.15); --ambient-c:rgba(232,185,116,.09);
+  --theme-card-selected:#e8f4fb; --theme-card-border:#d8e9f1; --theme-card-selected-border:#a8cee1;
+  --theme-card-title:#29404d; --theme-card-description:#718793; --theme-card-icon:#4f8fb3;
+  --sidebar-text:#5f7079; --sidebar-heading:#293b44; --sidebar-muted:#98a8b0; --sidebar-label:#bdcbd1;
+  --sidebar-hover:#eff8fc; --sidebar-icon-bg:#eaf5fa; --sidebar-icon-text:#91a8b4; --sidebar-icon-active-bg:#fff;
+  --sidebar-accent:#4f8fb3; --sidebar-accent-dark:#3c748f; --sidebar-active-bg:#e8f4fb; --sidebar-private-bg:#eff8fc; --sidebar-border:#dcecf3;
+  --sidebar-hover-shadow:rgba(79,143,179,.10); --sidebar-icon-hover-bg:#e1f1f8;
+}
+html[data-theme="coffee"] {
+  --accent:#936b4d; --accent-soft:#f4ebe2; --accent-border:#e1cdbb; --accent-shadow:rgba(147,107,77,.16);
+  --ambient-a:rgba(147,107,77,.19); --ambient-b:rgba(194,145,101,.14); --ambient-c:rgba(180,117,126,.10);
+  --theme-card-selected:#f4ebe2; --theme-card-border:#e9ddd2; --theme-card-selected-border:#c9a98e;
+  --theme-card-title:#40342c; --theme-card-description:#89786b; --theme-card-icon:#936b4d;
+  --sidebar-text:#70645b; --sidebar-heading:#3d3129; --sidebar-muted:#a29488; --sidebar-label:#c6bcb4;
+  --sidebar-hover:#f8f1eb; --sidebar-icon-bg:#f3ebe4; --sidebar-icon-text:#a38e7d; --sidebar-icon-active-bg:#fff;
+  --sidebar-accent:#936b4d; --sidebar-accent-dark:#775438; --sidebar-active-bg:#f4ebe2; --sidebar-private-bg:#f8f1eb; --sidebar-border:#e9ddd3;
+  --sidebar-hover-shadow:rgba(147,107,77,.10); --sidebar-icon-hover-bg:#eee1d5;
+}
+html[data-theme="graphite"] {
+  --accent:#8fa7a0; --accent-soft:#263330; --accent-border:#3b4c48; --accent-shadow:rgba(143,167,160,.18);
+  --ambient-a:rgba(103,143,132,.15); --ambient-b:rgba(125,112,166,.13); --ambient-c:rgba(179,132,91,.08);
+  --theme-card-bg:#1b2322; --theme-card-selected:#263330; --theme-card-border:#303d3a; --theme-card-selected-border:#506660;
+  --theme-card-title:#e6eeeb; --theme-card-description:#9aa9a4; --theme-card-icon:#8fa7a0;
+  --sidebar-text:#a7b4af; --sidebar-heading:#e6eeeb; --sidebar-muted:#7f918a; --sidebar-label:#64736e;
+  --sidebar-hover:#26302e; --sidebar-icon-bg:#222d2a; --sidebar-icon-text:#80918b; --sidebar-icon-active-bg:#2b3935;
+  --sidebar-accent:#8fa7a0; --sidebar-accent-dark:#b6cbc4; --sidebar-active-bg:#263330; --sidebar-private-bg:#222d2a; --sidebar-border:#34433f;
+  --sidebar-hover-shadow:rgba(143,167,160,.12); --sidebar-icon-hover-bg:#2d3b37;
+}
+html[data-theme="forest"] body { background:radial-gradient(circle at 8% 10%,rgba(63,125,90,.16),transparent 24rem),#f4f8f5; }
+html[data-theme="sunset"] body { background:radial-gradient(circle at 8% 10%,rgba(239,151,92,.16),transparent 24rem),#fcf7f3; }
+html[data-theme="sky"] body { background:radial-gradient(circle at 8% 10%,rgba(79,143,179,.15),transparent 24rem),#f4f9fc; }
+html[data-theme="coffee"] body { background:radial-gradient(circle at 8% 10%,rgba(147,107,77,.14),transparent 24rem),#faf7f3; }
+html[data-theme="graphite"] body { background:#121817;color:#e6eeeb; }
+html[data-theme="graphite"] .app-shell { background:rgba(18,24,23,.84); }
+html[data-theme="graphite"] .glass-panel,
+html[data-theme="graphite"] .bg-white { background-color:#1b2322 !important;color:#e6eeeb; }
+html[data-theme="graphite"] .bg-gray-50 { background-color:#222d2a !important; }
+html[data-theme="graphite"] .text-gray-900,
+html[data-theme="graphite"] .text-gray-800,
+html[data-theme="graphite"] .text-gray-700,
+html[data-theme="graphite"] .text-gray-600 { color:#e6eeeb !important; }
+html[data-theme="graphite"] .text-gray-400 { color:#9aa9a4 !important; }
+html[data-theme="graphite"] .border-gray-100,
+html[data-theme="graphite"] .border-gray-200 { border-color:#303d3a !important; }
+html[data-theme="graphite"] input,
+html[data-theme="graphite"] select,
+html[data-theme="graphite"] textarea { background-color:#1b2322;color:#e6eeeb;border-color:#303d3a; }
+html[data-theme="graphite"] .ambient-bg { opacity:.55; }
+
 /* Theme cards: fix contrast and make selection feel intentional. */
 .theme-card {
   position: relative;
@@ -1248,6 +1321,11 @@ select {
 
 /* Use theme surfaces for the responsive bottom navigation. */
 @media (max-width: 768px) {
+  html[data-theme="forest"] .app-sidebar { background:rgba(244,249,246,.96) !important; }
+  html[data-theme="sunset"] .app-sidebar { background:rgba(252,247,243,.96) !important; }
+  html[data-theme="sky"] .app-sidebar { background:rgba(244,249,252,.96) !important; }
+  html[data-theme="coffee"] .app-sidebar { background:rgba(250,247,243,.96) !important; }
+  html[data-theme="graphite"] .app-sidebar { background:rgba(20,28,27,.96) !important; }
   html[data-theme="midnight"] .app-sidebar {
     background: rgba(20, 28, 26, .96) !important;
   }
@@ -1671,6 +1749,13 @@ html[data-theme="midnight"] {
   --nav-glow-b: rgba(169,154,214,.15);
   --nav-glow-c: rgba(87,154,184,.10);
 }
+
+html[data-theme="forest"] { --nav-gradient-a:rgba(241,249,244,.98); --nav-gradient-b:rgba(226,242,231,.98); --nav-gradient-c:rgba(246,247,238,.98); --nav-glow-a:rgba(63,125,90,.20); --nav-glow-b:rgba(116,151,94,.13); --nav-glow-c:rgba(214,166,108,.08); }
+html[data-theme="sunset"] { --nav-gradient-a:rgba(255,248,241,.98); --nav-gradient-b:rgba(252,236,222,.98); --nav-gradient-c:rgba(250,241,237,.98); --nav-glow-a:rgba(239,151,92,.20); --nav-glow-b:rgba(222,129,151,.13); --nav-glow-c:rgba(214,166,108,.10); }
+html[data-theme="sky"] { --nav-gradient-a:rgba(246,251,254,.98); --nav-gradient-b:rgba(230,244,251,.98); --nav-gradient-c:rgba(243,248,250,.98); --nav-glow-a:rgba(79,143,179,.19); --nav-glow-b:rgba(118,177,211,.14); --nav-glow-c:rgba(232,185,116,.08); }
+html[data-theme="coffee"] { --nav-gradient-a:rgba(251,248,244,.98); --nav-gradient-b:rgba(242,234,225,.98); --nav-gradient-c:rgba(249,244,239,.98); --nav-glow-a:rgba(147,107,77,.18); --nav-glow-b:rgba(194,145,101,.13); --nav-glow-c:rgba(180,117,126,.08); }
+html[data-theme="graphite"] { --nav-gradient-a:rgba(20,28,27,.98); --nav-gradient-b:rgba(29,39,37,.98); --nav-gradient-c:rgba(27,31,39,.98); --nav-glow-a:rgba(103,143,132,.18); --nav-glow-b:rgba(125,112,166,.14); --nav-glow-c:rgba(179,132,91,.08); }
+
 html[data-motion="reduced"] .app-sidebar,
 html[data-motion="reduced"] .app-sidebar::before {
   animation: none;

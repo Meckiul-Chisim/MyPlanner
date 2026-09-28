@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Check, Database, Moon, Palette, RotateCcw, Sparkles, Sun, Zap } from 'lucide-react'
-type Theme = 'sage' | 'lavender' | 'ocean' | 'rose' | 'midnight'
+type Theme = 'sage' | 'lavender' | 'ocean' | 'rose' | 'midnight' | 'forest' | 'sunset' | 'sky' | 'coffee' | 'graphite'
 type Motion = 'full' | 'reduced'
 
 const THEME_KEY = 'myplanner-theme'
@@ -52,6 +52,11 @@ export function SettingsView() {
             <ThemeCard theme={theme} selected="ocean" onSelect={setTheme} icon={<Zap size={18} />} title="Ocean" description="Cool and refreshing." />
             <ThemeCard theme={theme} selected="rose" onSelect={setTheme} icon={<Palette size={18} />} title="Rose" description="Warm and expressive." />
             <ThemeCard theme={theme} selected="midnight" onSelect={setTheme} icon={<Moon size={18} />} title="Midnight" description="Dark and easy on the eyes." />
+            <ThemeCard theme={theme} selected="forest" onSelect={setTheme} icon={<Sparkles size={18} />} title="Forest" description="Deep green and grounded." />
+            <ThemeCard theme={theme} selected="sunset" onSelect={setTheme} icon={<Sun size={18} />} title="Sunset" description="Warm, soft and energetic." />
+            <ThemeCard theme={theme} selected="sky" onSelect={setTheme} icon={<Zap size={18} />} title="Sky" description="Bright, airy and fresh." />
+            <ThemeCard theme={theme} selected="coffee" onSelect={setTheme} icon={<Palette size={18} />} title="Coffee" description="Warm, earthy and cozy." />
+            <ThemeCard theme={theme} selected="graphite" onSelect={setTheme} icon={<Moon size={18} />} title="Graphite" description="Dark, neutral and minimal." />
           </div>
 
           <div className="settings-control flex items-center justify-between gap-4 rounded-2xl bg-gray-50 border border-gray-100 p-4 card-lift">

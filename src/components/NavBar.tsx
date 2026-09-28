@@ -92,6 +92,7 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
       <nav className="sidebar-nav flex-1 px-3 space-y-1">
         <p className="sidebar-workspace-label px-3 pt-1 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] sidebar-label">Workspace</p>
         {workspaceItems.map(renderItem)}
+        {renderItem({ id: 'settings', label: 'Settings', icon: Settings, hint: 'Preferences' })}
       </nav>
 
       <nav className="sidebar-mobile-nav" aria-label="Mobile navigation">
@@ -115,24 +116,6 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
           <UserRound className="sidebar-profile-arrow" size={15} />
         </button>
 
-        <div className="sidebar-divider" />
-
-        <button
-          onClick={() => onNavigate('settings')}
-          className={`sidebar-settings-button w-full flex items-center gap-3 px-3 py-3 rounded-xl text-left ${
-            active === 'settings' ? 'sidebar-active shadow-sm' : 'sidebar-item'
-          }`}
-        >
-          <span className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-            active === 'settings' ? 'sidebar-icon-active' : 'sidebar-icon'
-          }`}>
-            <Settings size={17} strokeWidth={active === 'settings' ? 2.2 : 1.8} />
-          </span>
-          <span className="sidebar-item-copy flex-1">
-            <span className="block text-sm font-semibold">Settings</span>
-            <span className="block text-[10px] mt-0.5 text-gray-400">Preferences</span>
-          </span>
-        </button>
       </div>
 
       <div className="sidebar-private m-3 mt-0 p-3 rounded-2xl border">

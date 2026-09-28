@@ -2277,3 +2277,30 @@ html[data-theme="midnight"] .profile-workspace-snapshot > p:nth-child(2),
 html[data-theme="graphite"] .profile-workspace-snapshot > p:nth-child(2) {
   color: var(--body-text) !important;
 }
+
+/* Planner data card: always follows the active theme */
+.planner-data-card {
+  background: color-mix(in srgb, var(--accent, #5d9678) 9%, var(--theme-card-bg, #ffffff)) !important;
+  border-color: color-mix(in srgb, var(--accent, #5d9678) 22%, var(--theme-card-border, #e5e7eb)) !important;
+}
+.planner-data-card p:first-child {
+  color: var(--accent-strong, var(--accent, #5d9678)) !important;
+}
+.planner-data-card p:last-child {
+  color: var(--theme-card-description, #64748b) !important;
+}
+html[data-theme="creator-night"] .planner-data-card {
+  background: linear-gradient(135deg, rgba(88,201,154,.13), rgba(142,113,220,.08)) !important;
+  border-color: rgba(88,201,154,.25) !important;
+}
+html[data-theme="creator-night"] .planner-data-card p:first-child {
+  color: #9ce2c2 !important;
+}
+html[data-theme="creator-night"] .planner-data-card p:last-child {
+  color: #9aafa7 !important;
+}
+html[data-theme="midnight"] .planner-data-card,
+html[data-theme="graphite"] .planner-data-card {
+  background: #18221f !important;
+  border-color: #30413c !important;
+}

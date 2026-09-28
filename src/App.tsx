@@ -51,7 +51,7 @@ function App() {
         <div className="ambient-orb orb-two" />
         <div className="floating-symbol symbol-one">&lt;/&gt;</div>
         <div className="floating-symbol symbol-two">✦</div>
-        <div className="floating-symbol symbol-three">{ }</div>
+        <div className="floating-symbol symbol-three">{'{}'}</div>
         <div className="floating-symbol symbol-four">+</div>
       </div>
 

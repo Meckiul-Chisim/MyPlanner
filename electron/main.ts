@@ -43,7 +43,15 @@ function checkScheduleReminders() {
   ].join('-')
   const currentMinutes = now.getHours() * 60 + now.getMinutes()
 
-  for (const block of getScheduleBlocks().filter((item) => item.date === today)) {
+  let scheduleBlocks
+  try {
+    scheduleBlocks = getScheduleBlocks()
+  } catch (error) {
+    console.warn('Schedule reminders skipped because the database is not ready yet.', error)
+    return
+  }
+
+  for (const block of scheduleBlocks.filter((item) => item.date === today)) {
     const [hours, minutes] = block.startTime.split(':').map(Number)
     const startMinutes = hours * 60 + minutes
     const reminderKey = `${block.id}-${today}-${block.startTime}`
@@ -65,6 +73,7 @@ function checkScheduleReminders() {
 }
 
 function startScheduleReminders() {
+  if (reminderTimer) clearInterval(reminderTimer)
   checkScheduleReminders()
   reminderTimer = setInterval(checkScheduleReminders, 30_000)
 }

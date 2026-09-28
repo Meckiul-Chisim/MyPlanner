@@ -45,6 +45,7 @@ export function SettingsView() {
 
   function saveProfile() {
     savePlannerProfile(profile)
+    window.dispatchEvent(new Event('myplanner-profile-updated'))
     setSaved(true)
     window.setTimeout(() => setSaved(false), 2200)
   }
@@ -52,6 +53,7 @@ export function SettingsView() {
   function resetProfile() {
     const next = resetPlannerProfile()
     setProfile(next)
+    window.dispatchEvent(new Event('myplanner-profile-updated'))
     setSaved(true)
     window.setTimeout(() => setSaved(false), 2200)
   }

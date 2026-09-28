@@ -472,6 +472,99 @@ html[data-theme="midnight"] {
 }
 
 
+
+/* Creator Night — cinematic builder theme */
+html[data-theme="creator-night"] {
+  --accent:#58c99a;
+  --accent-soft:#17372d;
+  --accent-border:#2d5a4a;
+  --accent-shadow:rgba(88,201,154,.20);
+  --ambient-a:rgba(63,190,143,.20);
+  --ambient-b:rgba(142,113,220,.17);
+  --ambient-c:rgba(218,160,100,.08);
+  --theme-card-bg:#17211f;
+  --theme-card-selected:#1a3a30;
+  --theme-card-border:#293936;
+  --theme-card-selected-border:#4b9277;
+  --theme-card-title:#edf7f2;
+  --theme-card-description:#8ea79e;
+  --theme-card-icon:#58c99a;
+  --sidebar-text:#9bb0a8;
+  --sidebar-heading:#edf7f2;
+  --sidebar-muted:#70857d;
+  --sidebar-label:#5d716a;
+  --sidebar-hover:#1a2925;
+  --sidebar-icon-bg:#182723;
+  --sidebar-icon-text:#789088;
+  --sidebar-icon-active-bg:#20382f;
+  --sidebar-accent:#58c99a;
+  --sidebar-accent-dark:#9ce2c2;
+  --sidebar-active-bg:#19372d;
+  --sidebar-private-bg:#182723;
+  --sidebar-border:#2c3d38;
+  --sidebar-hover-shadow:rgba(88,201,154,.12);
+  --sidebar-icon-hover-bg:#214238;
+  --nav-gradient-a:rgba(13,25,22,.99);
+  --nav-gradient-b:rgba(19,37,31,.99);
+  --nav-gradient-c:rgba(27,24,40,.99);
+  --nav-glow-a:rgba(63,190,143,.20);
+  --nav-glow-b:rgba(142,113,220,.16);
+  --nav-glow-c:rgba(218,160,100,.07);
+}
+html[data-theme="creator-night"] body {
+  color:#e9f3ef;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(63,190,143,.18), transparent 25rem),
+    radial-gradient(circle at 88% 25%, rgba(142,113,220,.14), transparent 28rem),
+    #0b1110;
+}
+html[data-theme="creator-night"] .app-shell {
+  background:
+    radial-gradient(circle at 22% 12%, rgba(63,190,143,.09), transparent 28rem),
+    radial-gradient(circle at 78% 76%, rgba(142,113,220,.09), transparent 30rem),
+    rgba(11,17,16,.86);
+}
+html[data-theme="creator-night"] .glass-panel,
+html[data-theme="creator-night"] .bg-white {
+  background-color:rgba(19,29,27,.78) !important;
+  color:#e9f3ef;
+  border-color:#293936 !important;
+}
+html[data-theme="creator-night"] .bg-gray-50 { background-color:#17221f !important; }
+html[data-theme="creator-night"] .text-gray-900,
+html[data-theme="creator-night"] .text-gray-800,
+html[data-theme="creator-night"] .text-gray-700,
+html[data-theme="creator-night"] .text-gray-600 { color:#e9f3ef !important; }
+html[data-theme="creator-night"] .text-gray-500,
+html[data-theme="creator-night"] .text-gray-400 { color:#8ea79e !important; }
+html[data-theme="creator-night"] .border-gray-100,
+html[data-theme="creator-night"] .border-gray-200 { border-color:#293936 !important; }
+html[data-theme="creator-night"] input,
+html[data-theme="creator-night"] select,
+html[data-theme="creator-night"] textarea {
+  background-color:#14201d;
+  color:#e9f3ef;
+  border-color:#30433e;
+}
+html[data-theme="creator-night"] .ambient-bg {
+  background:
+    radial-gradient(circle at 15% 15%, rgba(63,190,143,.12), transparent 30%),
+    radial-gradient(circle at 82% 38%, rgba(142,113,220,.12), transparent 34%),
+    linear-gradient(125deg,rgba(17,48,38,.18),transparent 42%,rgba(45,31,73,.14));
+}
+html[data-theme="creator-night"] .planner-splash {
+  background:
+    radial-gradient(circle at 18% 20%,rgba(63,190,143,.25),transparent 28rem),
+    radial-gradient(circle at 82% 28%,rgba(142,113,220,.23),transparent 27rem),
+    radial-gradient(circle at 50% 90%,rgba(218,160,100,.10),transparent 28rem),
+    #070d0c;
+}
+html[data-theme="creator-night"] .splash-progress span {
+  background:linear-gradient(90deg,#58c99a,#a99ad6,#e0a86e);
+}
+html[data-theme="creator-night"] .theme-preview { background:#17211f; }
+html[data-theme="creator-night"] .app-sidebar { border-color:#2c3d38 !important; }
+
 /* Additional theme presets */
 html[data-theme="forest"] {
   --accent:#3f7d5a; --accent-soft:#e4f1e8; --accent-border:#c7dfcf; --accent-shadow:rgba(63,125,90,.17);

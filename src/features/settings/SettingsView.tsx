@@ -22,11 +22,17 @@ function joinLines(value: string[]) {
   return value.join('\n')
 }
 
-export function SettingsView() {
+export function SettingsView({ focusProfile = false }: { focusProfile?: boolean }) {
   const [theme, setTheme] = useState<Theme>(() => (localStorage.getItem(THEME_KEY) as Theme) || 'sage')
   const [motion, setMotion] = useState<Motion>(() => (localStorage.getItem(MOTION_KEY) as Motion) || 'full')
   const [profile, setProfile] = useState<PlannerProfile>(() => getPlannerProfile())
   const [saved, setSaved] = useState(false)
+
+  useEffect(() => {
+    if (focusProfile) {
+      window.setTimeout(() => document.getElementById('planner-profile')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80)
+    }
+  }, [focusProfile])
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -74,7 +80,7 @@ export function SettingsView() {
         <p className="text-sm text-gray-400 mt-2">Shape MyPlanner around your real life, goals and working style.</p>
       </header>
 
-      <section className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden card-lift">
+      <section id="planner-profile" className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden card-lift">
         <div className="px-5 py-4 border-b border-gray-100">
           <div className="flex items-center gap-3">
             <span className="w-9 h-9 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center"><UserRound size={17} /></span>

@@ -13,7 +13,7 @@ export function ScheduleBlockCard({ block, onDelete }: ScheduleBlockCardProps) {
   return (
     <div
       style={{ top: `${top}px`, height: `${height}px` }}
-      className="absolute left-16 right-2 schedule-block bg-primary-50 border border-primary-100 border-l-4 border-l-primary-600 rounded-xl px-3 py-2 overflow-hidden group shadow-sm hover:shadow-md transition-shadow duration-200"
+      className="absolute left-16 right-2 schedule-block schedule-block-card bg-primary-50 border border-primary-100 border-l-4 border-l-primary-600 rounded-xl px-3 py-2 overflow-hidden group shadow-sm hover:shadow-md transition-shadow duration-200"
     >
       <p className="text-xs font-bold text-primary-700 truncate">{block.title}</p>
       <p className="text-[10px] font-medium text-primary-600 mt-0.5">{displayStart} – {block.endTime}</p>

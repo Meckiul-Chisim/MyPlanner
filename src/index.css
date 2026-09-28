@@ -1596,3 +1596,82 @@ html[data-motion="reduced"] .profile-list-card {
     border-radius: 22px;
   }
 }
+
+
+/* Animated gradient navigation surface */
+.app-sidebar {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(
+    135deg,
+    var(--nav-gradient-a, rgba(244, 250, 247, .98)),
+    var(--nav-gradient-b, rgba(238, 246, 242, .98)),
+    var(--nav-gradient-c, rgba(248, 246, 252, .98)),
+    var(--nav-gradient-a, rgba(244, 250, 247, .98))
+  ) !important;
+  background-size: 320% 320% !important;
+  animation: navGradientFlow 18s ease-in-out infinite;
+}
+.app-sidebar::before {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 15% 20%, var(--nav-glow-a, rgba(114,173,141,.16)), transparent 25%),
+    radial-gradient(circle at 82% 35%, var(--nav-glow-b, rgba(169,154,214,.14)), transparent 28%),
+    radial-gradient(circle at 45% 92%, var(--nav-glow-c, rgba(223,143,155,.10)), transparent 24%);
+  filter: blur(24px);
+  animation: navGlowFloat 14s ease-in-out infinite alternate;
+}
+.app-sidebar > * {
+  position: relative;
+  z-index: 1;
+}
+@keyframes navGradientFlow {
+  0%, 100% { background-position: 0% 40%; }
+  50% { background-position: 100% 60%; }
+}
+@keyframes navGlowFloat {
+  0% { transform: translate3d(-2%, 0, 0) scale(.98); }
+  50% { transform: translate3d(2%, -1%, 0) scale(1.03); }
+  100% { transform: translate3d(-1%, 2%, 0) scale(1); }
+}
+html[data-theme="lavender"] {
+  --nav-gradient-a: rgba(249,247,253,.98);
+  --nav-gradient-b: rgba(239,235,249,.98);
+  --nav-gradient-c: rgba(248,244,249,.98);
+  --nav-glow-a: rgba(169,154,214,.20);
+  --nav-glow-b: rgba(126,111,174,.13);
+  --nav-glow-c: rgba(223,143,155,.08);
+}
+html[data-theme="ocean"] {
+  --nav-gradient-a: rgba(246,251,253,.98);
+  --nav-gradient-b: rgba(231,244,249,.98);
+  --nav-gradient-c: rgba(245,248,250,.98);
+  --nav-glow-a: rgba(87,154,184,.19);
+  --nav-glow-b: rgba(114,173,141,.12);
+  --nav-glow-c: rgba(131,183,216,.10);
+}
+html[data-theme="rose"] {
+  --nav-gradient-a: rgba(253,248,249,.98);
+  --nav-gradient-b: rgba(249,235,238,.98);
+  --nav-gradient-c: rgba(250,245,241,.98);
+  --nav-glow-a: rgba(223,143,155,.18);
+  --nav-glow-b: rgba(214,166,108,.12);
+  --nav-glow-c: rgba(169,154,214,.08);
+}
+html[data-theme="midnight"] {
+  --nav-gradient-a: rgba(20,30,27,.98);
+  --nav-gradient-b: rgba(27,39,35,.98);
+  --nav-gradient-c: rgba(29,28,39,.98);
+  --nav-glow-a: rgba(114,173,141,.18);
+  --nav-glow-b: rgba(169,154,214,.15);
+  --nav-glow-c: rgba(87,154,184,.10);
+}
+html[data-motion="reduced"] .app-sidebar,
+html[data-motion="reduced"] .app-sidebar::before {
+  animation: none;
+}

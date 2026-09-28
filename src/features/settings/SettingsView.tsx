@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Check, Database, Moon, Palette, RotateCcw, Sparkles, Sun, Zap } from 'lucide-react'
-type Theme = 'sage' | 'lavender' | 'ocean' | 'rose' | 'midnight' | 'forest' | 'sunset' | 'sky' | 'coffee' | 'graphite'
+type Theme = 'sage' | 'lavender' | 'ocean' | 'rose' | 'midnight' | 'forest' | 'sunset' | 'sky' | 'coffee' | 'graphite' | 'creator-night'
 type Motion = 'full' | 'reduced'
 
 const THEME_KEY = 'myplanner-theme'
@@ -57,6 +57,7 @@ export function SettingsView() {
             <ThemeCard theme={theme} selected="sky" onSelect={setTheme} icon={<Zap size={18} />} title="Sky" description="Bright, airy and fresh." />
             <ThemeCard theme={theme} selected="coffee" onSelect={setTheme} icon={<Palette size={18} />} title="Coffee" description="Warm, earthy and cozy." />
             <ThemeCard theme={theme} selected="graphite" onSelect={setTheme} icon={<Moon size={18} />} title="Graphite" description="Dark, neutral and minimal." />
+            <ThemeCard theme={theme} selected="creator-night" onSelect={setTheme} icon={<Sparkles size={18} />} title="Creator Night" description="Your cinematic builder workspace." />
           </div>
 
           <div className="settings-control flex items-center justify-between gap-4 rounded-2xl bg-gray-50 border border-gray-100 p-4 card-lift">

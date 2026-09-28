@@ -1,6 +1,6 @@
 // Purpose: Left-hand sidebar navigation between the app's main sections.
 import { useEffect, useMemo, useState } from 'react'
-import { LayoutGrid, CheckSquare, Repeat, CalendarDays, Plus, Settings, UserRound } from 'lucide-react'
+import { LayoutGrid, CheckSquare, Repeat, CalendarDays, Plus, Settings, UserRound, ShieldCheck, X } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { getPlannerProfile } from '../features/profile/profile'
 
@@ -26,11 +26,17 @@ const mobileItems: { id: View; label: string; icon: LucideIcon; hint: string }[]
 
 export function Sidebar({ active, onNavigate }: SidebarProps) {
   const [profile, setProfile] = useState(() => getPlannerProfile())
+  const [showPrivacyToast, setShowPrivacyToast] = useState(true)
 
   useEffect(() => {
     const sync = () => setProfile(getPlannerProfile())
     window.addEventListener('myplanner-profile-updated', sync)
     return () => window.removeEventListener('myplanner-profile-updated', sync)
+  }, [])
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setShowPrivacyToast(false), 4500)
+    return () => window.clearTimeout(timer)
   }, [])
 
   const initials = useMemo(() => {
@@ -118,10 +124,18 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
 
       </div>
 
-      <div className="sidebar-private m-3 mt-0 p-3 rounded-2xl border">
-        <p className="text-[10px] font-semibold sidebar-heading">Private by default</p>
-        <p className="text-[10px] sidebar-muted mt-1 leading-relaxed">Your planner data stays stored locally on this device.</p>
-      </div>
+      {showPrivacyToast && (
+        <div className="privacy-toast" role="status" aria-live="polite">
+          <span className="privacy-toast-icon"><ShieldCheck size={16} /></span>
+          <span className="privacy-toast-copy">
+            <strong>Private by default</strong>
+            <span>Your planner data stays stored locally on this device.</span>
+          </span>
+          <button type="button" className="privacy-toast-close" onClick={() => setShowPrivacyToast(false)} aria-label="Dismiss privacy notice">
+            <X size={14} />
+          </button>
+        </div>
+      )
     </aside>
   )
 }

@@ -2239,3 +2239,41 @@ html[data-theme="midnight"] .profile-page .bg-primary-50,
 html[data-theme="graphite"] .profile-page .bg-primary-50 {
   background: color-mix(in srgb, var(--accent, #5d9678) 12%, #17201e) !important;
 }
+
+/* Profile workspace snapshot — final theme layer */
+.profile-workspace-snapshot {
+  background: color-mix(in srgb, var(--accent) 9%, var(--surface)) !important;
+  border-color: color-mix(in srgb, var(--accent) 22%, var(--line)) !important;
+  color: var(--body-text);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+}
+.profile-workspace-snapshot > p:first-child {
+  color: var(--accent-strong) !important;
+}
+.profile-workspace-snapshot > p:nth-child(2) {
+  color: var(--body-text) !important;
+}
+.profile-workspace-snapshot > div {
+  color: var(--accent-strong) !important;
+}
+html[data-theme="creator-night"] .profile-workspace-snapshot {
+  background:
+    linear-gradient(135deg, rgba(88,201,154,.13), rgba(142,113,220,.08)),
+    rgba(19,29,27,.86) !important;
+  border-color: rgba(88,201,154,.24) !important;
+}
+html[data-theme="creator-night"] .profile-workspace-snapshot > p:first-child,
+html[data-theme="creator-night"] .profile-workspace-snapshot > div {
+  color: #9ce2c2 !important;
+}
+html[data-theme="creator-night"] .profile-workspace-snapshot > p:nth-child(2) {
+  color: #a7bdb5 !important;
+}
+html[data-theme="midnight"] .profile-workspace-snapshot,
+html[data-theme="graphite"] .profile-workspace-snapshot {
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface)) !important;
+}
+html[data-theme="midnight"] .profile-workspace-snapshot > p:nth-child(2),
+html[data-theme="graphite"] .profile-workspace-snapshot > p:nth-child(2) {
+  color: var(--body-text) !important;
+}

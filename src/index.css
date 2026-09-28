@@ -2218,3 +2218,24 @@ html[data-motion="reduced"] .ambient-bg::after,
 html[data-motion="reduced"] .ambient-bg::before {
   animation: none !important;
 }
+
+/* Theme-aware profile workspace snapshot */
+.profile-page .bg-primary-50 {
+  background: color-mix(in srgb, var(--accent, #5d9678) 10%, var(--theme-card-bg, #ffffff)) !important;
+  border-color: color-mix(in srgb, var(--accent, #5d9678) 24%, transparent) !important;
+}
+.profile-page .text-primary-800,
+.profile-page .text-primary-700 {
+  color: color-mix(in srgb, var(--accent, #5d9678) 72%, var(--theme-card-title, #1f2937)) !important;
+}
+.profile-page .text-primary-700\/75 {
+  color: color-mix(in srgb, var(--accent, #5d9678) 62%, var(--theme-card-description, #64748b)) !important;
+}
+html[data-theme="creator-night"] .profile-page .bg-primary-50 {
+  background: linear-gradient(135deg, rgba(88,201,154,.12), rgba(142,113,220,.08)) !important;
+  border-color: rgba(88,201,154,.22) !important;
+}
+html[data-theme="midnight"] .profile-page .bg-primary-50,
+html[data-theme="graphite"] .profile-page .bg-primary-50 {
+  background: color-mix(in srgb, var(--accent, #5d9678) 12%, #17201e) !important;
+}

@@ -246,6 +246,12 @@ html[data-motion="reduced"] .card-lift {
 html[data-theme="lavender"] { --theme-preview-bg:#f7f5fc; --theme-preview-a:#9b8ccc; --theme-preview-b:#c6bde8; --theme-preview-c:#d9b7c0; }
 html[data-theme="ocean"] { --theme-preview-bg:#f2f8fb; --theme-preview-a:#579ab8; --theme-preview-b:#86c5d7; --theme-preview-c:#d1b477; }
 html[data-theme="rose"] { --theme-preview-bg:#fcf5f5; --theme-preview-a:#cf7d89; --theme-preview-b:#d9a0b0; --theme-preview-c:#d6a66c; }
+html[data-theme="forest"] { --theme-preview-bg:#f1f8f3; --theme-preview-a:#3f7d5a; --theme-preview-b:#74975e; --theme-preview-c:#d6a66c; }
+html[data-theme="sunset"] { --theme-preview-bg:#fff7ef; --theme-preview-a:#c47745; --theme-preview-b:#de8197; --theme-preview-c:#e8b974; }
+html[data-theme="sky"] { --theme-preview-bg:#f1f9fd; --theme-preview-a:#4f8fb3; --theme-preview-b:#76b1d3; --theme-preview-c:#e8b974; }
+html[data-theme="coffee"] { --theme-preview-bg:#faf6f1; --theme-preview-a:#936b4d; --theme-preview-b:#c29165; --theme-preview-c:#b4757e; }
+html[data-theme="graphite"] { --theme-preview-bg:#1b2322; --theme-preview-a:#8fa7a0; --theme-preview-b:#7d70a6; --theme-preview-c:#b3835b; }
+
 html[data-theme="midnight"] { --theme-preview-bg:#1c2423; --theme-preview-a:#72ad8d; --theme-preview-b:#9b8ccc; --theme-preview-c:#d6a66c; }
 
 html[data-theme="lavender"] body { background: radial-gradient(circle at 8% 10%, rgba(169,154,214,.16), transparent 24rem), #f7f5fc; }

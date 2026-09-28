@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { getPlannerProfile } from '../features/profile/profile'
+import { MyPlannerLogo } from './MyPlannerLogo'
 
 export type View = 'dashboard' | 'tasks' | 'habits' | 'schedule' | 'profile' | 'settings'
 
@@ -106,9 +107,9 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
     <aside className="app-sidebar w-64 h-full bg-white/90 backdrop-blur-xl border-r border-gray-200/70 flex flex-col shrink-0">
       <div className="sidebar-brand px-5 pt-6 pb-5">
         <div className="flex items-center gap-3">
-          <div className="sidebar-logo relative w-10 h-10 rounded-2xl flex items-center justify-center text-white">
-            <span className="text-lg font-bold">M</span>
-            <span className="sidebar-logo-dot absolute -right-0.5 -top-0.5 w-2.5 h-2.5 rounded-full border-2" />
+          <div className="sidebar-logo-wrap">
+            <MyPlannerLogo size={42} />
+            <span className="sidebar-logo-dot" />
           </div>
 
           <div>

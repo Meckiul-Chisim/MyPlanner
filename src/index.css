@@ -1024,7 +1024,7 @@ select {
     height: 100%;
     width: 100%;
     display: grid !important;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     gap: 0 !important;
     padding: .35rem .35rem calc(.35rem + env(safe-area-inset-bottom)) !important;
     overflow: visible;

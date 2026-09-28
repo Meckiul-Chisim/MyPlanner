@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type ReactNode } from 'react'
 import { Camera, Check, Clock3, Code2, Gamepad2, Globe2, ImagePlus, Pencil, Rocket, Save, Sparkles, Target, Trash2, UserRound, X, Zap } from 'lucide-react'
 import {
-  DEFAULT_PROFILE,
   getPlannerProfile,
   resetPlannerProfile,
   savePlannerProfile,
@@ -45,7 +44,7 @@ export function ProfileView() {
     setSaved(false)
   }
 
-  function handleAvatar(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleAvatar(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0]
     if (!file) return
     if (!file.type.startsWith('image/')) return
@@ -216,7 +215,7 @@ function ProfileTextarea({ label, value, onChange, hint }: { label: string; valu
   return <label className="profile-field block"><span className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">{label}{hint && <span className="normal-case tracking-normal font-medium opacity-70">· {hint}</span>}</span><textarea value={value} onChange={(e) => onChange(e.target.value)} rows={3} className="w-full resize-y rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-sm text-gray-700 outline-none" /></label>
 }
 
-function InfoCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+function InfoCard({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
   return <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 profile-info-card"><span className="profile-info-icon">{icon}</span><p className="text-[10px] uppercase tracking-wider font-bold text-gray-400 mt-4">{label}</p><p className="text-sm font-semibold text-gray-800 mt-1">{value}</p></div>
 }
 

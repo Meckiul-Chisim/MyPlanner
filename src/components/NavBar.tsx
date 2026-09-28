@@ -1,6 +1,16 @@
 // Purpose: Left-hand sidebar navigation between the app's main sections.
 import { useEffect, useMemo, useState } from 'react'
-import { LayoutGrid, CheckSquare, Repeat, CalendarDays, Plus, Settings, UserRound, ShieldCheck, X } from 'lucide-react'
+import {
+  CalendarDays,
+  CheckSquare,
+  LayoutGrid,
+  Plus,
+  Repeat,
+  Settings,
+  ShieldCheck,
+  UserRound,
+  X,
+} from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { getPlannerProfile } from '../features/profile/profile'
 
@@ -11,17 +21,24 @@ interface SidebarProps {
   onNavigate: (view: View) => void
 }
 
-const workspaceItems: { id: View; label: string; icon: LucideIcon; hint: string }[] = [
+type NavItem = {
+  id: View
+  label: string
+  icon: LucideIcon
+  hint: string
+}
+
+const workspaceItems: NavItem[] = [
   { id: 'dashboard', label: 'Today', icon: LayoutGrid, hint: 'Overview' },
   { id: 'tasks', label: 'Tasks', icon: CheckSquare, hint: 'To-do list' },
   { id: 'habits', label: 'Habits', icon: Repeat, hint: 'Daily rhythm' },
   { id: 'schedule', label: 'Schedule', icon: CalendarDays, hint: 'Time blocks' },
+  { id: 'settings', label: 'Settings', icon: Settings, hint: 'Preferences' },
 ]
 
-const mobileItems: { id: View; label: string; icon: LucideIcon; hint: string }[] = [
+const mobileItems: NavItem[] = [
   ...workspaceItems,
   { id: 'profile', label: 'Profile', icon: UserRound, hint: 'Your details' },
-  { id: 'settings', label: 'Settings', icon: Settings, hint: 'Preferences' },
 ]
 
 export function Sidebar({ active, onNavigate }: SidebarProps) {
@@ -35,33 +52,48 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
   }, [])
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setShowPrivacyToast(false), 4500)
+    const timer = window.setTimeout(() => {
+      setShowPrivacyToast(false)
+    }, 4500)
+
     return () => window.clearTimeout(timer)
   }, [])
 
   const initials = useMemo(() => {
     const words = profile.name.trim().split(/\s+/).filter(Boolean)
-    return (words.length > 1 ? words.slice(0, 2).map((word) => word[0]).join('') : profile.name.slice(0, 2)).toUpperCase() || 'M'
+
+    if (words.length > 1) {
+      return words
+        .slice(0, 2)
+        .map((word) => word[0])
+        .join('')
+        .toUpperCase()
+    }
+
+    return profile.name.slice(0, 2).toUpperCase() || 'M'
   }, [profile.name])
 
-  const avatar = profile.avatar
-
-  const renderItem = (item: { id: View; label: string; icon: LucideIcon; hint: string }) => {
+  const renderItem = (item: NavItem) => {
     const Icon = item.icon
     const isActive = active === item.id
+
     return (
       <button
         key={item.id}
+        type="button"
         onClick={() => onNavigate(item.id)}
         className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-left transition-all duration-150 group ${
           isActive ? 'sidebar-active shadow-sm' : 'sidebar-item'
         }`}
       >
-        <span className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-          isActive ? 'sidebar-icon-active' : 'sidebar-icon'
-        }`}>
+        <span
+          className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+            isActive ? 'sidebar-icon-active' : 'sidebar-icon'
+          }`}
+        >
           <Icon size={17} strokeWidth={isActive ? 2.2 : 1.8} />
         </span>
+
         <span className="sidebar-item-copy flex-1">
           <span className="block text-sm font-semibold">{item.label}</span>
           <span className="block text-[10px] mt-0.5 text-gray-400">{item.hint}</span>
@@ -78,6 +110,7 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
             <span className="text-lg font-bold">M</span>
             <span className="sidebar-logo-dot absolute -right-0.5 -top-0.5 w-2.5 h-2.5 rounded-full border-2" />
           </div>
+
           <div>
             <p className="text-[15px] font-bold sidebar-heading tracking-tight">MyPlanner</p>
             <p className="text-[11px] sidebar-muted mt-0.5">Plan a calmer day</p>
@@ -87,6 +120,7 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
 
       <div className="sidebar-action px-4 pb-4">
         <button
+          type="button"
           onClick={() => onNavigate('tasks')}
           className="sidebar-new-task w-full flex items-center justify-center gap-2 rounded-xl text-white py-2.5 text-sm font-semibold"
         >
@@ -96,9 +130,10 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
       </div>
 
       <nav className="sidebar-nav flex-1 px-3 space-y-1">
-        <p className="sidebar-workspace-label px-3 pt-1 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] sidebar-label">Workspace</p>
+        <p className="sidebar-workspace-label px-3 pt-1 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] sidebar-label">
+          Workspace
+        </p>
         {workspaceItems.map(renderItem)}
-        {renderItem({ id: 'settings', label: 'Settings', icon: Settings, hint: 'Preferences' })}
       </nav>
 
       <nav className="sidebar-mobile-nav" aria-label="Mobile navigation">
@@ -107,35 +142,54 @@ export function Sidebar({ active, onNavigate }: SidebarProps) {
 
       <div className="sidebar-bottom px-3 pb-3">
         <button
+          type="button"
           onClick={() => onNavigate('profile')}
           className={`sidebar-profile-card w-full rounded-2xl border p-3 text-left ${
             active === 'profile' ? 'sidebar-profile-active' : ''
           }`}
         >
           <span className="sidebar-profile-avatar">
-            {avatar ? <img src={avatar} alt="" /> : <span>{initials}</span>}
+            {profile.avatar ? (
+              <img src={profile.avatar} alt="" />
+            ) : (
+              <span>{initials}</span>
+            )}
           </span>
+
           <span className="sidebar-profile-copy">
-            <span className="block text-sm font-bold sidebar-heading truncate">{profile.name || 'Your profile'}</span>
-            <span className="block text-[10px] sidebar-muted mt-0.5 truncate">{profile.role || 'Add your role'}</span>
+            <span className="block text-sm font-bold sidebar-heading truncate">
+              {profile.name || 'Your profile'}
+            </span>
+            <span className="block text-[10px] sidebar-muted mt-0.5 truncate">
+              {profile.role || 'Add your role'}
+            </span>
           </span>
+
           <UserRound className="sidebar-profile-arrow" size={15} />
         </button>
-
       </div>
 
       {showPrivacyToast && (
         <div className="privacy-toast" role="status" aria-live="polite">
-          <span className="privacy-toast-icon"><ShieldCheck size={16} /></span>
+          <span className="privacy-toast-icon">
+            <ShieldCheck size={16} />
+          </span>
+
           <span className="privacy-toast-copy">
             <strong>Private by default</strong>
             <span>Your planner data stays stored locally on this device.</span>
           </span>
-          <button type="button" className="privacy-toast-close" onClick={() => setShowPrivacyToast(false)} aria-label="Dismiss privacy notice">
+
+          <button
+            type="button"
+            className="privacy-toast-close"
+            onClick={() => setShowPrivacyToast(false)}
+            aria-label="Dismiss privacy notice"
+          >
             <X size={14} />
           </button>
         </div>
-      )
+      )}
     </aside>
   )
 }

@@ -219,7 +219,7 @@ function InfoCard({ icon, label, value }: { icon: ReactNode; label: string; valu
   return <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 profile-info-card"><span className="profile-info-icon">{icon}</span><p className="text-[10px] uppercase tracking-wider font-bold text-gray-400 mt-4">{label}</p><p className="text-sm font-semibold text-gray-800 mt-1">{value}</p></div>
 }
 
-function SectionHeading({ icon, title, subtitle }: { icon: React.ReactNode; title: string; subtitle: string }) {
+function SectionHeading({ icon, title, subtitle }: { icon: ReactNode; title: string; subtitle: string }) {
   return <div className="flex items-center gap-3"><span className="profile-section-icon">{icon}</span><div><h2 className="text-sm font-bold text-gray-800">{title}</h2><p className="text-xs text-gray-400 mt-0.5">{subtitle}</p></div></div>
 }
 

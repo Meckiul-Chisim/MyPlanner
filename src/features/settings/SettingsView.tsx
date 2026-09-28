@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { Check, Database, Moon, Palette, RotateCcw, Sparkles, Sun, Zap } from 'lucide-react'
 type Theme = 'sage' | 'lavender' | 'ocean' | 'rose' | 'midnight'
 type Motion = 'full' | 'reduced'
@@ -10,6 +10,15 @@ export function SettingsView() {
   const [theme, setTheme] = useState<Theme>(() => (localStorage.getItem(THEME_KEY) as Theme) || 'sage')
   const [motion, setMotion] = useState<Motion>(() => (localStorage.getItem(MOTION_KEY) as Motion) || 'full')
 
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    localStorage.setItem(THEME_KEY, theme)
+  }, [theme])
+
+  useEffect(() => {
+    document.documentElement.dataset.motion = motion
+    localStorage.setItem(MOTION_KEY, motion)
+  }, [motion])
 
   function resetPreferences() {
     setTheme('sage')

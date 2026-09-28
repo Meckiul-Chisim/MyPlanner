@@ -83,7 +83,7 @@ export function ScheduleView() {
   const gridHeight = hours.length * HOUR_HEIGHT_PX
 
   return (
-    <div className="max-w-4xl mx-auto p-5 sm:p-8">
+    <div className="schedule-view max-w-4xl mx-auto p-5 sm:p-8">
       <div className="mb-5">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
           <div>

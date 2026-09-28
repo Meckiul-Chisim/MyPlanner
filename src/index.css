@@ -1903,7 +1903,7 @@ html[data-motion="reduced"] .app-sidebar::before {
 .privacy-toast-copy span {
   font-size: 10px;
   line-height: 1.4;
-  color: var(--muted-text);
+  color: var(--muted);
 }
 .privacy-toast-close {
   width: 28px;
@@ -1914,7 +1914,7 @@ html[data-motion="reduced"] .app-sidebar::before {
   align-items: center;
   justify-content: center;
   border-radius: 9px;
-  color: var(--muted-text);
+  color: var(--muted);
   transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
 }
 .privacy-toast-close:hover {
@@ -2343,7 +2343,7 @@ html[data-theme="graphite"] .planner-data-card {
 .dashboard-view .text-gray-500,
 .dashboard-view .text-gray-400,
 .dashboard-view .text-gray-300 {
-  color: var(--muted-text) !important;
+  color: var(--muted) !important;
 }
 
 /* Dashboard colored cards become theme accents instead of fixed pastel colors */
@@ -2423,7 +2423,7 @@ html[data-theme="graphite"] .planner-data-card {
 .schedule-view .text-gray-500,
 .schedule-view .text-gray-400,
 .schedule-view .text-gray-300 {
-  color: var(--muted-text) !important;
+  color: var(--muted) !important;
 }
 
 /* Schedule header/day picker */
@@ -2461,7 +2461,7 @@ html[data-theme="graphite"] .planner-data-card {
 }
 .schedule-view .schedule-calendar > div[class*="border-t"] span {
   background: var(--surface) !important;
-  color: var(--muted-text) !important;
+  color: var(--muted) !important;
 }
 
 /* Routine/schedule blocks */
@@ -2491,7 +2491,7 @@ html[data-theme="graphite"] .planner-data-card {
   background: color-mix(in srgb, var(--accent) 4%, var(--surface));
 }
 .schedule-view .schedule-form-root input::placeholder {
-  color: var(--muted-text);
+  color: var(--muted);
 }
 .schedule-view .schedule-form-root input:focus {
   border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
@@ -2507,7 +2507,7 @@ html[data-theme="graphite"] .planner-data-card {
 /* Empty schedule state */
 .schedule-view .schedule-calendar .text-gray-400,
 .schedule-view .schedule-calendar .text-gray-500 {
-  color: var(--muted-text) !important;
+  color: var(--muted) !important;
 }
 
 /* Stronger Creator Night treatment */
@@ -2534,4 +2534,32 @@ html[data-theme="creator-night"] .dashboard-view .bg-sand-100,
 html[data-theme="creator-night"] .dashboard-view .bg-blush-100\/70,
 html[data-theme="creator-night"] .dashboard-view .bg-sky-100\/60 {
   background: linear-gradient(135deg, rgba(88,201,154,.11), rgba(142,113,220,.07)) !important;
+}
+
+/* Catch remaining dashboard/schedule utility colors across every theme */
+html[data-theme] .dashboard-view .text-gray-300,
+html[data-theme] .schedule-view .text-gray-300,
+html[data-theme] .dashboard-view .text-gray-400,
+html[data-theme] .schedule-view .text-gray-400 {
+  color: var(--muted) !important;
+}
+html[data-theme] .dashboard-view .text-gray-500,
+html[data-theme] .schedule-view .text-gray-500 {
+  color: var(--muted) !important;
+}
+html[data-theme] .dashboard-view .text-gray-900,
+html[data-theme] .schedule-view .text-gray-900 {
+  color: var(--heading) !important;
+}
+html[data-theme] .dashboard-view .text-gray-800,
+html[data-theme] .schedule-view .text-gray-800 {
+  color: var(--heading) !important;
+}
+html[data-theme] .dashboard-view .text-gray-700,
+html[data-theme] .schedule-view .text-gray-700 {
+  color: var(--body-text) !important;
+}
+html[data-theme] .dashboard-view .border-white,
+html[data-theme] .schedule-view .border-white {
+  border-color: var(--line) !important;
 }

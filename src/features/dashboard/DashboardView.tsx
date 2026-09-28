@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 import type { Habit, HabitLog, ScheduleBlock, Task } from '../../db/types'
 import { todayString } from '../schedule/timeUtils'
+import { getPlannerProfile, type PlannerProfile } from '../profile/profile'
 
 function isDueTodayOrOverdue(task: Task, today: string): boolean {
   if (task.completed || !task.dueDate) return false
@@ -49,6 +50,7 @@ export function DashboardView() {
   const [habitLogs, setHabitLogs] = useState<HabitLog[]>([])
   const [scheduleBlocks, setScheduleBlocks] = useState<ScheduleBlock[]>([])
   const [loading, setLoading] = useState(true)
+  const [profile, setProfile] = useState<PlannerProfile>(() => getPlannerProfile())
 
   const today = todayString()
   const dayPlan = useMemo(getDayPlan, [])
@@ -68,6 +70,12 @@ export function DashboardView() {
 
   useEffect(() => {
     refresh().finally(() => setLoading(false))
+  }, [])
+
+  useEffect(() => {
+    const handleProfileUpdate = () => setProfile(getPlannerProfile())
+    window.addEventListener('myplanner-profile-updated', handleProfileUpdate)
+    return () => window.removeEventListener('myplanner-profile-updated', handleProfileUpdate)
   }, [])
 
   async function handleToggleTask(id: number) {
@@ -106,9 +114,10 @@ export function DashboardView() {
             {dayPlan.eyebrow}
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">
-            Hey Meckiul. Let’s build.
+            Hey {profile.name || 'there'}. Let’s build.
           </h1>
           <p className="text-sm text-gray-400 mt-2">{dateLabel} · {dayPlan.description}</p>
+          <p className="text-xs text-gray-500 mt-2 font-medium">{profile.primaryFocus} · {profile.role}</p>
         </div>
         <div className="glass-panel rounded-2xl border border-white shadow-sm px-4 py-3 min-w-52">
           <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-gray-300">Today's intention</p>
@@ -156,10 +165,10 @@ export function DashboardView() {
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {[
-            { icon: Code2, title: 'Build', text: 'Apps, games & projects', className: 'bg-primary-50 text-primary-700 border-primary-100' },
-            { icon: Compass, title: 'Learn', text: 'Code, AI & new skills', className: 'bg-sky-100/60 text-sky-700 border-sky-100' },
-            { icon: Video, title: 'Create', text: 'Videos, reels & content', className: 'bg-blush-100/70 text-blush-700 border-blush-100' },
-            { icon: TrendingUp, title: 'Grow', text: 'Freelance & online income', className: 'bg-lavender-100/70 text-lavender-700 border-lavender-100' },
+            { icon: Code2, title: 'Build', text: profile.lanes.build, className: 'bg-primary-50 text-primary-700 border-primary-100' },
+            { icon: Compass, title: 'Learn', text: profile.lanes.learn, className: 'bg-sky-100/60 text-sky-700 border-sky-100' },
+            { icon: Video, title: 'Create', text: profile.lanes.create, className: 'bg-blush-100/70 text-blush-700 border-blush-100' },
+            { icon: TrendingUp, title: 'Grow', text: profile.lanes.grow, className: 'bg-lavender-100/70 text-lavender-700 border-lavender-100' },
           ].map((lane) => {
             const Icon = lane.icon
             return (
@@ -252,6 +261,32 @@ export function DashboardView() {
             })}
           </div>
         )}
+      </section>
+
+      <section className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden card-lift">
+        <div className="px-5 py-4 border-b border-gray-100">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.16em] text-gray-300 font-bold">About this workspace</p>
+              <h2 className="text-base font-bold text-gray-800 mt-1">{profile.role || 'Your personal workspace'}</h2>
+            </div>
+            <span className="w-9 h-9 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center"><Sparkles size={16} /></span>
+          </div>
+        </div>
+        <div className="p-5">
+          <p className="text-sm text-gray-600 leading-relaxed">{profile.bio || 'Add a short description in Settings → Your profile.'}</p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {profile.interests.slice(0, 5).map((interest) => (
+              <span key={interest} className="rounded-full bg-gray-50 border border-gray-100 px-3 py-1.5 text-[11px] font-semibold text-gray-600">{interest}</span>
+            ))}
+          </div>
+          {profile.goals.length > 0 && (
+            <div className="mt-4">
+              <p className="text-[10px] uppercase tracking-[0.16em] text-gray-300 font-bold">Current goals</p>
+              <p className="text-xs text-gray-500 mt-2">{profile.goals.slice(0, 2).join(' · ')}</p>
+            </div>
+          )}
+        </div>
       </section>
 
       <section className="rounded-2xl bg-gray-900 text-white p-5 sm:p-6 shadow-lg">

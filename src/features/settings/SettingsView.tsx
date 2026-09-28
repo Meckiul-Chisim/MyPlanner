@@ -1,13 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react'
-import { Check, Database, Moon, Palette, RotateCcw, Save, Sparkles, Sun, UserRound, Zap } from 'lucide-react'
-import {
-  DEFAULT_PROFILE,
-  getPlannerProfile,
-  resetPlannerProfile,
-  savePlannerProfile,
-  type PlannerProfile,
-} from '../profile/profile'
-
+import { Check, Database, Moon, Palette, RotateCcw, Sparkles, Sun, Zap } from 'lucide-react'
 type Theme = 'sage' | 'lavender' | 'ocean' | 'rose' | 'midnight'
 type Motion = 'full' | 'reduced'
 
@@ -22,47 +14,10 @@ function joinLines(value: string[]) {
   return value.join('\n')
 }
 
-export function SettingsView({ focusProfile = false }: { focusProfile?: boolean }) {
+export function SettingsView() {
   const [theme, setTheme] = useState<Theme>(() => (localStorage.getItem(THEME_KEY) as Theme) || 'sage')
   const [motion, setMotion] = useState<Motion>(() => (localStorage.getItem(MOTION_KEY) as Motion) || 'full')
-  const [profile, setProfile] = useState<PlannerProfile>(() => getPlannerProfile())
-  const [saved, setSaved] = useState(false)
 
-  useEffect(() => {
-    if (focusProfile) {
-      window.setTimeout(() => document.getElementById('planner-profile')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80)
-    }
-  }, [focusProfile])
-
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme
-    localStorage.setItem(THEME_KEY, theme)
-  }, [theme])
-
-  useEffect(() => {
-    document.documentElement.dataset.motion = motion
-    localStorage.setItem(MOTION_KEY, motion)
-  }, [motion])
-
-  function updateProfile<K extends keyof PlannerProfile>(key: K, value: PlannerProfile[K]) {
-    setProfile((current) => ({ ...current, [key]: value }))
-    setSaved(false)
-  }
-
-  function saveProfile() {
-    savePlannerProfile(profile)
-    window.dispatchEvent(new Event('myplanner-profile-updated'))
-    setSaved(true)
-    window.setTimeout(() => setSaved(false), 2200)
-  }
-
-  function resetProfile() {
-    const next = resetPlannerProfile()
-    setProfile(next)
-    window.dispatchEvent(new Event('myplanner-profile-updated'))
-    setSaved(true)
-    window.setTimeout(() => setSaved(false), 2200)
-  }
 
   function resetPreferences() {
     setTheme('sage')
@@ -80,94 +35,6 @@ export function SettingsView({ focusProfile = false }: { focusProfile?: boolean 
         <p className="text-sm text-gray-400 mt-2">Shape MyPlanner around your real life, goals and working style.</p>
       </header>
 
-      <section id="planner-profile" className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden card-lift">
-        <div className="px-5 py-4 border-b border-gray-100">
-          <div className="flex items-center gap-3">
-            <span className="w-9 h-9 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center"><UserRound size={17} /></span>
-            <div>
-              <h2 className="text-sm font-bold text-gray-800">Your profile</h2>
-              <p className="text-[11px] text-gray-400">These details personalize your dashboard. Everything is editable and stored locally.</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="p-4 space-y-5">
-          <div className="grid sm:grid-cols-2 gap-3">
-            <ProfileField label="Name" value={profile.name} onChange={(value) => updateProfile('name', value)} placeholder="What should MyPlanner call you?" />
-            <ProfileField label="Role" value={profile.role} onChange={(value) => updateProfile('role', value)} placeholder="e.g. Developer & builder" />
-            <ProfileField label="Primary focus" value={profile.primaryFocus} onChange={(value) => updateProfile('primaryFocus', value)} placeholder="What matters most right now?" />
-            <div className="grid grid-cols-2 gap-3">
-              <ProfileField label="Day starts" type="time" value={profile.dayStart} onChange={(value) => updateProfile('dayStart', value)} />
-              <ProfileField label="Day ends" type="time" value={profile.dayEnd} onChange={(value) => updateProfile('dayEnd', value)} />
-            </div>
-          </div>
-
-          <ProfileTextarea
-            label="About you"
-            value={profile.bio}
-            onChange={(value) => updateProfile('bio', value)}
-            placeholder="A short description of what you are working toward."
-          />
-
-          <ProfileTextarea
-            label="Work style"
-            value={profile.workStyle}
-            onChange={(value) => updateProfile('workStyle', value)}
-            placeholder="How do you like your day to feel?"
-          />
-
-          <div className="grid sm:grid-cols-2 gap-3">
-            <ProfileTextarea
-              label="Current goals"
-              hint="One goal per line"
-              value={joinLines(profile.goals)}
-              onChange={(value) => updateProfile('goals', splitLines(value))}
-              placeholder="Ship my next app\nLearn a new skill"
-            />
-            <ProfileTextarea
-              label="Interests"
-              hint="One interest per line"
-              value={joinLines(profile.interests)}
-              onChange={(value) => updateProfile('interests', splitLines(value))}
-              placeholder="Web development\nGame development"
-            />
-          </div>
-
-          <div>
-            <div className="mb-3">
-              <p className="text-sm font-bold text-gray-800">Your four planner lanes</p>
-              <p className="text-[11px] text-gray-400 mt-1">Rename or rewrite what each area means to you.</p>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-3">
-              {(['build', 'learn', 'create', 'grow'] as const).map((lane) => (
-                <ProfileField
-                  key={lane}
-                  label={lane.charAt(0).toUpperCase() + lane.slice(1)}
-                  value={profile.lanes[lane]}
-                  onChange={(value) => {
-                    setProfile((current) => ({
-                      ...current,
-                      lanes: { ...current.lanes, [lane]: value },
-                    }))
-                    setSaved(false)
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2 pt-1">
-            <button onClick={saveProfile} className="profile-save-button inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold">
-              <Save size={14} />
-              {saved ? 'Profile saved' : 'Save profile'}
-            </button>
-            <button onClick={resetProfile} className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-xs font-semibold text-gray-600">
-              <RotateCcw size={14} />
-              Restore starter profile
-            </button>
-          </div>
-        </div>
-      </section>
 
       <section className="settings-section bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden card-lift">
         <div className="px-5 py-4 border-b border-gray-100">
@@ -219,51 +86,6 @@ export function SettingsView({ focusProfile = false }: { focusProfile?: boolean 
         Reset appearance preferences
       </button>
     </div>
-  )
-}
-
-function ProfileField({ label, value, onChange, placeholder, type = 'text' }: {
-  label: string
-  value: string
-  onChange: (value: string) => void
-  placeholder?: string
-  type?: string
-}) {
-  return (
-    <label className="profile-field block">
-      <span className="block text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">{label}</span>
-      <input
-        type={type}
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        placeholder={placeholder}
-        className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-sm text-gray-700 outline-none transition focus:border-primary-300 focus:ring-2 focus:ring-primary-100"
-      />
-    </label>
-  )
-}
-
-function ProfileTextarea({ label, value, onChange, placeholder, hint }: {
-  label: string
-  value: string
-  onChange: (value: string) => void
-  placeholder?: string
-  hint?: string
-}) {
-  return (
-    <label className="profile-field block">
-      <span className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1.5">
-        {label}
-        {hint && <span className="normal-case tracking-normal font-medium opacity-70">· {hint}</span>}
-      </span>
-      <textarea
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        placeholder={placeholder}
-        rows={3}
-        className="w-full resize-y rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-sm text-gray-700 outline-none transition focus:border-primary-300 focus:ring-2 focus:ring-primary-100"
-      />
-    </label>
   )
 }
 

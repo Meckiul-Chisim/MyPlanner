@@ -1273,3 +1273,26 @@ select {
   .app-main .group-hover\\:opacity-100{opacity:1}
 }
 @media (min-width:769px) and (max-width:900px){.task-form>input[type="date"],.task-form>select{flex:1 1 150px}.schedule-form>input[type="time"]{flex:0 1 145px}}
+
+
+/* Profile editor */
+.profile-save-button {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 8px 18px var(--accent-shadow);
+  transition: transform 180ms cubic-bezier(.22,1,.36,1), background-color 180ms ease, box-shadow 180ms ease;
+}
+.profile-save-button:hover {
+  background: var(--accent-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px var(--accent-shadow);
+}
+.profile-field textarea { min-height: 84px; }
+html[data-theme="midnight"] textarea {
+  background: var(--surface) !important;
+  color: var(--heading) !important;
+  border-color: var(--line-strong) !important;
+}
+html[data-theme="midnight"] textarea::placeholder { color: #6f8179 !important; }
+html[data-motion="reduced"] .profile-save-button { transition: none; }
+html[data-motion="reduced"] .profile-save-button:hover { transform: none; }

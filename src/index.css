@@ -2304,3 +2304,234 @@ html[data-theme="graphite"] .planner-data-card {
   background: #18221f !important;
   border-color: #30413c !important;
 }
+
+/* =========================================================
+   Complete theme coverage: Dashboard + Schedule
+   ========================================================= */
+.dashboard-view,
+.schedule-view {
+  color: var(--body-text);
+}
+
+/* Dashboard surfaces */
+.dashboard-view .bg-white {
+  background: var(--surface) !important;
+  border-color: var(--line) !important;
+}
+.dashboard-view .glass-panel {
+  background: color-mix(in srgb, var(--surface) 84%, transparent) !important;
+  border-color: var(--line) !important;
+}
+.dashboard-view .bg-gray-50,
+.dashboard-view .bg-gray-50\/60 {
+  background: color-mix(in srgb, var(--accent) 5%, var(--surface)) !important;
+  border-color: var(--line) !important;
+}
+.dashboard-view .bg-gray-900 {
+  background: color-mix(in srgb, var(--surface) 30%, #0d1513) !important;
+}
+.dashboard-view .border-gray-100,
+.dashboard-view .border-white {
+  border-color: var(--line) !important;
+}
+.dashboard-view .text-gray-900,
+.dashboard-view .text-gray-800,
+.dashboard-view .text-gray-700,
+.dashboard-view .text-gray-600 {
+  color: var(--body-text) !important;
+}
+.dashboard-view .text-gray-500,
+.dashboard-view .text-gray-400,
+.dashboard-view .text-gray-300 {
+  color: var(--muted-text) !important;
+}
+
+/* Dashboard colored cards become theme accents instead of fixed pastel colors */
+.dashboard-view .bg-primary-50,
+.dashboard-view .bg-lavender-100,
+.dashboard-view .bg-lavender-100\/70,
+.dashboard-view .bg-lavender-100\/50,
+.dashboard-view .bg-sand-100,
+.dashboard-view .bg-blush-100\/70,
+.dashboard-view .bg-sky-100\/60 {
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface)) !important;
+}
+.dashboard-view .border-primary-100,
+.dashboard-view .border-lavender-100,
+.dashboard-view .border-sand-100,
+.dashboard-view .border-blush-100,
+.dashboard-view .border-sky-100 {
+  border-color: color-mix(in srgb, var(--accent) 22%, var(--line)) !important;
+}
+.dashboard-view .text-primary-800,
+.dashboard-view .text-primary-700,
+.dashboard-view .text-primary-600,
+.dashboard-view .text-lavender-700,
+.dashboard-view .text-sand-700,
+.dashboard-view .text-blush-700,
+.dashboard-view .text-sky-700 {
+  color: var(--accent-strong) !important;
+}
+.dashboard-view .bg-primary-50 .text-primary-700,
+.dashboard-view .bg-primary-50 .text-primary-600,
+.dashboard-view .bg-lavender-100 .text-lavender-700,
+.dashboard-view .bg-sand-100 .text-sand-700 {
+  color: var(--accent-strong) !important;
+}
+.dashboard-view .bg-primary-50 .bg-primary-600,
+.dashboard-view .bg-primary-50 .bg-lavender-500 {
+  background: var(--accent) !important;
+}
+
+/* Daily rhythm / routine cards */
+.dashboard-view label[class*="bg-primary-50"],
+.dashboard-view label[class*="bg-gray-50"] {
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface)) !important;
+  border-color: var(--line) !important;
+}
+.dashboard-view label[class*="bg-primary-50"] span,
+.dashboard-view label[class*="bg-gray-50"] span {
+  color: var(--body-text);
+}
+.dashboard-view label[class*="bg-primary-50"] span.text-primary-700 {
+  color: var(--accent-strong) !important;
+}
+
+/* Dashboard task hover */
+.dashboard-view label.hover\:bg-gray-50:hover {
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface)) !important;
+}
+
+/* Schedule page */
+.schedule-view .bg-white {
+  background: var(--surface) !important;
+  border-color: var(--line) !important;
+}
+.schedule-view .bg-gray-50 {
+  background: color-mix(in srgb, var(--accent) 5%, var(--surface)) !important;
+}
+.schedule-view .border-gray-100,
+.schedule-view .border-gray-200 {
+  border-color: var(--line) !important;
+}
+.schedule-view .text-gray-900,
+.schedule-view .text-gray-800,
+.schedule-view .text-gray-700,
+.schedule-view .text-gray-600 {
+  color: var(--body-text) !important;
+}
+.schedule-view .text-gray-500,
+.schedule-view .text-gray-400,
+.schedule-view .text-gray-300 {
+  color: var(--muted-text) !important;
+}
+
+/* Schedule header/day picker */
+.schedule-view .bg-lavender-100,
+.schedule-view .bg-lavender-50 {
+  background: color-mix(in srgb, var(--accent) 9%, var(--surface)) !important;
+}
+.schedule-view .border-lavender-100,
+.schedule-view .border-lavender-200 {
+  border-color: color-mix(in srgb, var(--accent) 22%, var(--line)) !important;
+}
+.schedule-view .text-lavender-700 {
+  color: var(--accent-strong) !important;
+}
+.schedule-view .schedule-day-active {
+  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 65%, #8b7fd1)) !important;
+  border-color: var(--accent) !important;
+  color: #fff !important;
+}
+.schedule-view .schedule-day-strip button:not(.schedule-day-active) {
+  color: var(--body-text);
+}
+.schedule-view .schedule-day-strip button:not(.schedule-day-active):hover {
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface)) !important;
+  border-color: color-mix(in srgb, var(--accent) 25%, var(--line)) !important;
+}
+
+/* Calendar itself + hour lines */
+.schedule-view .schedule-calendar {
+  background: var(--surface) !important;
+  border-color: var(--line) !important;
+}
+.schedule-view .schedule-calendar > div[class*="border-t"] {
+  border-color: var(--line) !important;
+}
+.schedule-view .schedule-calendar > div[class*="border-t"] span {
+  background: var(--surface) !important;
+  color: var(--muted-text) !important;
+}
+
+/* Routine/schedule blocks */
+.schedule-view .schedule-block-card {
+  background: color-mix(in srgb, var(--accent) 11%, var(--surface)) !important;
+  border-color: color-mix(in srgb, var(--accent) 24%, var(--line)) !important;
+  border-left-color: var(--accent) !important;
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 8%, transparent) !important;
+}
+.schedule-view .schedule-block-card .text-primary-700,
+.schedule-view .schedule-block-card .text-primary-600 {
+  color: var(--accent-strong) !important;
+}
+.schedule-view .schedule-block-card button:hover {
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface)) !important;
+  color: var(--accent) !important;
+}
+
+/* Schedule form */
+.schedule-view .schedule-form-root {
+  background: var(--surface) !important;
+  border-color: var(--line) !important;
+}
+.schedule-view .schedule-form-root input {
+  color: var(--body-text);
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--accent) 4%, var(--surface));
+}
+.schedule-view .schedule-form-root input::placeholder {
+  color: var(--muted-text);
+}
+.schedule-view .schedule-form-root input:focus {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.schedule-view .schedule-add-button {
+  background: var(--accent) !important;
+}
+.schedule-view .schedule-add-button:hover {
+  filter: brightness(1.06);
+}
+
+/* Empty schedule state */
+.schedule-view .schedule-calendar .text-gray-400,
+.schedule-view .schedule-calendar .text-gray-500 {
+  color: var(--muted-text) !important;
+}
+
+/* Stronger Creator Night treatment */
+html[data-theme="creator-night"] .dashboard-view .bg-gray-900 {
+  background:
+    linear-gradient(135deg, rgba(88,201,154,.14), rgba(142,113,220,.11)),
+    #111b18 !important;
+  border: 1px solid rgba(88,201,154,.18);
+}
+html[data-theme="creator-night"] .dashboard-view .glass-panel,
+html[data-theme="creator-night"] .schedule-view .schedule-calendar,
+html[data-theme="creator-night"] .schedule-view .schedule-form-root,
+html[data-theme="creator-night"] .schedule-view .bg-white {
+  background: rgba(19,29,27,.78) !important;
+}
+html[data-theme="creator-night"] .schedule-view .schedule-block-card {
+  background: linear-gradient(135deg, rgba(88,201,154,.14), rgba(142,113,220,.08)) !important;
+  border-color: rgba(88,201,154,.25) !important;
+  border-left-color: #58c99a !important;
+}
+html[data-theme="creator-night"] .dashboard-view .bg-primary-50,
+html[data-theme="creator-night"] .dashboard-view .bg-lavender-100,
+html[data-theme="creator-night"] .dashboard-view .bg-sand-100,
+html[data-theme="creator-night"] .dashboard-view .bg-blush-100\/70,
+html[data-theme="creator-night"] .dashboard-view .bg-sky-100\/60 {
+  background: linear-gradient(135deg, rgba(88,201,154,.11), rgba(142,113,220,.07)) !important;
+}

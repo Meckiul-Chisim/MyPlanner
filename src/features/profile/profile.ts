@@ -8,6 +8,7 @@ export interface PlannerProfile {
   workStyle: string
   dayStart: string
   dayEnd: string
+  avatar: string
   lanes: {
     build: string
     learn: string
@@ -37,6 +38,7 @@ export const DEFAULT_PROFILE: PlannerProfile = {
   workStyle: 'Focused blocks with room for learning, exercise and creative work.',
   dayStart: '06:30',
   dayEnd: '22:30',
+  avatar: '',
   lanes: {
     build: 'Apps, games and development projects',
     learn: 'Coding, AI and technical skills',

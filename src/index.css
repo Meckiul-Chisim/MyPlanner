@@ -1675,3 +1675,87 @@ html[data-motion="reduced"] .app-sidebar,
 html[data-motion="reduced"] .app-sidebar::before {
   animation: none;
 }
+
+/* Temporary privacy notice */
+.privacy-toast {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 100;
+  width: min(360px, calc(100vw - 40px));
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 13px;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  color: var(--body-text);
+  box-shadow: 0 18px 42px rgba(20, 30, 25, .14);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  animation: privacyToastIn 360ms cubic-bezier(.22,1,.36,1);
+}
+.privacy-toast-icon {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.privacy-toast-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.privacy-toast-copy strong {
+  font-size: 12px;
+  line-height: 1.2;
+}
+.privacy-toast-copy span {
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--muted-text);
+}
+.privacy-toast-close {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  color: var(--muted-text);
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+.privacy-toast-close:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+  transform: scale(1.05);
+}
+@keyframes privacyToastIn {
+  from { opacity: 0; transform: translateY(12px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+html[data-motion="reduced"] .privacy-toast,
+html[data-motion="reduced"] .privacy-toast-close {
+  animation: none;
+  transition: none;
+}
+@media (max-width: 768px) {
+  .privacy-toast {
+    left: 50%;
+    bottom: 82px;
+    transform: translateX(-50%);
+  }
+  @keyframes privacyToastIn {
+    from { opacity: 0; transform: translate(-50%, 12px) scale(.98); }
+    to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  }
+}

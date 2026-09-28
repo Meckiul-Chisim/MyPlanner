@@ -42,7 +42,7 @@ function App() {
             </div>
           </div>
         </div>
-      )
+      )}
       <div className="ambient-bg" aria-hidden="true">
         <div className="smoke smoke-one" />
         <div className="smoke smoke-two" />

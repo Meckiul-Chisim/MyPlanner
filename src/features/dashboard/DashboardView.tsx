@@ -106,7 +106,7 @@ export function DashboardView() {
   const openHabitCount = Math.max(habits.length - completedHabits, 0)
 
   return (
-    <div className="max-w-5xl mx-auto p-5 sm:p-8 lg:p-10 space-y-7">
+    <div className="dashboard-view max-w-5xl mx-auto p-5 sm:p-8 lg:p-10 space-y-7">
       <header className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full bg-primary-50 border border-primary-100 px-3 py-1.5 text-[11px] font-semibold text-primary-700 mb-3">

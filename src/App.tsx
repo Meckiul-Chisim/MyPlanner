@@ -37,6 +37,7 @@ function App() {
             {view === 'tasks' && <TaskList />}
             {view === 'habits' && <HabitList />}
             {view === 'schedule' && <ScheduleView />}
+            {view === 'profile' && <SettingsView focusProfile />}
             {view === 'settings' && <SettingsView />}
           </div>
         </main>

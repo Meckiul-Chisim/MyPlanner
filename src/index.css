@@ -1301,6 +1301,9 @@ html[data-motion="reduced"] .profile-save-button:hover { transform: none; }
 /* Sidebar profile area */
 .sidebar-bottom {
   flex-shrink: 0;
+  border-top: 1px solid var(--sidebar-border, #e7ece9);
+  padding-top: 12px;
+  margin-top: 10px;
 }
 .sidebar-profile-card {
   display: grid;

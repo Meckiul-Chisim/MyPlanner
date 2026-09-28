@@ -81,7 +81,7 @@ export function SettingsView() {
           </div>
         </div>
         <div className="p-4">
-          <div className="rounded-2xl bg-primary-50 border border-primary-100 p-4">
+          <div className="planner-data-card rounded-2xl border p-4">
             <p className="text-sm font-semibold text-primary-800">Local-first workspace</p>
             <p className="text-xs text-primary-700/70 mt-1 leading-relaxed">Tasks, habits, schedule and your profile are stored locally through MyPlanner's existing storage layer. No account is required.</p>
           </div>

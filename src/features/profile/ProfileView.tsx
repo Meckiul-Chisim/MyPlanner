@@ -160,7 +160,7 @@ export function ProfileView() {
 
           <section className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sm:p-6">
             <SectionHeading icon={<Gamepad2 size={17} />} title="About your workspace" subtitle="A quick snapshot of how you use MyPlanner." />
-            <div className="mt-5 rounded-2xl bg-primary-50 border border-primary-100 p-5">
+            <div className="profile-workspace-snapshot mt-5 rounded-2xl border p-5">
               <p className="text-sm font-semibold text-primary-800">{profile.primaryFocus || 'Build what matters'}</p>
               <p className="text-sm text-primary-700/75 mt-2 leading-relaxed">{profile.bio}</p>
               <div className="mt-4 flex items-center gap-2 text-xs font-semibold text-primary-700"><UserRound size={14} /> {profile.role}</div>

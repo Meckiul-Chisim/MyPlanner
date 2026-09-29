@@ -62,7 +62,8 @@
           ]
         }
       ],
-      "artifactName": "MyPlanner-Setup-${version}.${ext}"
+      "artifactName": "MyPlanner-Setup-${version}.${ext}",
+      "icon": "build/icon.svg"
     },
     "nsis": {
       "oneClick": false,

@@ -78,8 +78,8 @@ function startScheduleReminders() {
   reminderTimer = setInterval(checkScheduleReminders, 30_000)
 }
 
-app.whenReady().then(() => {
-  initDatabase()
+app.whenReady().then(async () => {
+  await initDatabase()
   registerIpcHandlers()
   createWindow()
   startScheduleReminders()

@@ -63,7 +63,8 @@
         }
       ],
       "artifactName": "MyPlanner-Setup-${version}.${ext}",
-      "icon": "build/icon.svg"
+      "signAndEditExecutable": false,
+      "icon": "build/icon.ico"
     },
     "nsis": {
       "oneClick": false,

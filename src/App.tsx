@@ -10,6 +10,7 @@ import { ensurePersonalDefaults } from './features/personalization/defaults'
 import { SettingsView } from './features/settings/SettingsView'
 import { ProfileView } from './features/profile/ProfileView'
 import { HealthView } from './features/health/HealthView'
+import { ProjectsView } from './features/projects/ProjectsView'
 import { MyPlannerLogo } from './components/MyPlannerLogo'
 
 function App() {
@@ -62,6 +63,7 @@ function App() {
           <div className="page-reveal" key={view}>
             {view === 'dashboard' && <DashboardView />}
             {view === 'tasks' && <TaskList />}
+            {view === 'projects' && <ProjectsView />}
             {view === 'habits' && <HabitList />}
             {view === 'schedule' && <ScheduleView />}
             {view === 'health' && <HealthView />}

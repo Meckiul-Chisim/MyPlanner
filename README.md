@@ -1,75 +1,49 @@
-# React + TypeScript + Vite
+# MyPlanner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+MyPlanner is a private-by-default personal workspace for managing **work, life and health** in one place. The current desktop application is built with Electron, React, TypeScript and Vite.
 
-Currently, two official plugins are available:
+## Product areas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Today** — an at-a-glance view of tasks, habits and the day's schedule.
+- **Tasks** — capture actions, set priorities and due dates, and track completion.
+- **Projects** — organize work and personal projects, set target dates, update status and track progress.
+- **Habits** — build routines and review daily completion streaks.
+- **Schedule** — time-block your day and receive desktop reminders.
+- **Health** — record workouts, hydration, sleep, mood and optional body-weight check-ins. Weekly views are calculated from your own entries.
+- **Profile & settings** — personalize your workspace and preferences.
 
-## React Compiler
+## Technology
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Electron + electron-vite
+- React 19 + TypeScript
+- Tailwind CSS 4 + Lucide icons
+- Local SQLite database for tasks, habits and schedule data
+- Local device storage for profile preferences, projects and health logs
 
-## Expanding the ESLint configuration
+No account, paid API or external database is required for the current local-first desktop workflow. Health and project entries are not sent to a server.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Development
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Requirements: Node.js (current LTS recommended) and npm.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+## Build a Windows installer
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm run build
+npm run dist
 ```
+
+The installer is written to the `release/` directory.
+
+## Data & privacy
+
+The app stores its working data locally on the device. Keep regular backups of important information. The current project and health modules use browser storage within the Electron app profile; they do not yet sync with a phone or another computer.
+
+## Product direction
+
+The long-term direction is a connected personal operating system across desktop and mobile, with optional secure sync and export/restore. Mobile sync should be added only after a deliberate account, encryption, backup and conflict-resolution design—not by silently uploading personal health information.

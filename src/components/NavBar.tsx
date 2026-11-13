@@ -43,6 +43,7 @@ const workspaceItems: NavItem[] = [
 
 const mobileItems: NavItem[] = [
   { id: 'dashboard', label: 'Today', icon: LayoutGrid, hint: 'Overview' },
+  { id: 'tasks', label: 'Tasks', icon: CheckSquare, hint: 'Daily actions' },
   { id: 'projects', label: 'Projects', icon: FolderKanban, hint: 'Work & personal goals' },
   { id: 'health', label: 'Health', icon: HeartPulse, hint: 'Fitness & wellbeing' },
   { id: 'habits', label: 'Habits', icon: Repeat, hint: 'Daily rhythm' },

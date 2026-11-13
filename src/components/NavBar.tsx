@@ -4,7 +4,9 @@ import {
   CalendarDays,
   CheckSquare,
   LayoutGrid,
+  HeartPulse,
   Plus,
+  FolderKanban,
   Repeat,
   Settings,
   ShieldCheck,
@@ -15,7 +17,7 @@ import type { LucideIcon } from 'lucide-react'
 import { getPlannerProfile } from '../features/profile/profile'
 import { MyPlannerLogo } from './MyPlannerLogo'
 
-export type View = 'dashboard' | 'tasks' | 'habits' | 'schedule' | 'profile' | 'settings'
+export type View = 'dashboard' | 'tasks' | 'projects' | 'habits' | 'schedule' | 'health' | 'profile' | 'settings'
 
 interface SidebarProps {
   active: View
@@ -31,14 +33,21 @@ type NavItem = {
 
 const workspaceItems: NavItem[] = [
   { id: 'dashboard', label: 'Today', icon: LayoutGrid, hint: 'Overview' },
-  { id: 'tasks', label: 'Tasks', icon: CheckSquare, hint: 'To-do list' },
+  { id: 'tasks', label: 'Tasks', icon: CheckSquare, hint: 'Daily actions' },
+  { id: 'projects', label: 'Projects', icon: FolderKanban, hint: 'Work & personal goals' },
   { id: 'habits', label: 'Habits', icon: Repeat, hint: 'Daily rhythm' },
   { id: 'schedule', label: 'Schedule', icon: CalendarDays, hint: 'Time blocks' },
+  { id: 'health', label: 'Health', icon: HeartPulse, hint: 'Fitness & wellbeing' },
   { id: 'settings', label: 'Settings', icon: Settings, hint: 'Preferences' },
 ]
 
 const mobileItems: NavItem[] = [
-  ...workspaceItems,
+  { id: 'dashboard', label: 'Today', icon: LayoutGrid, hint: 'Overview' },
+  { id: 'tasks', label: 'Tasks', icon: CheckSquare, hint: 'Daily actions' },
+  { id: 'projects', label: 'Projects', icon: FolderKanban, hint: 'Work & personal goals' },
+  { id: 'health', label: 'Health', icon: HeartPulse, hint: 'Fitness & wellbeing' },
+  { id: 'habits', label: 'Habits', icon: Repeat, hint: 'Daily rhythm' },
+  { id: 'schedule', label: 'Schedule', icon: CalendarDays, hint: 'Time blocks' },
   { id: 'profile', label: 'Profile', icon: UserRound, hint: 'Your details' },
 ]
 

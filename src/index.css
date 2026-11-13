@@ -2595,3 +2595,36 @@ html[data-theme="creator-night"] {
   --line:#293936; --line-strong:#3b5149; --heading:#edf7f2; --body-text:#b8c9c2; --muted:#8ea79e;
   --accent:#58c99a; --accent-strong:#9ce2c2; --accent-soft:#17372d;
 }
+
+
+/* Health & fitness workspace */
+.health-page { color: var(--body-text, #52685a); animation: health-page-in .42s cubic-bezier(.2,.7,.2,1) both; }
+.health-eyebrow { display:inline-flex; align-items:center; gap:7px; padding:7px 11px; border:1px solid var(--line, #dce8df); border-radius:999px; color:var(--accent-strong, #326746); background:var(--accent-soft, #e4f1e8); font-size:10px; font-weight:800; letter-spacing:.14em; }
+.health-date { padding:9px 13px; border:1px solid var(--line, #dce8df); border-radius:12px; background:var(--surface, #fff); color:var(--muted, #819188); font-size:12px; font-weight:600; }
+.health-panel, .health-metric { background:var(--surface, #fff); border:1px solid var(--line, #e5ebe7); border-radius:20px; box-shadow:0 8px 28px rgba(20,40,30,.035); transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
+.health-panel:hover, .health-metric:hover { transform:translateY(-2px); box-shadow:0 14px 34px rgba(20,40,30,.07); border-color:var(--line-strong, #cadbcf); }
+.health-metric { padding:17px; animation:health-card-in .5s both; }
+.health-metric-icon, .health-icon { width:38px; height:38px; display:inline-flex; align-items:center; justify-content:center; border-radius:12px; background:var(--accent-soft, #e4f1e8); color:var(--accent-strong, #326746); }
+.health-metric-icon.blue { background:#eaf4fb; color:#477e9e; }
+.health-metric-icon.violet { background:#f1edfb; color:#7863a5; }
+.health-metric-icon.sand { background:#f8f0e4; color:#99794d; }
+.health-field { display:flex; flex-direction:column; gap:7px; min-width:0; color:var(--heading, #263b2e); font-size:12px; font-weight:700; }
+.health-field small { color:var(--muted, #819188); font-size:10px; font-weight:500; }
+.health-field input, .health-field select, .health-field textarea, .health-setting input { width:100%; min-width:0; border:1px solid var(--line, #dce8df); border-radius:11px; background:var(--surface-soft, #f7faf8); color:var(--heading, #263b2e); padding:10px 12px; font:inherit; font-size:13px; outline:none; transition:border-color .18s, box-shadow .18s, background .18s; }
+.health-field input:focus, .health-field select:focus, .health-field textarea:focus, .health-setting input:focus { border-color:var(--accent, #3f7d5a); box-shadow:0 0 0 3px color-mix(in srgb, var(--accent, #3f7d5a) 14%, transparent); }
+.health-primary { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:11px; background:var(--accent, #3f7d5a); color:white; padding:10px 15px; font-size:12px; font-weight:700; transition:transform .18s, filter .18s; }
+.health-primary:hover { filter:brightness(1.06); transform:translateY(-1px); }
+.health-insight { display:flex; align-items:flex-start; gap:10px; border-radius:13px; padding:12px; background:var(--accent-soft, #e4f1e8); color:var(--accent-strong, #326746); font-size:11px; line-height:1.55; }
+.health-count { border-radius:999px; padding:6px 10px; background:var(--surface-soft, #f0f7f2); color:var(--muted, #819188); font-size:10px; font-weight:700; }
+.health-workout { display:flex; align-items:center; gap:12px; border:1px solid var(--line, #e5ebe7); border-radius:13px; padding:11px; background:var(--surface-soft, #f8faf9); }
+.health-workout-icon { width:34px; height:34px; display:flex; align-items:center; justify-content:center; border-radius:10px; background:var(--accent-soft, #e4f1e8); color:var(--accent-strong, #326746); flex-shrink:0; }
+.health-delete { color:var(--muted, #819188); padding:7px; border-radius:8px; transition:background .18s,color .18s; }
+.health-delete:hover { background:#fff0ee; color:#bd5145; }
+.health-empty { min-height:180px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:var(--muted, #819188); }
+.health-empty p { color:var(--heading, #263b2e); font-size:13px; font-weight:700; }
+.health-empty span { font-size:11px; }
+.health-setting { display:flex; flex-direction:column; gap:7px; color:var(--muted, #819188); font-size:10px; font-weight:700; }
+.health-setting input { padding:8px 9px; font-size:12px; }
+@keyframes health-page-in { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+@keyframes health-card-in { from { opacity:0; transform:translateY(12px) scale(.985); } to { opacity:1; transform:translateY(0) scale(1); } }
+@media (prefers-reduced-motion: reduce) { .health-page, .health-metric { animation:none; } .health-panel, .health-metric, .health-primary { transition:none; } }

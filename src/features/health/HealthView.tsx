@@ -22,12 +22,12 @@ function prettyDate(date: string) { return new Date(date + 'T12:00:00').toLocale
 
 export function HealthView() {
   const [data, setData] = useState<HealthState>(readHealth)
-  const [water, setWater] = useState('0')
-  const [sleep, setSleep] = useState('8')
+  const [water, setWater] = useState('')
+  const [sleep, setSleep] = useState('')
   const [weight, setWeight] = useState('')
   const [mood, setMood] = useState<Mood>('good')
   const [workoutType, setWorkoutType] = useState('Strength')
-  const [minutes, setMinutes] = useState('30')
+  const [minutes, setMinutes] = useState('')
   const [notes, setNotes] = useState('')
   const [saved, setSaved] = useState(false)
   const date = today()
@@ -81,8 +81,8 @@ export function HealthView() {
 
       <section className="grid sm:grid-cols-2 xl:grid-cols-4 gap-3">
         <Metric icon={<Dumbbell size={18}/>} label="Workouts this week" value={String(workoutsThisWeek.length)} detail={minutesThisWeek + ' active minutes'} tone="mint"/>
-        <Metric icon={<Droplets size={18}/>} label="Water today" value={water + ' / ' + data.waterGoal} detail="glasses logged" tone="blue"/>
-        <Metric icon={<Moon size={18}/>} label="Sleep last night" value={(todayLog?.sleep ?? 0) + 'h'} detail={'Target ' + data.sleepGoal + ' hours'} tone="violet"/>
+        <Metric icon={<Droplets size={18}/>} label="Water today" value={todayLog ? water + ' / ' + data.waterGoal : '—'} detail="glasses logged" tone="blue"/>
+        <Metric icon={<Moon size={18}/>} label="Sleep last night" value={todayLog ? sleep + 'h' : '—'} detail={'Target ' + data.sleepGoal + ' hours'} tone="violet"/>
         <Metric icon={<Scale size={18}/>} label="Latest weight" value={(data.daily.filter(x => x.weight != null).at(-1)?.weight != null ? data.daily.filter(x => x.weight != null).at(-1)!.weight!.toFixed(1) + ' kg' : '—')} detail="Only recorded when you choose" tone="sand"/>
       </section>
 
@@ -90,8 +90,8 @@ export function HealthView() {
         <form onSubmit={saveCheckIn} className="health-panel p-5 sm:p-6 space-y-5">
           <div className="flex items-center justify-between"><div><h2 className="text-lg font-bold text-gray-900">Daily check-in</h2><p className="text-xs text-gray-500 mt-1">Your entries are saved on this device.</p></div><span className="health-icon"><Activity size={18}/></span></div>
           <div className="grid sm:grid-cols-2 gap-4">
-            <Field label="Water intake" suffix="glasses"><input type="number" min="0" max="50" value={water} onChange={e => setWater(e.target.value)} /></Field>
-            <Field label="Sleep" suffix="hours"><input type="number" min="0" max="24" step=".25" value={sleep} onChange={e => setSleep(e.target.value)} /></Field>
+            <Field label="Water intake" suffix="glasses"><input type="number" min="0" max="50" value={water} onChange={e => setWater(e.target.value)} required /></Field>
+            <Field label="Sleep" suffix="hours"><input type="number" min="0" max="24" step=".25" value={sleep} onChange={e => setSleep(e.target.value)} required /></Field>
             <Field label="Body weight" suffix="kg (optional)"><input type="number" min="0" max="500" step=".1" placeholder="e.g. 52.5" value={weight} onChange={e => setWeight(e.target.value)} /></Field>
             <label className="health-field"><span>How are you feeling?</span><select value={mood} onChange={e => setMood(e.target.value as Mood)}><option value="low">Low energy</option><option value="okay">Okay</option><option value="good">Good</option><option value="great">Great</option></select></label>
           </div>
@@ -105,7 +105,7 @@ export function HealthView() {
         <div className="health-panel p-5 sm:p-6 space-y-5">
           <div><h2 className="text-lg font-bold text-gray-900">Weekly consistency</h2><p className="text-xs text-gray-500 mt-1">Based only on check-ins you have recorded.</p></div>
           <div className="flex items-end justify-between gap-2 h-36 pt-3">
-            {week.map((entry, index) => { const d = new Date(); d.setDate(d.getDate() - (6 - index)); return <div key={index} className="flex-1 h-full flex flex-col justify-end items-center gap-2"><div className="w-full max-w-9 rounded-t-lg bg-gray-100 overflow-hidden flex items-end h-24"><div className="w-full rounded-t-lg bg-gradient-to-t from-emerald-600 to-emerald-400 transition-all duration-700" style={{height: entry ? Math.max(12, Math.min(100, (entry.water / data.waterGoal) * 100)) + '%' : '0%'}}/></div><span className="text-[10px] text-gray-400">{d.toLocaleDateString(undefined, {weekday:'narrow'})}</span></div>})}
+            {week.map((entry, index) => { const d = new Date(); d.setDate(d.getDate() - (6 - index)); return <div key={index} className="flex-1 h-full flex flex-col justify-end items-center gap-2"><div className="w-full max-w-9 rounded-t-lg bg-gray-100 overflow-hidden flex items-end h-24"><div className="w-full rounded-t-lg bg-emerald-500 transition-all duration-700" style={{height: entry ? Math.max(12, Math.min(100, (entry.water / data.waterGoal) * 100)) + '%' : '0%'}}/></div><span className="text-[10px] text-gray-400">{d.toLocaleDateString(undefined, {weekday:'narrow'})}</span></div>})}
           </div>
           <div className="health-insight"><TrendingUp size={16}/><p>{week.filter(Boolean).length} of 7 days checked in. Consistency matters more than a perfect streak.</p></div>
           <div className="border-t border-gray-100 pt-4 grid grid-cols-2 gap-3">
@@ -119,7 +119,7 @@ export function HealthView() {
         <form onSubmit={addWorkout} className="health-panel p-5 sm:p-6 space-y-4">
           <div><h2 className="text-lg font-bold text-gray-900">Log a workout</h2><p className="text-xs text-gray-500 mt-1">Record strength, walking, mobility or any activity.</p></div>
           <label className="health-field"><span>Activity</span><select value={workoutType} onChange={e => setWorkoutType(e.target.value)}><option>Strength</option><option>Walking</option><option>Running</option><option>Cycling</option><option>Mobility</option><option>Sports</option><option>Other</option></select></label>
-          <Field label="Duration" suffix="minutes"><input type="number" min="1" max="600" value={minutes} onChange={e => setMinutes(e.target.value)}/></Field>
+          <Field label="Duration" suffix="minutes"><input type="number" min="1" max="600" value={minutes} onChange={e => setMinutes(e.target.value)} required/></Field>
           <label className="health-field"><span>Notes (optional)</span><textarea rows={2} placeholder="What did you work on?" value={notes} onChange={e => setNotes(e.target.value)}/></label>
           <button className="health-primary w-full" type="submit"><Plus size={16}/> Add workout</button>
         </form>

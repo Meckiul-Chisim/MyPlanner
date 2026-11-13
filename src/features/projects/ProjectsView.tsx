@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react'
-import { FolderKanban, Plus, Trash2, CalendarDays, ArrowUpRight, CheckCircle2 } from 'lucide-react'
+import { FolderKanban, Plus, Trash2, CalendarDays, CheckCircle2 } from 'lucide-react'
 
 type Project = { id: string; name: string; area: 'Work' | 'Personal'; status: 'Planning' | 'Active' | 'On hold' | 'Completed'; progress: number; dueDate: string; description: string }
 const KEY = 'myplanner-projects-v1'
